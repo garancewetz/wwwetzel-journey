@@ -1,0 +1,767 @@
+[
+  [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
+    },
+    {
+      "id": 10
+    }
+  ],
+  [
+    {
+      "id": 11
+    },
+    {
+      "id": 12
+    },
+    {
+      "id": 13,
+      "isWay": true,
+      "item": {
+        "type": "xp",
+        "name": "Okeiro - Développeuse front - 2025",
+        "image": "/star.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 14,
+      "isWay": true
+    },
+    {
+      "id": 15,
+      "isWay": true
+    },
+    {
+      "id": 16,
+      "isWay": true
+    },
+    {
+      "id": 17
+    },
+    {
+      "id": 18
+    },
+    {
+      "id": 19
+    },
+    {
+      "id": 20
+    }
+  ],
+  [
+    {
+      "id": 21
+    },
+    {
+      "id": 22
+    },
+    {
+      "id": 23,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 24
+    },
+    {
+      "id": 25
+    },
+    {
+      "id": 26,
+      "isWay": true
+    },
+    {
+      "id": 27,
+      "isWay": true
+    },
+    {
+      "id": 28
+    },
+    {
+      "id": 29
+    },
+    {
+      "id": 30
+    }
+  ],
+  [
+    {
+      "id": 31
+    },
+    {
+      "id": 32
+    },
+    {
+      "id": 33,
+      "isWay": true
+    },
+    {
+      "id": 34
+    },
+    {
+      "id": 35
+    },
+    {
+      "id": 36
+    },
+    {
+      "id": 37,
+      "isWay": true
+    },
+    {
+      "id": 38,
+      "isWay": true,
+      "item": {
+        "type": "xp",
+        "name": "Colorz - Développeuse front - 2022",
+        "image": "/star.svg",
+        "found": false,
+        "projects": [
+          {
+            "title": "Pimp my shop",
+            "description": "Gère les inscriptions à l'événement e-commerce Pimp My Shop.",
+            "technologies": [
+              "React",
+              "Next.js",
+              "Tailwind",
+              "Framer Motion"
+            ],
+            "company": "Colorz",
+            "urlPage": "https://pimp-my.shop",
+            "created_at": "2025",
+            "marketing": {
+              "brand": "Pimp my shop",
+              "imageUrl": "pictures/pms25.png"
+            }
+          },
+          {
+            "title": "Mapz",
+            "description": "Application web collaborative de cartographie qui permet aux utilisateurs de partager des lieux sur une carte Google Maps.",
+            "technologies": [
+              "Vue.js",
+              "Nuxt",
+              "Vite",
+              "Tailwind",
+              "Sass",
+              "Heroku",
+              "S3 Azure",
+              "Drizzle",
+              "Google Maps API"
+            ],
+            "urlPage": "https://mapz.colorz.fr/",
+            "created_at": "2024",
+            "marketing": {
+              "brand": "MAPZ",
+              "imageUrl": "pictures/mapz.png"
+            }
+          },
+          {
+            "title": "Station-e",
+            "description": "Application qui permet de s'inscrire et obtenir un badge pour recharger sa voiture électrique via un formulaire multi-étapes.",
+            "technologies": [
+              "TypeScript",
+              "React",
+              "Next.js",
+              "Tailwind"
+            ],
+            "urlPage": "https://stations-e.com/account/fr/auth/sign-up/start",
+            "created_at": "2025",
+            "marketing": {
+              "brand": "STATION-E",
+              "imageUrl": "pictures/station-e.webp"
+            }
+          },
+          {
+            "title": "Husbands",
+            "description": "Site e-commerce de prêt-à-porter, accessoires, souliers et commande spéciale pour homme.",
+            "technologies": [
+              "Shopify",
+              "Tailwind",
+              "SEO",
+              "JS Vanilla",
+              "React",
+              "End to End Testing"
+            ],
+            "created_at": "2025",
+            "marketing": {
+              "brand": "HUSBANDS",
+              "imageUrl": "pictures/husbands.webp"
+            }
+          },
+          {
+            "title": "Paprika",
+            "description": "Site e-commerce. Mode femme jusqu'au 54 — Une mode inclusive, colorée et joyeuse qui s'adapte à vous, pas l'inverse.",
+            "technologies": [
+              "Shopify",
+              "Tailwind",
+              "SEO",
+              "JS Vanilla",
+              "End to End Testing",
+              "Vite.js",
+              "Sass"
+            ],
+            "urlPage": "https://www.paprika.fr/",
+            "created_at": "2025",
+            "marketing": {
+              "brand": "PAPRIKA",
+              "imageUrl": "pictures/paprika.webp"
+            }
+          },
+          {
+            "title": "Woozwoo",
+            "description": "Application mobile cross-platform avec animations fluides",
+            "technologies": [
+              "Vue.js",
+              "Nuxt",
+              "Vite",
+              "Tailwind",
+              "Sass",
+              "Heroku",
+              "S3 Azure",
+              "GSAP"
+            ],
+            "urlPage": "https://woozwoo.colorz.fr/who-is-who",
+            "created_at": "2024",
+            "marketing": {
+              "brand": "woozwoo",
+              "imageUrl": "pictures/woozwoo.png"
+            }
+          },
+          {
+            "title": "Cabaïa",
+            "description": "Site e-commerce. Accessoires et vêtements pour femmes, hommes et enfants.",
+            "technologies": [
+              "Shopify",
+              "Tailwind",
+              "SEO",
+              "Tracking",
+              "JS Vanilla"
+            ],
+            "urlPage": "https://www.cabaia.fr/",
+            "created_at": "2024",
+            "marketing": {
+              "brand": "CABAÏA",
+              "imageUrl": "pictures/cabaia.webp"
+            }
+          },
+          {
+            "title": "AMI",
+            "description": "Site e-commerce. Prêt-à-porter et Accessoires",
+            "technologies": [
+              "Storyblok",
+              "Shopify",
+              "JS Vanilla",
+              "Tracking",
+              "Sass",
+              "Tailwind",
+              "SEO",
+              "Accessibilité"
+            ],
+            "urlPage": "https://www.amiparis.com/",
+            "created_at": "2024",
+            "marketing": {
+              "brand": "AMI",
+              "imageUrl": "pictures/ami.webp"
+            }
+          },
+          {
+            "title": "Mathon",
+            "description": "Marketplace. Vente en ligne d'ustensiles de cuisine avec notamment un large choix de matériel de pâtisserie.",
+            "technologies": [
+              "Shopify",
+              "Tailwind",
+              "SEO",
+              "Sass",
+              "Tracking",
+              "JS Vanilla"
+            ],
+            "urlPage": "https://www.mathon.fr/",
+            "created_at": "2023",
+            "marketing": {
+              "brand": "MATHON",
+              "imageUrl": "pictures/mathon.webp"
+            }
+          },
+          {
+            "title": "Davidson",
+            "description": "Carte de voeux 2024 interactive pour Davidson",
+            "technologies": [
+              "Vue.js",
+              "Nuxt",
+              "Tailwind"
+            ],
+            "company": "Colorz",
+            "created_at": "2023",
+            "marketing": {
+              "brand": "Davidson",
+              "imageUrl": "pictures/davidson.jpeg"
+            }
+          },
+          {
+            "title": "Pimp my shop",
+            "description": "Gère les inscriptions à l'événement e-commerce 'Pimp My Shop'.",
+            "technologies": [
+              "Vue.js",
+              "Nuxt",
+              "Tailwind",
+              "GSAP"
+            ],
+            "company": "Colorz",
+            "created_at": "2024",
+            "urlPage": "https://pimp-my.shop/en/",
+            "marketing": {
+              "brand": "Pimp my shop",
+              "imageUrl": "pictures/pimp-my-shop.png"
+            }
+          },
+          {
+            "title": "Empreintes",
+            "description": "Marketplace de créateurs.",
+            "technologies": [
+              "Shopify",
+              "Tailwind",
+              "Sass",
+              "SEO",
+              "Storyblok",
+              "Tracking",
+              "JS Vanilla"
+            ],
+            "company": "Colorz",
+            "urlPage": "https://www.empreintes-paris.com/",
+            "created_at": "2023",
+            "marketing": {
+              "brand": "EMPREINTES",
+              "imageUrl": "pictures/empreintes.webp"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "isWay": true
+    },
+    {
+      "id": 40
+    }
+  ],
+  [
+    {
+      "id": 41
+    },
+    {
+      "id": 42,
+      "isWay": true
+    },
+    {
+      "id": 43,
+      "isWay": true,
+      "item": {
+        "type": "xp",
+        "name": "Développeuse d'application web - OpenClassrooms - 2022",
+        "image": "/website.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 44,
+      "isWay": true
+    },
+    {
+      "id": 45
+    },
+    {
+      "id": 46
+    },
+    {
+      "id": 47
+    },
+    {
+      "id": 48,
+      "isWay": true
+  
+    },
+    {
+      "id": 49,
+      "isWay": true
+    },
+    {
+      "id": 50,
+      "isWay": true
+    }
+  ],
+  [
+    {
+      "id": 51,
+      "isWay": true,
+      "item": {
+        "type": "interest",
+        "name": "Item 3",
+        "image": "/wine.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 52,
+      "isWay": true
+    },
+    {
+      "id": 53
+    },
+    {
+      "id": 54,
+      "isWay": true
+    },
+    {
+      "id": 55,
+      "isWay": true
+    },
+    {
+      "id": 56,
+      "isWay": true
+    },
+    {
+      "id": 57,
+      "isWay": true
+    },
+    {
+      "id": 58,
+      "isWay": true,
+      "item": {
+        "type": "xp",
+        "name": "Uptoo - Développeuse front - 2019",
+        "image": "/star.svg",
+        "found": false,
+        "projects": [
+          {
+            "title": "Assessment platform",
+            "description": "Plateforme de test pour une entreprise de recrutement",
+            "technologies": [
+              "React",
+              "Next.js",
+              "Tailwind",
+              "Sass"
+            ],
+            "company": "Uptoo",
+            "urlPage": "https://uptoo.fr/test/assessment/welcome/",
+            "created_at": "2021",
+            "marketing": {
+              "brand": "UPTOO",
+              "imageUrl": "pictures/uptoo-assessment.svg"
+            }
+          },
+          {
+            "title": "Blog",
+            "description": "Blog pour une entreprise de recrutement",
+            "technologies": [
+              "React",
+              "Next.js",
+              "Tailwind",
+              "Sass",
+              "Strapi"
+            ],
+            "company": "Uptoo",
+            "urlPage": "https://uptoo.fr/blog/",
+            "created_at": "2020",
+            "marketing": {
+              "brand": "UPTOO BLOG",
+              "imageUrl": "placeholder.png"
+            }
+          },
+          {
+            "title": "Uptoo",
+            "description": "Site vitrine pour une entreprise de recrutement",
+            "technologies": [
+              "React",
+              "Next.js",
+              "Tailwind",
+              "Sass",
+              "Strapi",
+              "Ghost"
+            ],
+            "company": "Uptoo",
+            "urlPage": "https://uptoo.fr/",
+            "created_at": "2019",
+            "marketing": {
+              "brand": "UPTOO",
+              "imageUrl": "placeholder.png"
+            }
+          },
+          {
+            "title": "Plateforme de formations",
+            "description": "Plateforme de formation pour commerciaux.",
+            "technologies": [
+              "React",
+              "Next.js",
+              "Tailwind",
+              "Sass"
+            ],
+            "company": "Uptoo",
+            "urlPage": "https://uptoo.fr/formations/",
+            "created_at": "2019",
+            "marketing": {
+              "brand": "UPTOO Formations",
+              "imageUrl": "placeholder.png"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 60,
+      "isWay": true
+    }
+  ],
+  [
+    {
+      "id": 61
+    },
+    {
+      "id": 62,
+      "isWay": true
+    },
+    {
+      "id": 63
+    },
+    {
+      "id": 64,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 65,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 66,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 67
+    },
+    {
+      "id": 68,
+      "isWay": true
+    },
+    {
+      "id": 69,
+      "isWay": true,
+      "item": {
+        "type": "interest",
+        "name": "Queer",
+        "image": "/queer.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 70,
+      "isWay": true
+    }
+  ],
+  [
+    {
+      "id": 71
+    },
+    {
+      "id": 72,
+      "isWay": true
+    },
+    {
+      "id": 73,
+      "isWay": true,
+      "item": {
+        "type": "xp",
+        "name": "Développeuse web - 3W Academy - 2018",
+        "image": "/computer.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 74,
+      "isWay": true
+    },
+    {
+      "id": 75,
+      "isWay": true
+    },
+    {
+      "id": 76,
+      "isWay": true
+    },
+    {
+      "id": 77
+    },
+    {
+      "id": 78
+    },
+    {
+      "id": 79,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 80
+    }
+  ],
+  [
+    {
+      "id": 81
+    },
+    {
+      "id": 82,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 83
+    },
+    {
+      "id": 84
+    },
+    {
+      "id": 85,
+      "isWay": true
+    },
+    {
+      "id": 86,
+      "isWay": true
+    },
+    {
+      "id": 87,
+      "isWay": true
+    },
+    {
+      "id": 88,
+      "isWay": true
+    },
+    {
+      "id": 89,
+      "isWay": true,
+      "item": {
+        "type": "interest",
+        "name": "Piano",
+        "image": "/piano.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 90
+    }
+  ],
+  [
+    {
+      "id": 91,
+      "isWay": true
+    },
+    {
+      "id": 92,
+      "isWay": true
+    },
+    {
+      "id": 93,
+      "isWay": true
+    },
+    {
+      "id": 94,
+      "isWay": true,
+      "item": {
+        "type": "xp",
+        "name": "Master de lettres - Sorbonne Nouvelle - 2015",
+        "image": "/book.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 95,
+      "isWay": true
+    },
+    {
+      "id": 96,
+      "isWay": true
+    },
+    {
+      "id": 97,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 98,
+      "item": {
+        "type": "obstacle",
+        "name": "Arbre",
+        "image": "/tree.svg",
+        "found": false
+      }
+    },
+    {
+      "id": 99
+    },
+    {
+      "id": 100
+    }
+  ]
+]
