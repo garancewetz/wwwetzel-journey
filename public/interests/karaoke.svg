@@ -1,0 +1,30 @@
+<svg width="160" height="160" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tête du micro (gris argenté) -->
+  <rect x="6" y="2" width="4" height="5" fill="#C0C0C0"/>
+  
+  <!-- Grille du micro (lignes foncées) -->
+  <rect x="6" y="3" width="4" height="1" fill="#808080"/>
+  <rect x="6" y="5" width="4" height="1" fill="#808080"/>
+  
+  <!-- Bordure tête du micro -->
+  <rect x="6" y="2" width="4" height="1" fill="#A8A8A8"/>
+  <rect x="6" y="6" width="4" height="1" fill="#A8A8A8"/>
+  
+  <!-- Corps du micro (noir) -->
+  <rect x="7" y="7" width="2" height="4" fill="#2A2A2A"/>
+  
+  <!-- Détails sur le corps -->
+  <rect x="7" y="8" width="2" height="1" fill="#404040"/>
+  
+  <!-- Câble du micro -->
+  <rect x="8" y="11" width="1" height="1" fill="#404040"/>
+  <rect x="9" y="12" width="1" height="1" fill="#404040"/>
+  <rect x="10" y="13" width="1" height="1" fill="#404040"/>
+  <rect x="11" y="13" width="1" height="1" fill="#404040"/>
+  <rect x="12" y="13" width="1" height="1" fill="#404040"/>
+  
+  <!-- Highlight sur la tête du micro -->
+  <rect x="7" y="3" width="1" height="1" fill="#E8E8E8"/>
+  <rect x="8" y="2" width="1" height="1" fill="#E8E8E8"/>
+</svg>
+

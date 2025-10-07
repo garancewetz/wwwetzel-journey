@@ -1,0 +1,30 @@
+<svg width="160" height="160" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base du fromage (jaune) -->
+  <rect x="2" y="10" width="12" height="4" fill="#FFD700"/>
+  
+  <!-- Haut du fromage (côtés inclinés) -->
+  <rect x="3" y="9" width="10" height="1" fill="#FFD700"/>
+  <rect x="4" y="8" width="8" height="1" fill="#FFD700"/>
+  <rect x="5" y="7" width="6" height="1" fill="#FFD700"/>
+  <rect x="6" y="6" width="4" height="1" fill="#FFD700"/>
+  <rect x="7" y="5" width="2" height="1" fill="#FFD700"/>
+  
+  <!-- Ombres (jaune plus foncé) -->
+  <rect x="2" y="13" width="12" height="1" fill="#E6B800"/>
+  <rect x="2" y="10" width="1" height="3" fill="#E6B800"/>
+  <rect x="13" y="10" width="1" height="3" fill="#E6B800"/>
+  
+  <!-- Trous dans le fromage -->
+  <rect x="4" y="11" width="2" height="1" fill="#FFE44D"/>
+  <rect x="4" y="12" width="2" height="1" fill="#FFE44D"/>
+  
+  <rect x="10" y="11" width="2" height="1" fill="#FFE44D"/>
+  <rect x="10" y="12" width="2" height="1" fill="#FFE44D"/>
+  
+  <rect x="7" y="10" width="1" height="1" fill="#FFE44D"/>
+  
+  <!-- Petits trous supplémentaires -->
+  <rect x="6" y="8" width="1" height="1" fill="#FFE44D"/>
+  <rect x="9" y="8" width="1" height="1" fill="#FFE44D"/>
+</svg>
+

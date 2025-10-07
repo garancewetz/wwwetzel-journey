@@ -1,0 +1,38 @@
+<svg width="160" height="160" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bretelles haut -->
+  <rect x="4" y="2" width="2" height="1" fill="#4a4a4a"/>
+  <rect x="10" y="2" width="2" height="1" fill="#4a4a4a"/>
+  
+  <!-- Haut du sac -->
+  <rect x="5" y="3" width="6" height="1" fill="#6b4423"/>
+  
+  <!-- Corps principal du sac -->
+  <rect x="4" y="4" width="8" height="8" fill="#8b5a2b"/>
+  
+  <!-- Ombres sur les côtés -->
+  <rect x="4" y="4" width="1" height="8" fill="#6b4423"/>
+  <rect x="11" y="4" width="1" height="8" fill="#6b4423"/>
+  
+  <!-- Poche avant -->
+  <rect x="6" y="6" width="4" height="4" fill="#a0754d"/>
+  <rect x="6" y="6" width="4" height="1" fill="#6b4423"/>
+  
+  <!-- Fermeture éclair poche -->
+  <rect x="7" y="7" width="2" height="1" fill="#4a4a4a"/>
+  
+  <!-- Bas du sac (ombre) -->
+  <rect x="4" y="11" width="8" height="1" fill="#6b4423"/>
+  
+  <!-- Bretelles côtés -->
+  <rect x="3" y="5" width="1" height="6" fill="#4a4a4a"/>
+  <rect x="12" y="5" width="1" height="6" fill="#4a4a4a"/>
+  
+  <!-- Détails bretelles (boucles) -->
+  <rect x="3" y="11" width="1" height="1" fill="#666666"/>
+  <rect x="12" y="11" width="1" height="1" fill="#666666"/>
+  
+  <!-- Highlights -->
+  <rect x="5" y="4" width="1" height="1" fill="#a0754d"/>
+  <rect x="6" y="4" width="1" height="1" fill="#a0754d"/>
+</svg>
+

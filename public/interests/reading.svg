@@ -1,0 +1,32 @@
+<svg width="160" height="160" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Page gauche du livre (blanc cassé) -->
+  <rect x="2" y="5" width="6" height="7" fill="#F5F5DC"/>
+  
+  <!-- Page droite du livre (blanc cassé) -->
+  <rect x="8" y="5" width="6" height="7" fill="#F5F5DC"/>
+  
+  <!-- Ligne centrale (reliure) -->
+  <rect x="7" y="5" width="2" height="7" fill="#8B7355"/>
+  <rect x="7" y="6" width="2" height="1" fill="#6B5345"/>
+  <rect x="7" y="8" width="2" height="1" fill="#6B5345"/>
+  <rect x="7" y="10" width="2" height="1" fill="#6B5345"/>
+  
+  <!-- Bordures des pages -->
+  <rect x="2" y="5" width="6" height="1" fill="#D3D3D3"/>
+  <rect x="8" y="5" width="6" height="1" fill="#D3D3D3"/>
+  <rect x="2" y="11" width="6" height="1" fill="#C0C0C0"/>
+  <rect x="8" y="11" width="6" height="1" fill="#C0C0C0"/>
+  
+  <!-- Lignes de texte sur page gauche -->
+  <rect x="3" y="7" width="4" height="1" fill="#A9A9A9"/>
+  <rect x="3" y="9" width="3" height="1" fill="#A9A9A9"/>
+  
+  <!-- Lignes de texte sur page droite -->
+  <rect x="9" y="7" width="4" height="1" fill="#A9A9A9"/>
+  <rect x="9" y="9" width="4" height="1" fill="#A9A9A9"/>
+  
+  <!-- Ombres des pages -->
+  <rect x="2" y="5" width="1" height="7" fill="#E0E0D0"/>
+  <rect x="13" y="5" width="1" height="7" fill="#E0E0D0"/>
+</svg>
+
