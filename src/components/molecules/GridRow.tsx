@@ -7,21 +7,9 @@ interface GridRowProps {
 }
 
 export default function GridRow({ row, rowIndex, heightCell }: GridRowProps) {
-  let gridCols;
-  switch(row.length) {
-    case 10:
-      gridCols = `grid-cols-10`;
-      break;
-    case 11:
-      gridCols = `grid-cols-11`;
-      break;
-    case 12:
-      gridCols = `grid-cols-12`;
-      break;
 
-  }
   return (
-    <ul className={`grid ${gridCols}`}>
+    <ul className={`flex `}>
       {row.map((cell, colIndex) => (
         <GridCell
           heightCell={heightCell}

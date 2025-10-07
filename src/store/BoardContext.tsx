@@ -2,11 +2,26 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import boardData from '../datas/board.json';
+import xpsData from '../datas/xps.json';
+
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+  company?: string;
+  urlPage?: string;
+  created_at: string;
+  marketing?: {
+    brand: string;
+    imageUrl: string;
+  };
+}
 
 interface FoundItem {
   name: string;
   image: string;
   type: string;
+  projects?: Project[];
 }
 
 interface GridItem {
@@ -45,6 +60,20 @@ export function BoardProvider({ children }: { children: ReactNode }) {
       // Vérifier si l'item n'est pas déjà dans la liste
       const exists = prev.some(existingItem => existingItem.name === item.name);
       if (!exists) {
+        // Enrichir l'item avec les projets si c'est une expérience
+        let enrichedItem = { ...item };
+        if (item.type === 'xp') {
+          // Extraire le nom de la compagnie du nom de l'expérience
+          const companyMatch = item.name.match(/^(\w+)\s*-/);
+          if (companyMatch) {
+            const companyKey = companyMatch[1].toLowerCase();
+            const projects = (xpsData as Record<string, Project[]>)[companyKey];
+            if (projects) {
+              enrichedItem.projects = projects;
+            }
+          }
+        }
+        
         // Mettre à jour la grille pour marquer l'item comme trouvé
         setGrid(prevGrid => 
           prevGrid.map((gridRow, rowIndex) => 
@@ -57,7 +86,7 @@ export function BoardProvider({ children }: { children: ReactNode }) {
               : gridRow
           )
         );
-        return [...prev, item];
+        return [...prev, enrichedItem];
       }
       return prev;
     });

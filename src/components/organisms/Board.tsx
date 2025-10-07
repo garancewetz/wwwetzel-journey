@@ -6,7 +6,7 @@ import GridRow from '../molecules/GridRow';
 import { useBoard } from '../../store/BoardContext';
 
 export default function Board() {
-  const { grid, addFoundItem } = useBoard();
+  const { grid, addFoundItem, foundItems } = useBoard();
 // je veux flatter mon board.json
 const flattenedGrid = grid.flat();
 const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
@@ -14,8 +14,24 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
   const [currentPosition, setCurrentPosition] = useState({ row: 0, col: 0 });
   const [gridOffset, setGridOffset] = useState({ x: 0, y: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [circleRadius, setCircleRadius] = useState(150);
   const gridRef = useRef<HTMLDivElement>(null);
   const heightCell = 120;
+
+  // Calculer le rayon du cercle en fonction des XPs trouvés
+  const baseRadius = 150;
+  const radiusIncrement = 15;
+  const foundXpsCount = foundItems.filter(item => item.type === 'xp').length;
+
+  // Mettre à jour le rayon avec un délai de 200ms
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCircleRadius(baseRadius + (foundXpsCount * radiusIncrement));
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [foundXpsCount]);
 
   const updateGridPosition = (row: number, col: number) => {
     if (gridRef.current) {
@@ -189,11 +205,11 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       // Attendre que le DOM soit chargé
       // Calculer dynamiquement l'index de la dernière ligne
       const timer = setTimeout(() => {
-        const lastRowIndex = grid.length - 1;
+        const lastRowIndex = grid.length - 2;
         // Mettre à jour la position actuelle d'abord
-        setCurrentPosition({ row: lastRowIndex, col: 0 });
+        setCurrentPosition({ row: lastRowIndex, col: 1 });
         // Puis positionner la grille
-        updateGridPosition(lastRowIndex, 0);
+        updateGridPosition(lastRowIndex, 1);
         // Marquer comme initialisé
       }, 200);
       setIsInitialized(true);
@@ -201,6 +217,17 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       return () => clearTimeout(timer);
     }
   }, [grid]);
+
+  // Attendre 1 seconde après l'initialisation avant de rendre la carte visible
+  useEffect(() => {
+    if (isInitialized) {
+      const timer = setTimeout(() => {
+        setIsReady(true);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isInitialized]);
 
   // Afficher un message de chargement si la grille n'est pas encore chargée
   if (!grid || grid.length === 0) {
@@ -210,15 +237,23 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
   return (
     <div className={`relative z-0 `}>
 
+      {/* Écran de chargement noir complet */}
+      <div 
+        className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-500"
+        style={{
+          opacity: isReady ? 0 : 1
+        }}
+      />
 
       {/* Fond noir complet pour masquer le contenu */}
      <div 
-         className="fixed inset-0 bg-black/80 z-10 pointer-events-none transition-all duration-300 ease-in-out"
-         style={{
-           mask: `radial-gradient(circle at 50% 50%, transparent 150px, black 150px)`,
-           WebkitMask: `radial-gradient(circle at 50% 50%, transparent 150px, black 150px)`
-         }}
-       />
+        className="fixed inset-0 bg-black z-10 pointer-events-none"
+        style={{
+          mask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
+          WebkitMask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
+          transition: 'mask 0.8s ease-out, -webkit-mask 0.8s ease-out'
+        }}
+      />
        
       {/* Personnage fixe au centre */}
       <Character x={0} y={0} />
