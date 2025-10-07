@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import boardData from '../datas/board.json';
+import boardData from '../datas/board';
 import xpsData from '../datas/xps.json';
 
 interface Project {

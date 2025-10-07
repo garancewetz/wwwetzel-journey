@@ -230,8 +230,8 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
   }, [isInitialized]);
 
   // Afficher un message de chargement si la grille n'est pas encore chargée
-  if (!grid || grid.length === 0) {
-    return <div>Chargement...</div>;
+  if (!grid || !isInitialized) {
+    return <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">Chargement...</div>;
   }
 
   return (
@@ -247,7 +247,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
 
       {/* Fond noir complet pour masquer le contenu */}
      <div 
-        className="fixed inset-0 bg-black z-10 pointer-events-none"
+        className="fixed inset-0 bg-black/90 z-10 pointer-events-none"
         style={{
           mask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
           WebkitMask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
