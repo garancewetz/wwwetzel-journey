@@ -23,6 +23,7 @@ interface FoundItem {
   image: string;
   type: string;
   company?: string;
+  text?: string;
 }
 
 interface LeftPanelProps {
@@ -43,7 +44,6 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
 
   useEffect(() => {
     const company = panelActive?.company;
-		console.log("TCL: LeftPanel -> company", company)
     if (company) {
       const projects = (xpsData as Record<string, Project[]>)[company.toLowerCase()];
       if (projects) {
@@ -60,7 +60,7 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
           onClick={() => setIsOpen(false)}
         />
       )}
-      <Panel className={`z-20 fixed inset-0 w-2/3 flex  justify-between duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-[calc(100%-60px)]'}  bg-gray-900`}>
+      <Panel className={`${foundXps.length === 0 ? '-translate-x-full' : (isOpen ? 'translate-x-0' : '-translate-x-[calc(100%-60px)]')} fixed inset-0 w-2/3 flex z-10 justify-between duration-300 bg-gray-900`}>
         <div className="flex-1 p-5 overflow-y-auto">
           <div className="text-white text-lg font-bold mb-4">{panelActiveContent?.name}</div>
           {panelActiveContent && (

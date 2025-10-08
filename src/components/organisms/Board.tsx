@@ -28,7 +28,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
   useEffect(() => {
     const timer = setTimeout(() => {
       setCircleRadius(baseRadius + (foundXpsCount * radiusIncrement));
-    }, 300);
+    }, 0);
 
     return () => clearTimeout(timer);
   }, [foundXpsCount]);
@@ -247,11 +247,10 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
 
       {/* Fond noir complet pour masquer le contenu */}
      <div 
-        className="fixed inset-0 bg-black/90 z-10 pointer-events-none"
+        className="fixed inset-0 bg-black/100 z-10 pointer-events-none"
         style={{
           mask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
           WebkitMask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
-          transition: 'mask 0.8s ease-out, -webkit-mask 0.8s ease-out'
         }}
       />
        

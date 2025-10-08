@@ -31,12 +31,11 @@ export default function GridCell({ value, rowIndex, colIndex, item, heightCell, 
             initial={{ scale: 1 }}
             animate={isTreasureType ? {
               scale: [1, 1.7, 1],
-           
             } : isDanger ? {
-              y: [0, 8, 0]
+              y: [0, 10, 0]
             } : {}}
             exit={{
-              scale: [1, 1.8, 0],
+              scale: [1, 3, 0],
               opacity: [1, 1, 0],
               transition: {
                 duration: 0.5,

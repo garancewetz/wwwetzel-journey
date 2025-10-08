@@ -1,3 +1,10 @@
+const tree = {
+  "type": "obstacle",
+  "name": "Arbre",
+  "image": "/obstacles/tree.svg",
+  "found": false
+}
+
 const board = [
   [
     {
@@ -49,42 +56,22 @@ const board = [
     {
       "id": 12,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 13,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 14,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 15,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 16,
@@ -114,7 +101,8 @@ const board = [
         "type": "interest",
         "name": "Karaoké",
         "image": "/interests/karaoke.svg",
-        "found": false
+        "found": false,
+        "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer..."
       }
     },
     {
@@ -130,12 +118,7 @@ const board = [
     {
       "id": 23,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 24,
@@ -161,7 +144,8 @@ const board = [
         "type": "xp",
         "name": "Okeiro - Développeuse front - 2025",
         "image": "/xps/star.svg",
-        "found": false
+        "found": false,
+        "text": "Je gagne en expérience !"
       }
     },
     {
@@ -198,12 +182,7 @@ const board = [
     {
       "id": 34,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 35,
@@ -213,7 +192,8 @@ const board = [
         "type": "interest",
         "name": "Fromage",
         "image": "/interests/cheese.svg",
-        "found": false
+        "found": false,
+        "text": "Oh, du fromage fondu ! J'adore ça !"
       }
     },
     {
@@ -224,12 +204,7 @@ const board = [
     {
       "id": 37,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 38,
@@ -264,31 +239,22 @@ const board = [
         "type": "interest",
         "name": "Lecture",
         "image": "/interests/reading.svg",
-        "found": false
+        "found": false,
+        "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !"
       }
       
     },
     {
       "id": 44,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     }
   ],
   [
     {
       "id": 45,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 46,
@@ -331,7 +297,8 @@ const board = [
         "name": "Colorz - Développeuse front - 2022",
         "image": "/xps/star.svg",
         "found": false,
-        "company": "Colorz"
+        "company": "Colorz",
+        "text": "Je gagne en expérience !"
 
       }
     },
@@ -343,34 +310,19 @@ const board = [
     {
       "id": 55,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     }
   ],
   [
     {
       "id": 56,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 57,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 58,
@@ -385,7 +337,8 @@ const board = [
         "type": "xp",
         "name": "Développeuse d'application web - OpenClassrooms - 2022",
         "image": "/xps/website.svg",
-        "found": false
+        "found": false,
+        "text": "Un diplôme de développeuse d'application web, c'est intéressant !"
       }
     },
     {
@@ -426,12 +379,7 @@ const board = [
     {
       "id": 67,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 68,
@@ -441,7 +389,8 @@ const board = [
         "type": "interest",
         "name": "Item 3",
         "image": "/interests/wine.svg",
-        "found": false
+        "found": false,
+        "text": "Du vin ? C'est parti !"
       }
     },
     {
@@ -485,18 +434,14 @@ const board = [
         "name": "Uptoo - Développeuse front - 2019",
         "image": "/xps/star.svg",
         "found": false,
-        "company": "Uptoo"
+        "company": "Uptoo",
+        "text": "Je gagne en expérience !"
       }
     },
     {
       "id": 76,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 77,
@@ -509,22 +454,12 @@ const board = [
     {
       "id": 78,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 79,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 80,
@@ -539,32 +474,17 @@ const board = [
     {
       "id": 82,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 83,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 84,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 85,
@@ -597,12 +517,7 @@ const board = [
     {
       "id": 89,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 90,
@@ -622,7 +537,8 @@ const board = [
         "type": "xp",
         "name": "Développeuse web - 3W Academy - 2018",
         "image": "/xps/computer.svg",
-        "found": false
+        "found": false,
+        "text": "Un diplôme de développeuse web, c'est intéressant !"
       }
     },
     {
@@ -651,34 +567,26 @@ const board = [
     {
       "id": 98,
       "path": "mud",
+      "isWay": true,
       "item": {
         "type": "danger",
         "name": "Champignon maléfique",
         "image": "/dangers/mushroom.svg",
-        "found": false
+        "found": false,
+        "text": "Oh non, un champignon maléfique ! JE SUIS EN DANGER ! Ai-je quelque chose dans mon sac pour le neutraliser ?"
       }
     },
     {
       "id": 99,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     }
   ],
   [
     {
       "id": 100,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 101,
@@ -688,32 +596,17 @@ const board = [
     {
       "id": 102,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 103,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 104,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item":tree
     },
     {
       "id": 105,
@@ -743,31 +636,22 @@ const board = [
         "type": "interest",
         "name": "Piano",
         "image": "/interests/piano.svg",
-        "found": false
+        "found": false,
+        "text": "Depuis le temps que je veux apprendre le piano. C'est une chance d'en trouver un ici !"
       }
     },
     {
       "id": 110,
       
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     }
   ],
   [
     {
       "id": 111,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 112,
@@ -782,7 +666,8 @@ const board = [
         "type": "interest",
         "name": "Soleil du sud",
         "image": "/interests/sun.svg",
-        "found": false
+        "found": false,
+        "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances..."
       }
     },
     {
@@ -798,7 +683,8 @@ const board = [
         "type": "xp",
         "name": "Master de lettres - Sorbonne Nouvelle - 2015",
         "image": "/xps/book.svg",
-        "found": false
+        "found": false,
+        "text": "Un master de lettres, c'est intéressant !"
       }
     },
     {
@@ -814,154 +700,79 @@ const board = [
     {
       "id": 118,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 119,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 120,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 121,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     }
   ],
   [
     {
       "id": 122,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 123,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 124,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 125,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 126,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 127,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 128,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 129,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 130,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+       "item": tree
     },
     {
       "id": 131,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     },
     {
       "id": 132,
       "path": "grass",
-      "item": {
-        "type": "obstacle",
-        "name": "Arbre",
-        "image": "/obstacles/tree.svg",
-        "found": false
-      }
+      "item": tree
     }
   ]
 ];

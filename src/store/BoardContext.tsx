@@ -21,6 +21,7 @@ interface FoundItem {
   name: string;
   image: string;
   type: string;
+  text?: string;
   projects?: Project[];
 }
 
@@ -74,13 +75,14 @@ export function BoardProvider({ children }: { children: ReactNode }) {
           }
         }
         
-        // Mettre à jour la grille pour marquer l'item comme trouvé
+        // Mettre à jour la grille : marquer comme trouvé seulement si ce n'est PAS un danger
+        // Les dangers restent visibles sur la carte même après avoir été collectés
         setGrid(prevGrid => 
           prevGrid.map((gridRow, rowIndex) => 
             rowIndex === row 
               ? gridRow.map((cell, colIndex) => 
                   colIndex === col && cell.item
-                    ? { ...cell, item: { ...cell.item, found: true } }
+                    ? { ...cell, item: { ...cell.item, found: item.type === 'danger' ? false : true } }
                     : cell
                 )
               : gridRow

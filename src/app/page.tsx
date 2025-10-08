@@ -1,9 +1,8 @@
 'use client'
 
 import Board from "@/components/organisms/Board";
-import { LeftPanel } from "@/components";
+import { LeftPanel, TypewriterText, InterestsBar } from "@/components";
 import { useBoard } from '../store/BoardContext';
-import Image from 'next/image';
 
 
 export default function Home() {
@@ -14,47 +13,29 @@ export default function Home() {
 
   return (
     <div className="max-h-screen h-screen overflow-hidden">
-      <header className="relative z-10 bg-black pb-2">
+      <header className="relative z-10 bg-black py-2">
         <div className="text-center">
         www.etzel Journey 
         </div>
         <div className="text-center">
-          Use arrows and press space to interact
+          Utilisez les flèches et la barre d'espace pour interagir
         </div>
+        {foundItems[foundItems.length - 1]?.text && (
+          <div className="text-white text-center bg-gray-800 border border-gray-600 top-1/7 rounded-md my-2 p-2 fixed left-1/2 -translate-x-1/2 w-150">
+            <TypewriterText text={foundItems[foundItems.length - 1]?.text || ''} speed={0.02} />
+          </div>
+        )}
       </header>
       <main >
         <div className="z-0">
-
-        <Board />
+          <Board />
         </div>
 
         <LeftPanel foundXps={foundXps} />
 
-
-        <div className="h-15  border-t border-x rounded-t border-gray-600 flex items-center  fixed right-1/2 translate-x-1/2 w-1/2 bottom-0 bg-gray-900 z-10">
-            <div className="my-auto">
-              <Image src="/bagpack.svg" alt="bagpack" width={60} height={60} />
-            </div>
-          <ul className="flex items-center h-full space-x-4 ml-5">
-            {foundInterests.map((item, index) => (
-              <li key={index} className="relative group aspect-square flex items-center justify-center">
-                <Image 
-                  src={item.image} 
-                  alt={item.name} 
-                  width={40} 
-                  height={40}
-                  className="object-contain"
-                />
-                <span className="text-white text-sm absolute -top-full pl-2 w-max opacity-0 group-hover:opacity-100">{item.name}</span>
-              </li>
-
-            ))}
-          </ul>
-        </div>
+        <InterestsBar foundInterests={foundInterests} />
       </main>
-      {/* <footer className="">
-        footer 
-      </footer> */}
+
     </div>
   );
 }
