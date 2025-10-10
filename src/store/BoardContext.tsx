@@ -1,62 +1,37 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import boardData from '../datas/board';
-import xpsData from '../datas/xps.json';
-
-interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  company?: string;
-  urlPage?: string;
-  created_at: string;
-  marketing?: {
-    brand: string;
-    imageUrl: string;
-  };
-}
-
-interface FoundItem {
-  name: string;
-  image: string;
-  type: string;
-  text?: string;
-  projects?: Project[];
-}
-
-interface GridItem {
-  id: number;
-  isWay?: boolean;
-  item?: {
-    name: string;
-    image: string;
-    found: boolean;
-    type: string;
-  };
-}
+import { board, experiences, interests } from '@/datas/board';
+import xpsData from '@/datas/xps.json';
+import Project from '@/types/project';
+import BoardCell, { Item } from '@/types/boardCell';
 
 interface BoardContextType {
-  grid: GridItem[][];
-  foundItems: FoundItem[];
-  
-  addFoundItem: (item: FoundItem, row: number, col: number) => void;
+  grid: BoardCell[][];
+  experiences: Item[];
+  interests: Item[];
+  foundItems: Item[];
+  currentCell: BoardCell | null;
+
+  addFoundItem: (item: Item, row: number, col: number) => void;
   clearFoundItems: () => void;
   resetGame: () => void;
+  setCurrentCell: (cell: BoardCell | null) => void;
 }
 
 const BoardContext = createContext<BoardContextType | undefined>(undefined);
 
 export function BoardProvider({ children }: { children: ReactNode }) {
-  const [grid, setGrid] = useState<GridItem[][]>([]);
-  const [foundItems, setFoundItems] = useState<FoundItem[]>([]);
+  const [grid, setGrid] = useState<BoardCell[][]>([]);
+  const [foundItems, setFoundItems] = useState<Item[]>([]);
+  const [currentCell, setCurrentCell] = useState<BoardCell | null>(null);
 
   // Initialiser la grille avec les données du board.json
   useEffect(() => {
-    setGrid(boardData as GridItem[][]);
+    setGrid(board as BoardCell[][]);
   }, []);
 
-  const addFoundItem = (item: FoundItem, row: number, col: number) => {
+  const addFoundItem = (item: Item, row: number, col: number) => {
     setFoundItems(prev => {
       // Vérifier si l'item n'est pas déjà dans la liste
       const exists = prev.some(existingItem => existingItem.name === item.name);
@@ -74,17 +49,24 @@ export function BoardProvider({ children }: { children: ReactNode }) {
             }
           }
         }
-        
+
         // Mettre à jour la grille : marquer comme trouvé seulement si ce n'est PAS un danger
         // Les dangers restent visibles sur la carte même après avoir été collectés
-        setGrid(prevGrid => 
-          prevGrid.map((gridRow, rowIndex) => 
-            rowIndex === row 
-              ? gridRow.map((cell, colIndex) => 
-                  colIndex === col && cell.item
-                    ? { ...cell, item: { ...cell.item, found: item.type === 'danger' ? false : true } }
-                    : cell
-                )
+        setGrid(prevGrid =>
+          prevGrid.map((gridRow, rowIndex) =>
+            rowIndex === row
+              ? gridRow.map((cell, colIndex) =>
+                colIndex === col && cell.items
+                  ? {
+                    ...cell,
+                    items: cell.items.map(cellItem =>
+                      cellItem.name === item.name
+                        ? { ...cellItem, found: item.type === 'danger' ? false : true }
+                        : cellItem
+                    )
+                  }
+                  : cell
+              )
               : gridRow
           )
         );
@@ -99,12 +81,16 @@ export function BoardProvider({ children }: { children: ReactNode }) {
   };
 
   const resetGame = () => {
-    setGrid(boardData as GridItem[][]);
+    setGrid(board as BoardCell[][]);
     setFoundItems([]);
+    setCurrentCell(null);
   };
 
   return (
-    <BoardContext.Provider value={{ grid, foundItems, addFoundItem, clearFoundItems, resetGame }}>
+    <BoardContext.Provider value={{
+      grid, experiences, interests, foundItems, currentCell,
+      addFoundItem, clearFoundItems, resetGame, setCurrentCell
+    }}>
       {children}
     </BoardContext.Provider>
   );
