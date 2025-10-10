@@ -5,16 +5,13 @@ interface GridCellProps {
   value: string;
   rowIndex: number;
   colIndex: number;
-  item?: { type: string, name: string, image: string, found: boolean };
+  items?: { type: string, name: string, image: string, found: boolean }[];
   isActive?: boolean;
   heightCell: number;
-  cell: { id: number, isWay?: boolean, item?: { type: string, name: string, image: string, found: boolean }, path?: string };
+  cell: { id: number, isWay?: boolean, items?: { type: string, name: string, image: string, found: boolean }[], path?: string };
 }
 
-export default function GridCell({ value, rowIndex, colIndex, item, heightCell, cell }: GridCellProps) {
-  const isTreasureType = item?.type === 'xp' || item?.type === 'interest';
-  const isDanger = item?.type === 'danger';
-  
+export default function GridCell({ value, rowIndex, colIndex, items, heightCell, cell }: GridCellProps) {
   return (
     <li className="relative  flex justify-center items-center aspect-square"
     style={{ height: `${heightCell}px` }} >
@@ -24,43 +21,49 @@ export default function GridCell({ value, rowIndex, colIndex, item, heightCell, 
         </svg>
       )}
       <AnimatePresence>
-        {item && item.image && !item.found && (
-          <motion.div
-            key={`item-${rowIndex}-${colIndex}`}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            initial={{ scale: 1 }}
-            animate={isTreasureType ? {
-              scale: [1, 1.7, 1],
-            } : isDanger ? {
-              y: [0, 10, 0]
-            } : {}}
-            exit={{
-              scale: [1, 3, 0],
-              opacity: [1, 1, 0],
-              transition: {
-                duration: 0.5,
-                ease: "easeOut"
-              }
-            }}
-            transition={isTreasureType ? {
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            } : isDanger ? {
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            } : {}}
-          >
-            <Image 
-              src={item.image} 
-              alt={item.name} 
-              width={item.type === 'obstacle' || item.type === 'danger' ? 100 : 30} 
-              height={item.type === 'obstacle' || item.type === 'danger' ? 100 : 30} 
-              className={`${isTreasureType ? 'filter drop-shadow-lg' : ''}`}
-            />
-          </motion.div>
-        )}
+        {items && items.map((item, index) => {
+          const isTreasureType = item.type === 'xp' || item.type === 'interest';
+          const isDanger = item.type === 'danger';
+          
+          return item.image && !item.found && (
+            <motion.div
+              key={`item-${rowIndex}-${colIndex}-${index}`}
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${item.type === 'obstacle' || item.type === 'surprise' ? 'min-w-7/10' : ''}`}
+              initial={{ scale: 1 }}
+              animate={isTreasureType ? {
+                scale: [1, 1.7, 1],
+              } : isDanger ? {
+                y: [0, 10, 0]
+              } : {}}
+              exit={{
+                zIndex: 10,
+                scale: [1, 3, 0],
+                opacity: [1, 1, 0],
+                transition: {
+                  duration: 0.5,
+                  ease: "easeOut"
+                }
+              }}
+              transition={isTreasureType ? {
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              } : isDanger ? {
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              } : {}}
+            >
+              <Image 
+                src={item.image} 
+                alt={item.name} 
+                width={item.type === 'obstacle' || item.type === 'danger' || item.type === 'surprise' ? 100 : 30} 
+                height={item.type === 'obstacle' || item.type === 'danger' || item.type === 'surprise' ? 100 : 30} 
+                className={`${isTreasureType ? 'filter drop-shadow-lg' : ''} `}
+              />
+            </motion.div>
+          );
+        })}
       </AnimatePresence>
       <input 
         type="text" 

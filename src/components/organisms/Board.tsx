@@ -6,7 +6,7 @@ import GridRow from '../molecules/GridRow';
 import { useBoard } from '../../store/BoardContext';
 
 export default function Board() {
-  const { grid, addFoundItem, foundItems } = useBoard();
+  const { grid, addFoundItem, foundItems, setCurrentCell } = useBoard();
 // je veux flatter mon board.json
 const flattenedGrid = grid.flat();
 const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
@@ -24,7 +24,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
   const radiusIncrement = 15;
   const foundXpsCount = foundItems.filter(item => item.type === 'xp').length;
 
-  // Mettre à jour le rayon avec un délai de 200ms
+  // Mettre à jour le rayon
   useEffect(() => {
     const timer = setTimeout(() => {
       setCircleRadius(baseRadius + (foundXpsCount * radiusIncrement));
@@ -87,6 +87,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       });
     }
   }, []);
+
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     const { key } = event;
@@ -170,12 +171,20 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       case ' ':
         event.preventDefault();
         setCurrentPosition(prev => {
-          // Vérifier s'il y a un objet dans la case actuelle
+          // Vérifier s'il y a des objets dans la case actuelle
           const currentCell = grid[prev.row][prev.col];
-          if (currentCell.item) {
-            // Ajouter l'objet au store et marquer comme trouvé
-            addFoundItem(currentCell.item, prev.row, prev.col);
+          // Remonter la case actuelle dans l contexte pour affichage du texte
+          setCurrentCell(currentCell);
+          
+          if (currentCell.items && currentCell.items.length > 0) {
+            // Ajouter uniquement les objets qui ne sont ni obstacle ni danger
+            currentCell.items.forEach(item => {
+              if (item.type !== 'obstacle' && item.type !== 'danger') {
+                addFoundItem(item, prev.row, prev.col);
+              }
+            });
           }
+          
           
           // Sélectionner l'input de la case actuelle
           if (gridRef.current) {
@@ -189,7 +198,13 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         });
         break;
     }
-  }, [grid, addFoundItem, deselectAllInputs]);
+  }, [grid, addFoundItem, deselectAllInputs, setCurrentCell]);
+
+  useEffect(() => {
+    if (grid && grid.length > 0) {
+      setCurrentCell(grid[currentPosition.row][currentPosition.col]);
+    }
+  }, [currentPosition]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);

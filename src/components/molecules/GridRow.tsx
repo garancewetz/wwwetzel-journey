@@ -1,7 +1,7 @@
 import GridCell from '../atoms/GridCell';
 
 interface GridRowProps {
-  row: { id: number, isWay?: boolean, item?: { name: string, image: string, found: boolean } }[];
+  row: { id: number, isWay?: boolean, items?: { type: string, name: string, image: string, found: boolean }[], path?: string }[];
   rowIndex: number;
   heightCell: number;
 }
@@ -15,7 +15,7 @@ export default function GridRow({ row, rowIndex, heightCell }: GridRowProps) {
           heightCell={heightCell}
           key={cell.id}
           value={`${cell.id}`}
-          item={cell.item}
+          items={cell.items}
           cell={cell}
           rowIndex={rowIndex}
           colIndex={colIndex}
