@@ -10,7 +10,7 @@ interface InterestsBarProps {
 }
 
 export default function InterestsBar({ foundInterests }: InterestsBarProps) {
-  const { grid, interests, currentCell } = useBoard();
+  const { grid, interests, currentCell, setAction } = useBoard();
   const flattenedGrid = grid.flat();
   const [animatingItems, setAnimatingItems] = useState<Set<number>>(new Set());
 
@@ -25,10 +25,11 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
       if (!foundItem) return
       // Déclencher l'animation sur l'item avec ce numéro
       setAnimatingItems(prev => new Set(prev).add(keyNumber - 1));
-      if (currentCell?.items && !currentCell?.items[0].found ) {
-        alert(`Veux attaquer le ${currentCell?.items[0].name} avec ${foundItem.name} ?`)
+      if (currentCell?.items && !currentCell?.items[0].found) {
+        console.log("là j'envoie");
+        setAction(`Olala, un combat ? Je veux vraiment attaquer ${currentCell?.items[0].name} avec ${foundItem.name} ?`);
       } else {
-        alert(`${foundItem.name}. Qu'est-ce que je peux bien en faire ?`)
+        setAction(`${foundItem.name}. Qu'est-ce que je peux bien en faire ?`)
       }
       // Arrêter l'animation après 600ms
       setTimeout(() => {

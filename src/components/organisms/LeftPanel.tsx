@@ -28,7 +28,7 @@ interface LeftPanelProps {
 }
 
 export default function LeftPanel({ foundXps }: LeftPanelProps) {
-  const { grid, foundItems , experiences} = useBoard();
+  const { grid, foundItems, experiences } = useBoard();
   const flattenedGrid = grid.flat();
   const foundXpsCount = flattenedGrid.reduce((count, cell) => {
     const xpsInCell = cell.items?.filter(item => item.type === "xp").length || 0;
@@ -42,10 +42,14 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
   const [clickedXps, setClickedXps] = useState<Set<string>>(new Set());
 
   // Mapping des touches AZERTY aux indices des expériences visibles
-  const commands = ['a','z','e','r','t','y','u','i','o','p'];
+  const commands = ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     const key = event.key.toLowerCase();
+    if (key === 'escape') {
+      setIsOpen(false);
+      return;
+    }
     const index = commands.indexOf(key);
     if (index === -1) return;
 
@@ -87,7 +91,7 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
   return (
     <>
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-10"
           onClick={() => setIsOpen(false)}
         />
@@ -120,17 +124,17 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
         </div>
         <div className=" w-15 relative  bg-gray-900 z-10 border-r border-gray-600">
           {foundXps.length > 0 && (
-          <div className="absolute top-1/2 h-30  -translate-y-1/2 w-2.5 rounded-r -right-2.5  bg-gray-600 cursor-pointer" onClick={() => setIsOpen(prev => !prev)}></div>
+            <div className="absolute top-1/2 h-30  -translate-y-1/2 w-2.5 rounded-r -right-2.5  bg-gray-600 cursor-pointer" onClick={() => setIsOpen(prev => !prev)}></div>
           )}
           <div className="text-white aspect-square  w-full flex items-center justify-center">{foundXps?.length}/{foundXpsCount}</div>
           <ul className="flex flex-col items-center space-y-2 py-5 px-1">
             {experiences.map((xp, index) => {
               const foundItem = foundXps.find((fi) => fi.name === xp.name);
               const isClicked = foundItem ? clickedXps.has(foundItem.name) : false;
-              const commands = ['a','z','e','r','t','y','u','i','o','p'];
+              const commands = ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
               return (
-                <li 
-                  key={`${index}-${xp.name}`} 
+                <li
+                  key={`${index}-${xp.name}`}
                   className={`relative group aspect-square ${isClicked ? 'bg-gray-500/20' : ''} w-full flex items-center justify-center ${foundItem ? 'cursor-pointer' : ''}`}
                   onClick={() => {
                     if (!foundItem) return;
@@ -142,10 +146,10 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
                   {foundItem ? (
                     <>
                       <span className=" z-1 font-bold text-xs -top-1 right-0 absolute bg-black rounded p-0.25 aspect-square w-4 flex items-center justify-center uppercase">{commands[index]}</span>
-                      <Image 
-                        src={foundItem.image} 
-                        alt={foundItem.name} 
-                        width={30} 
+                      <Image
+                        src={foundItem.image}
+                        alt={foundItem.name}
+                        width={30}
                         height={30}
                         className={`object-contain ${!isClicked ? 'pulse-glow-animation' : ''}`}
                       />

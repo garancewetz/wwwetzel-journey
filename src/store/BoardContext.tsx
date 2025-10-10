@@ -12,11 +12,12 @@ interface BoardContextType {
   interests: Item[];
   foundItems: Item[];
   currentCell: BoardCell | null;
-
+  action: string | null;
   addFoundItem: (item: Item, row: number, col: number) => void;
   clearFoundItems: () => void;
   resetGame: () => void;
   setCurrentCell: (cell: BoardCell | null) => void;
+  setAction: (action: string | null) => void;
 }
 
 const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -25,6 +26,7 @@ export function BoardProvider({ children }: { children: ReactNode }) {
   const [grid, setGrid] = useState<BoardCell[][]>([]);
   const [foundItems, setFoundItems] = useState<Item[]>([]);
   const [currentCell, setCurrentCell] = useState<BoardCell | null>(null);
+  const [action, setAction] = useState<string | null>(null);
 
   // Initialiser la grille avec les données du board.json
   useEffect(() => {
@@ -88,8 +90,8 @@ export function BoardProvider({ children }: { children: ReactNode }) {
 
   return (
     <BoardContext.Provider value={{
-      grid, experiences, interests, foundItems, currentCell,
-      addFoundItem, clearFoundItems, resetGame, setCurrentCell
+      grid, experiences, interests, foundItems, currentCell, action,
+      addFoundItem, clearFoundItems, resetGame, setCurrentCell, setAction
     }}>
       {children}
     </BoardContext.Provider>
