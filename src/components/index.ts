@@ -1,4 +1,5 @@
 // Atoms
+export { default as Button } from './atoms/Button';
 export { default as Character } from './atoms/Character';
 export { default as GridCell } from './atoms/GridCell';
 export { default as PathsSprite } from './atoms/PathsSprite';

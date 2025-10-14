@@ -3,14 +3,23 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useBoard } from '../../store/BoardContext';
 import { BoardItem } from '@/types/boardCell';
+import crossed from '@/datas/crossed';
 
 
 interface InterestsBarProps {
   foundInterests: BoardItem[];
 }
 
+interface ActionObj {
+  text: string;
+  enemy: BoardItem | null;
+  weapon: BoardItem | null;
+  action: string | null;
+  image: string | null;
+}
+
 export default function InterestsBar({ foundInterests }: InterestsBarProps) {
-  const { grid, interests, currentCell, setAction } = useBoard();
+  const { grid, interests, currentCell, currentPosition, setAction, updateItemImage } = useBoard();
   const flattenedGrid = grid.flat();
   const [animatingItems, setAnimatingItems] = useState<Set<number>>(new Set());
 
@@ -25,11 +34,34 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
       if (!foundItem) return
       // Déclencher l'animation sur l'item avec ce numéro
       setAnimatingItems(prev => new Set(prev).add(keyNumber - 1));
-      if (currentCell?.items && !currentCell?.items[0].found) {
-        console.log("là j'envoie");
-        setAction(`Olala, un combat ? Je veux vraiment attaquer ${currentCell?.items[0].name} avec ${foundItem.name} ?`);
+      const isDanger = currentCell?.items && currentCell?.items[0].type === "danger";
+      if (currentCell?.items && !currentCell?.items[0].found && isDanger) {
+        const dangerName = currentCell.items[0].id;
+        const crossedData = crossed[dangerName as keyof typeof crossed];
+        const interaction = crossedData?.find((item) => item.id === foundItem.id);
+
+        // Si l'interaction a une image, mettre à jour l'image de la cellule
+        if (interaction?.image) {
+          updateItemImage(currentCell.items[0].name, interaction.image, currentPosition.row, currentPosition.col);
+        }
+
+        const actionObj: ActionObj = {
+          text: interaction?.text || `Olala, un combat ? Je veux vraiment attaquer ${currentCell?.items[0].name} avec ${foundItem.name} ?`,
+          enemy: interaction?.image ? { ...currentCell.items[0], image: interaction.image } : currentCell.items[0],
+          weapon: foundItem,
+          action: "attack",
+          image: interaction?.image || null
+        }
+        setAction(actionObj as ActionObj);
       } else {
-        setAction(`${foundItem.name}. Qu'est-ce que je peux bien en faire ?`)
+        const actionObj: ActionObj = {
+          text: `${foundItem.name}. Qu'est-ce que je peux bien en faire ?`,
+          enemy: null,
+          weapon: foundItem,
+          action: null,
+          image: null
+        }
+        setAction(actionObj as ActionObj);
       }
       // Arrêter l'animation après 600ms
       setTimeout(() => {
@@ -45,7 +77,7 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [foundInterests, interests]);
+  }, [foundInterests, interests, currentCell, currentPosition, setAction, updateItemImage]);
 
   return (
     <div className={`${foundInterests.length > 0 ? 'translate-y-0' : 'translate-y-full'} transition-transform duration-300 border-t border-x rounded-t border-gray-600 flex items-center fixed right-1/2 translate-x-1/2 w-fit bottom-0 bg-gray-900 z-10 py-2 px-4`}>

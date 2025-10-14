@@ -1,14 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 
 interface TypewriterTextProps {
   text: string;
   speed?: number;
+  children?: ReactNode;
 }
 
-export default function TypewriterText({ text, speed = 0.05 }: TypewriterTextProps) {
+export default function TypewriterText({ text, speed = 0.05, children }: TypewriterTextProps) {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,21 +30,32 @@ export default function TypewriterText({ text, speed = 0.05 }: TypewriterTextPro
   }, [currentIndex, text, speed]);
 
   return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-    >
-      {displayedText}
-      {currentIndex < text.length && (
-        <motion.span
-          animate={{ opacity: [1, 0] }}
-          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+    <>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {displayedText}
+        {currentIndex < text.length && (
+          <motion.span
+            animate={{ opacity: [1, 0] }}
+            transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+          >
+            |
+          </motion.span>
+        )}
+      </motion.span>
+      {currentIndex >= text.length && children && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
         >
-          |
-        </motion.span>
+          {children}
+        </motion.div>
       )}
-    </motion.span>
+    </>
   );
 }
 

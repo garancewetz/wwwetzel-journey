@@ -6,12 +6,10 @@ import GridRow from '../molecules/GridRow';
 import { useBoard } from '../../store/BoardContext';
 
 export default function Board() {
-  const { grid, addFoundItem, foundItems, setCurrentCell } = useBoard();
-// je veux flatter mon board.json
-const flattenedGrid = grid.flat();
-const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
-
-  const [currentPosition, setCurrentPosition] = useState({ row: 0, col: 0 });
+  const { grid, addFoundItem, foundItems, setCurrentCell, action, currentPosition, setCurrentPosition } = useBoard();
+  // je veux flatter mon board.json
+  const flattenedGrid = grid.flat();
+  const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
   const [gridOffset, setGridOffset] = useState({ x: 0, y: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -38,17 +36,17 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       const targetInput = gridRef.current.querySelector(`[data-row="${row}"][data-col="${col}"]`) as HTMLElement;
       if (targetInput) {
         const inputRect = targetInput.getBoundingClientRect();
-        
+
         // Calculer l'offset pour centrer la case cible sous le personnage fixe
         const windowCenterX = window.innerWidth / 2;
         const windowCenterY = window.innerHeight / 2;
         const inputCenterX = inputRect.left + (inputRect.width / 2);
         const inputCenterY = inputRect.top + (inputRect.height / 2);
-        
+
         // Calculer l'offset nécessaire pour centrer la case cible
         const offsetX = windowCenterX - inputCenterX;
         const offsetY = windowCenterY - inputCenterY;
-        
+
         setGridOffset({ x: offsetX, y: offsetY });
       }
     }
@@ -60,17 +58,17 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       if (firstCell) {
         const cellHeight = heightCell; // 120px (h-30)
         const cellWidth = firstCell.offsetWidth;
-        
+
         setGridOffset(prev => {
           switch (direction) {
             case 'up':
-              return { x: prev.x, y: prev.y + cellHeight/2 };
+              return { x: prev.x, y: prev.y + cellHeight / 2 };
             case 'down':
-              return { x: prev.x, y: prev.y - cellHeight/2 };
+              return { x: prev.x, y: prev.y - cellHeight / 2 };
             case 'left':
-              return { x: prev.x + cellWidth/2, y: prev.y };
+              return { x: prev.x + cellWidth / 2, y: prev.y };
             case 'right':
-              return { x: prev.x - cellWidth/2, y: prev.y };
+              return { x: prev.x - cellWidth / 2, y: prev.y };
             default:
               return prev;
           }
@@ -91,10 +89,10 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     const { key } = event;
-    
+
     // Vérifier que la grille est chargée
     if (!grid || grid.length === 0) return;
-    
+
     const maxRows = grid.length;
     const maxCols = grid[0].length;
 
@@ -104,7 +102,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         deselectAllInputs();
         setCurrentPosition(prev => {
           if (prev?.row > 0) {
-            const futureCell = grid[prev.row-1][prev.col];
+            const futureCell = grid[prev.row - 1][prev.col];
             const futureDataCell = mappedGrid.get(futureCell.id);
             if (!futureDataCell?.isWay) return prev;
 
@@ -122,7 +120,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         setCurrentPosition(prev => {
           if (prev.row < maxRows - 1) {
 
-            const futureCell = grid[prev.row+1][prev.col];
+            const futureCell = grid[prev.row + 1][prev.col];
             const futureDataCell = mappedGrid.get(futureCell.id);
             if (!futureDataCell?.isWay) return prev;
 
@@ -140,7 +138,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         setCurrentPosition(prev => {
           if (prev.col > 0) {
 
-            const futureCell = grid[prev.row][prev.col-1];
+            const futureCell = grid[prev.row][prev.col - 1];
             const futureDataCell = mappedGrid.get(futureCell.id);
             if (!futureDataCell?.isWay) return prev;
 
@@ -157,7 +155,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         setCurrentPosition(prev => {
           if (prev.col < maxCols - 1) {
 
-            const futureCell = grid[prev.row][prev.col+1];
+            const futureCell = grid[prev.row][prev.col + 1];
             const futureDataCell = mappedGrid.get(futureCell.id);
             if (!futureDataCell?.isWay) return prev;
 
@@ -170,12 +168,17 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         break;
       case ' ':
         event.preventDefault();
+        // si l'action est attack, on ne fait rien
+        console.log("action", action?.action);
+        if (action?.action === 'attack') {
+          console.log("action attack");
+        };
         setCurrentPosition(prev => {
           // Vérifier s'il y a des objets dans la case actuelle
           const currentCell = grid[prev.row][prev.col];
           // Remonter la case actuelle dans l contexte pour affichage du texte
           setCurrentCell(currentCell);
-          
+
           if (currentCell.items && currentCell.items.length > 0) {
             // Ajouter uniquement les objets qui ne sont ni obstacle ni danger
             currentCell.items.forEach(item => {
@@ -184,8 +187,8 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
               }
             });
           }
-          
-          
+
+
           // Sélectionner l'input de la case actuelle
           if (gridRef.current) {
             const currentInput = gridRef.current.querySelector(`[data-row="${prev.row}"][data-col="${prev.col}"]`) as HTMLInputElement;
@@ -228,7 +231,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
         // Marquer comme initialisé
       }, 200);
       setIsInitialized(true);
-      
+
       return () => clearTimeout(timer);
     }
   }, [grid]);
@@ -239,7 +242,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       const timer = setTimeout(() => {
         setIsReady(true);
       }, 1000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [isInitialized]);
@@ -253,7 +256,7 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
     <div className={`relative z-0 `}>
 
       {/* Écran de chargement noir complet */}
-      <div 
+      <div
         className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-500"
         style={{
           opacity: isReady ? 0 : 1
@@ -261,19 +264,19 @@ const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
       />
 
       {/* Fond noir complet pour masquer le contenu */}
-     <div 
+      <div
         className="fixed inset-0 bg-black/100 z-10 pointer-events-none"
         style={{
           mask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
           WebkitMask: `radial-gradient(circle at 50% 50%, transparent ${circleRadius}px, black ${circleRadius}px)`,
         }}
       />
-       
+
       {/* Personnage fixe au centre */}
       <Character x={0} y={0} />
-      
+
       {/* Grille avec les inputs - se déplace selon gridOffset */}
-      <div 
+      <div
         ref={gridRef}
         className="transition-transform duration-300 ease-in-out"
         style={{

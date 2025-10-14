@@ -1,10 +1,19 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { board, experiences, interests } from '@/datas/board';
+import { board } from '@/datas/board';
+import { experiences, interests } from '@/datas/items';
 import xpsData from '@/datas/xps.json';
 import Project from '@/types/project';
-import BoardCell, { Item } from '@/types/boardCell';
+import BoardCell, { BoardItem, Item } from '@/types/boardCell';
+
+interface ActionObj {
+  text: string;
+  enemy: BoardItem | null;
+  weapon: BoardItem | null;
+  action: string | null;
+  image: string | null;
+}
 
 interface BoardContextType {
   grid: BoardCell[][];
@@ -12,12 +21,15 @@ interface BoardContextType {
   interests: Item[];
   foundItems: Item[];
   currentCell: BoardCell | null;
-  action: string | null;
+  currentPosition: { row: number; col: number };
+  action: ActionObj | null;
   addFoundItem: (item: Item, row: number, col: number) => void;
+  updateItemImage: (itemName: string, newImage: string, row: number, col: number) => void;
   clearFoundItems: () => void;
   resetGame: () => void;
   setCurrentCell: (cell: BoardCell | null) => void;
-  setAction: (action: string | null) => void;
+  setCurrentPosition: (position: { row: number; col: number }) => void;
+  setAction: (action: ActionObj | null) => void;
 }
 
 const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -26,7 +38,8 @@ export function BoardProvider({ children }: { children: ReactNode }) {
   const [grid, setGrid] = useState<BoardCell[][]>([]);
   const [foundItems, setFoundItems] = useState<Item[]>([]);
   const [currentCell, setCurrentCell] = useState<BoardCell | null>(null);
-  const [action, setAction] = useState<string | null>(null);
+  const [currentPosition, setCurrentPosition] = useState<{ row: number; col: number }>({ row: 0, col: 0 });
+  const [action, setAction] = useState<ActionObj | null>(null);
 
   // Initialiser la grille avec les données du board.json
   useEffect(() => {
@@ -86,12 +99,34 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     setGrid(board as BoardCell[][]);
     setFoundItems([]);
     setCurrentCell(null);
+    setCurrentPosition({ row: 0, col: 0 });
+  };
+
+  const updateItemImage = (itemName: string, newImage: string, row: number, col: number) => {
+    setGrid(prevGrid =>
+      prevGrid.map((gridRow, rowIndex) =>
+        rowIndex === row
+          ? gridRow.map((cell, colIndex) =>
+            colIndex === col && cell.items
+              ? {
+                ...cell,
+                items: cell.items.map(cellItem =>
+                  cellItem.name === itemName
+                    ? { ...cellItem, image: newImage }
+                    : cellItem
+                )
+              }
+              : cell
+          )
+          : gridRow
+      )
+    );
   };
 
   return (
     <BoardContext.Provider value={{
-      grid, experiences, interests, foundItems, currentCell, action,
-      addFoundItem, clearFoundItems, resetGame, setCurrentCell, setAction
+      grid, experiences, interests, foundItems, currentCell, currentPosition, action,
+      addFoundItem, updateItemImage, clearFoundItems, resetGame, setCurrentCell, setCurrentPosition, setAction
     }}>
       {children}
     </BoardContext.Provider>

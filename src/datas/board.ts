@@ -1,161 +1,5 @@
+import { mushroom, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard } from "./items";
 
-
-const tree = {
-  "type": "obstacle",
-  "name": "Arbre",
-  "image": "/obstacles/tree.svg",
-  "found": false
-}
-
-const surpriseTree = {
-  "type": "obstacle",
-  "name": "Arbre surprise",
-  "image": "/obstacles/surpriseTree.svg",
-  "found": false
-}
-
-// XP
-
-const sorbonneXp = {
-  "type": "xp",
-  "name": "Master de lettres - Sorbonne Nouvelle - 2015",
-  "image": "/xps/book.svg",
-  "found": false,
-  "text": "Un master de lettres, c'est intéressant !",
-  "content": "Sorbonne"
-}
-
-const threeWXp = {
-  "type": "xp",
-  "name": "Développeuse web - 3W Academy - 2018",
-  "image": "/xps/computer.svg",
-  "found": false,
-  "text": "Un diplôme de développeuse web, c'est intéressant !",
-  "content": "3W"
-}
-
-const openclassroomsXp = {
-  "type": "xp",
-  "name": "Développeuse d'application web - OpenClassrooms - 2022",
-  "image": "/xps/website.svg",
-  "found": false,
-  "text": "Un diplôme de développeuse d'application web, c'est intéressant !",
-  "content": "OpenClassrooms"
-}
-
-const uptooXp = {
-  "type": "xp",
-  "name": "Uptoo - Développeuse front - 2019",
-  "image": "/xps/star.svg",
-  "found": false,
-  "content": "Uptoo",
-  "text": "Je gagne en expérience !"
-}
-
-const colorzXp = {
-  "type": "xp",
-  "name": "Colorz - Développeuse front - 2022",
-  "image": "/xps/star.svg",
-  "found": false,
-  "content": "Colorz",
-  "text": "Je gagne en expérience !"
-}
-
-const okeiroXp = {
-  "type": "xp",
-  "name": "Okeiro - Développeuse front - 2025",
-  "image": "/xps/star.svg",
-  "found": false,
-  "content": "Okeiro",
-  "text": "Je gagne en expérience !"
-}
-
-
-
-// Interests
-
-const sarahBernhardt = {
-  "type": "interest",
-  "name": "Sarah Bernhardt",
-  "image": "/interests/sarahBernhardt.svg",
-  "found": false,
-  "text": "Mais que fait donc Sarah Bernhardt cachée derrière cet arbre ? Elle pêche à la ligne ?"
-}
-
-const karaoke = {
-  "type": "interest",
-  "name": "Karaoké",
-  "image": "/interests/karaoke.svg",
-  "found": false,
-  "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer..."
-}
-
-const cheese = {
-  "type": "interest",
-  "name": "Fromage",
-  "image": "/interests/cheese.svg",
-  "found": false,
-  "text": "Oh, du fromage fondu ! J'adore ça !"
-}
-
-const reading = {
-  "type": "interest",
-  "name": "Lecture",
-  "image": "/interests/reading.svg",
-  "found": false,
-  "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !"
-}
-
-const wine = {
-  "type": "interest",
-  "name": "Un verre de vin",
-  "image": "/interests/wine.svg",
-  "found": false,
-  "text": "Du vin ? C'est parti !"
-}
-
-const sun = {
-  "type": "interest",
-  "name": "Soleil du sud",
-  "image": "/interests/sun.svg",
-  "found": false,
-  "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances..."
-}
-
-const queer = {
-  "type": "interest",
-  "name": "Queer",
-  "image": "/interests/rainbow.svg",
-  "found": false
-}
-
-const piano = {
-  "type": "interest",
-  "name": "Piano",
-  "image": "/interests/piano.svg",
-  "found": false,
-  "text": "Depuis le temps que je veux apprendre le piano. C'est une chance d'en trouver un ici !"
-}
-
-const interests = [
-  sun,
-  piano,
-  wine,
-  sarahBernhardt,
-  queer,
-  reading,
-  cheese,
-  karaoke
-]
-
-const experiences = [
-  sorbonneXp, 
-  threeWXp,
-  openclassroomsXp,
-  uptooXp,
-  colorzXp,
-  okeiroXp
-]
 
 const board = [
   [
@@ -249,15 +93,15 @@ const board = [
       "id": 20,
       "isWay": true,
       "path": "grass",
-      "items": [karaoke] 
+      "items": [karaoke]
     },
     {
       "id": 21,
-      "path":"water"
+      "path": "water"
     },
     {
       "id": 22,
-      "path":"water"
+      "path": "water"
     }
   ],
   [
@@ -348,7 +192,8 @@ const board = [
     {
       "id": 39,
       "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [lifeguard]
     },
     {
       "id": 40,
@@ -370,7 +215,7 @@ const board = [
       "isWay": true,
       "path": "grass",
       "items": [reading]
-      
+
     },
     {
       "id": 44,
@@ -386,12 +231,12 @@ const board = [
     },
     {
       "id": 46,
-          "isWay": true,
+      "isWay": true,
       "path": "grass"
     },
     {
       "id": 47,
-        "isWay": true,
+      "isWay": true,
       "path": "grass"
     },
     {
@@ -414,7 +259,7 @@ const board = [
     {
       "id": 52,
       "isWay": true,
-      "path":"topToRight"
+      "path": "topToRight"
     },
     {
       "id": 53,
@@ -476,7 +321,7 @@ const board = [
       "id": 64,
       "isWay": true,
       "path": "bottomToTop"
-  
+
     },
     {
       "id": 65,
@@ -618,7 +463,7 @@ const board = [
     },
     {
       "id": 90,
-        "isWay": true,
+      "isWay": true,
       "path": "grass"
     },
     {
@@ -659,13 +504,7 @@ const board = [
       "id": 98,
       "path": "mud",
       "isWay": true,
-      "items": [{
-        "type": "danger",
-        "name": "Champignon maléfique",
-        "image": "/dangers/mushroom.svg",
-        "found": false,
-        "text": "Oh non, un champignon maléfique ! JE SUIS EN DANGER ! Ai-je quelque chose dans mon sac pour le neutraliser ?"
-      }]
+      "items": [mushroom]
     },
     {
       "id": 99,
@@ -723,11 +562,11 @@ const board = [
       "id": 109,
       "isWay": true,
       "path": "grass",
-      "items": [interests[1]]
+      "items": [piano]
     },
     {
       "id": 110,
-      
+
       "path": "grass",
       "items": [tree]
     }
@@ -747,7 +586,7 @@ const board = [
       "id": 113,
       "isWay": true,
       "path": "leftToRight",
-      "items": [interests[0]]
+      "items": [sun]
     },
     {
       "id": 114,
@@ -835,7 +674,7 @@ const board = [
     {
       "id": 130,
       "path": "grass",
-       "items": [tree]
+      "items": [tree]
     },
     {
       "id": 131,
@@ -850,4 +689,4 @@ const board = [
   ]
 ];
 
-export { board, experiences, interests };
+export { board };
