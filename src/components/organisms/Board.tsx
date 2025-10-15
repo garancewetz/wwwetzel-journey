@@ -6,21 +6,20 @@ import GridRow from '../molecules/GridRow';
 import { useBoard } from '../../store/BoardContext';
 
 export default function Board() {
-  const { grid, addFoundItem, foundItems, setCurrentCell, action, currentPosition, setCurrentPosition } = useBoard();
-  // je veux flatter mon board.json
-  const flattenedGrid = grid.flat();
-  const mappedGrid = new Map(flattenedGrid.map((item) => [item.id, item]));
+  const { grid, getFoundItems, setCurrentPosition, setCurrentItem } = useBoard();
+
   const [gridOffset, setGridOffset] = useState({ x: 0, y: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [circleRadius, setCircleRadius] = useState(150);
   const gridRef = useRef<HTMLDivElement>(null);
-  const heightCell = 120;
 
+  const heightCell = 120;
+  const cellHalfHeight = heightCell / 2;
   // Calculer le rayon du cercle en fonction des XPs trouvés
   const baseRadius = 150;
   const radiusIncrement = 15;
-  const foundXpsCount = foundItems.filter(item => item.type === 'xp').length;
+  const foundXpsCount = getFoundItems().filter(item => item.type === 'xp').length;
 
   // Mettre à jour le rayon
   useEffect(() => {
@@ -40,8 +39,8 @@ export default function Board() {
         // Calculer l'offset pour centrer la case cible sous le personnage fixe
         const windowCenterX = window.innerWidth / 2;
         const windowCenterY = window.innerHeight / 2;
-        const inputCenterX = inputRect.left + (inputRect.width / 2);
-        const inputCenterY = inputRect.top + (inputRect.height / 2);
+        const inputCenterX = inputRect.left + cellHalfHeight;
+        const inputCenterY = inputRect.top + cellHalfHeight;
 
         // Calculer l'offset nécessaire pour centrer la case cible
         const offsetX = windowCenterX - inputCenterX;
@@ -53,36 +52,25 @@ export default function Board() {
   };
 
   const moveGridByOneCell = (direction: 'up' | 'down' | 'left' | 'right') => {
-    if (gridRef.current) {
-      const firstCell = gridRef.current.querySelector('[data-row="0"][data-col="0"]') as HTMLElement;
-      if (firstCell) {
-        const cellHeight = heightCell; // 120px (h-30)
-        const cellWidth = firstCell.offsetWidth;
-
-        setGridOffset(prev => {
-          switch (direction) {
-            case 'up':
-              return { x: prev.x, y: prev.y + cellHeight / 2 };
-            case 'down':
-              return { x: prev.x, y: prev.y - cellHeight / 2 };
-            case 'left':
-              return { x: prev.x + cellWidth / 2, y: prev.y };
-            case 'right':
-              return { x: prev.x - cellWidth / 2, y: prev.y };
-            default:
-              return prev;
-          }
-        });
+    setGridOffset(prev => {
+      switch (direction) {
+        case 'up':
+          return { x: prev.x, y: prev.y + cellHalfHeight };
+        case 'down':
+          return { x: prev.x, y: prev.y - cellHalfHeight };
+        case 'left':
+          return { x: prev.x + cellHalfHeight, y: prev.y };
+        case 'right':
+          return { x: prev.x - cellHalfHeight, y: prev.y };
+        default:
+          return prev;
       }
-    }
+    });
   };
 
-  const deselectAllInputs = useCallback(() => {
-    if (gridRef.current) {
-      const allInputs = gridRef.current.querySelectorAll('input');
-      allInputs.forEach(input => {
-        (input as HTMLInputElement).blur();
-      });
+  const deselectActiveElement = useCallback(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
     }
   }, []);
 
@@ -99,95 +87,84 @@ export default function Board() {
     switch (key) {
       case 'ArrowUp':
         event.preventDefault();
-        deselectAllInputs();
-        setCurrentPosition(prev => {
-          if (prev?.row > 0) {
-            const futureCell = grid[prev.row - 1][prev.col];
-            const futureDataCell = mappedGrid.get(futureCell.id);
-            if (!futureDataCell?.isWay) return prev;
+        deselectActiveElement();
 
-            const newRow = prev.row - 1;
-            moveGridByOneCell('up');
-            return { ...prev, row: newRow };
-          }
-          return prev;
+        setCurrentPosition(prev => {
+          if (prev.row === 0) return prev;
+          // récupération de la nouvelle position
+          const newPosition = { col: prev.col, row: prev.row - 1 };
+          const newCell = grid[newPosition.row][newPosition.col];
+          if (!newCell.isWay) return prev;
+          moveGridByOneCell('up');
+          return newPosition;
         });
         break;
       case 'ArrowDown':
         event.preventDefault();
-        deselectAllInputs();
+        deselectActiveElement();
 
         setCurrentPosition(prev => {
-          if (prev.row < maxRows - 1) {
+          if (prev.row >= maxRows - 1) return prev;
 
-            const futureCell = grid[prev.row + 1][prev.col];
-            const futureDataCell = mappedGrid.get(futureCell.id);
-            if (!futureDataCell?.isWay) return prev;
+          const newPosition = { col: prev.col, row: prev.row + 1 };
+          const newCell = grid[newPosition.row][newPosition.col];
+          if (!newCell.isWay) return prev;
 
-            const newRow = prev.row + 1;
-            moveGridByOneCell('down');
-            return { ...prev, row: newRow };
-          }
-          return prev;
+          moveGridByOneCell('down');
+          return newPosition;
+
         });
         break;
       case 'ArrowLeft':
         event.preventDefault();
-        deselectAllInputs();
+        deselectActiveElement();
 
         setCurrentPosition(prev => {
-          if (prev.col > 0) {
+          if (prev.col <= 0) return prev;
 
-            const futureCell = grid[prev.row][prev.col - 1];
-            const futureDataCell = mappedGrid.get(futureCell.id);
-            if (!futureDataCell?.isWay) return prev;
+          const newPosition = { col: prev.col - 1, row: prev.row };
+          const newCell = grid[newPosition.row][newPosition.col];
+          if (!newCell.isWay) return prev;
 
-            const newCol = prev.col - 1;
-            moveGridByOneCell('left');
-            return { ...prev, col: newCol };
-          }
-          return prev;
+          moveGridByOneCell('left');
+          return newPosition;
+
         });
         break;
       case 'ArrowRight':
         event.preventDefault();
-        deselectAllInputs();
+        deselectActiveElement();
         setCurrentPosition(prev => {
-          if (prev.col < maxCols - 1) {
+          if (prev.col >= maxCols - 1) return prev;
 
-            const futureCell = grid[prev.row][prev.col + 1];
-            const futureDataCell = mappedGrid.get(futureCell.id);
-            if (!futureDataCell?.isWay) return prev;
+          const newPosition = { col: prev.col + 1, row: prev.row };
+          const newCell = grid[newPosition.row][newPosition.col];
+          if (!newCell.isWay) return prev;
 
-            const newCol = prev.col + 1;
-            moveGridByOneCell('right');
-            return { ...prev, col: newCol };
-          }
-          return prev;
+          moveGridByOneCell('right');
+          return newPosition;
+
         });
         break;
       case ' ':
         event.preventDefault();
-        // si l'action est attack, on ne fait rien
-        console.log("action", action?.action);
-        if (action?.action === 'attack') {
-          console.log("action attack");
-        };
-        setCurrentPosition(prev => {
-          // Vérifier s'il y a des objets dans la case actuelle
-          const currentCell = grid[prev.row][prev.col];
-          // Remonter la case actuelle dans l contexte pour affichage du texte
-          setCurrentCell(currentCell);
 
+        setCurrentPosition(prev => {
+          const currentCell = grid[prev.row][prev.col];
+          // Vérifier s'il y a des objets dans la case actuelle
           if (currentCell.items && currentCell.items.length > 0) {
             // Ajouter uniquement les objets qui ne sont ni obstacle ni danger
             currentCell.items.forEach(item => {
               if (item.type !== 'obstacle' && item.type !== 'danger') {
-                addFoundItem(item, prev.row, prev.col);
+                // mettre à jour le currentObj
+                const currentObj = grid[prev.row][prev.col].items?.find(item => item.type === 'xp' || item.type === 'interest');
+                if (currentObj) {
+                  currentObj.found = true;
+                }
+                setCurrentItem(currentCell, prev.row, prev.col);
               }
             });
           }
-
 
           // Sélectionner l'input de la case actuelle
           if (gridRef.current) {
@@ -201,13 +178,7 @@ export default function Board() {
         });
         break;
     }
-  }, [grid, addFoundItem, deselectAllInputs, setCurrentCell]);
-
-  useEffect(() => {
-    if (grid && grid.length > 0) {
-      setCurrentCell(grid[currentPosition.row][currentPosition.col]);
-    }
-  }, [currentPosition]);
+  }, [grid, deselectActiveElement]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -215,7 +186,6 @@ export default function Board() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleKeyDown]);
-
 
   // Initialiser la position de la grille au montage pour centrer la première case de la dernière ligne sous le character
   useEffect(() => {
@@ -228,8 +198,8 @@ export default function Board() {
         setCurrentPosition({ row: lastRowIndex, col: 1 });
         // Puis positionner la grille
         updateGridPosition(lastRowIndex, 1);
-        // Marquer comme initialisé
       }, 200);
+      // Marquer comme initialisé
       setIsInitialized(true);
 
       return () => clearTimeout(timer);

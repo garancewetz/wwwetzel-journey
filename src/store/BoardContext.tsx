@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { board } from '@/datas/board';
 import { experiences, interests } from '@/datas/items';
 import xpsData from '@/datas/xps.json';
@@ -19,87 +19,52 @@ interface BoardContextType {
   grid: BoardCell[][];
   experiences: Item[];
   interests: Item[];
-  foundItems: Item[];
   currentCell: BoardCell | null;
   currentPosition: { row: number; col: number };
   action: ActionObj | null;
-  addFoundItem: (item: Item, row: number, col: number) => void;
+
   updateItemImage: (itemName: string, newImage: string, row: number, col: number) => void;
-  clearFoundItems: () => void;
-  resetGame: () => void;
   setCurrentCell: (cell: BoardCell | null) => void;
-  setCurrentPosition: (position: { row: number; col: number }) => void;
+  setCurrentPosition: Dispatch<SetStateAction<{ row: number; col: number }>>;
   setAction: (action: ActionObj | null) => void;
+  setCurrentItem: (cell: BoardCell, row: number, col: number) => void;
+  getFoundItems: () => Item[];
 }
 
 const BoardContext = createContext<BoardContextType | undefined>(undefined);
 
 export function BoardProvider({ children }: { children: ReactNode }) {
   const [grid, setGrid] = useState<BoardCell[][]>([]);
-  const [foundItems, setFoundItems] = useState<Item[]>([]);
   const [currentCell, setCurrentCell] = useState<BoardCell | null>(null);
   const [currentPosition, setCurrentPosition] = useState<{ row: number; col: number }>({ row: 0, col: 0 });
   const [action, setAction] = useState<ActionObj | null>(null);
 
+  console.log("--- CURRENT CELL ---", currentCell);
   // Initialiser la grille avec les données du board.json
   useEffect(() => {
     setGrid(board as BoardCell[][]);
   }, []);
 
-  const addFoundItem = (item: Item, row: number, col: number) => {
-    setFoundItems(prev => {
-      // Vérifier si l'item n'est pas déjà dans la liste
-      const exists = prev.some(existingItem => existingItem.name === item.name);
-      if (!exists) {
-        // Enrichir l'item avec les projets si c'est une expérience
-        let enrichedItem = { ...item };
-        if (item.type === 'xp') {
-          // Extraire le nom de la compagnie du nom de l'expérience
-          const companyMatch = item.name.match(/^(\w+)\s*-/);
-          if (companyMatch) {
-            const companyKey = companyMatch[1].toLowerCase();
-            const projects = (xpsData as Record<string, Project[]>)[companyKey];
-            if (projects) {
-              enrichedItem.projects = projects;
-            }
-          }
-        }
+  useEffect(() => {
+    if (grid && grid.length > 0) {
+      setCurrentCell(grid[currentPosition?.row][currentPosition?.col]);
+    }
+  }, [currentPosition]);
 
-        // Mettre à jour la grille : marquer comme trouvé seulement si ce n'est PAS un danger
-        // Les dangers restent visibles sur la carte même après avoir été collectés
-        setGrid(prevGrid =>
-          prevGrid.map((gridRow, rowIndex) =>
-            rowIndex === row
-              ? gridRow.map((cell, colIndex) =>
-                colIndex === col && cell.items
-                  ? {
-                    ...cell,
-                    items: cell.items.map(cellItem =>
-                      cellItem.name === item.name
-                        ? { ...cellItem, found: item.type === 'danger' ? false : true }
-                        : cellItem
-                    )
-                  }
-                  : cell
-              )
-              : gridRow
-          )
-        );
-        return [...prev, enrichedItem];
-      }
-      return prev;
+  const setCurrentItem = (cell: BoardCell, row: number, col: number) => {
+    setGrid(prevGrid => {
+      const newGrid = [...prevGrid];
+      newGrid[row] = [...newGrid[row]];
+      newGrid[row][col] = cell;
+      return newGrid;
     });
   };
 
-  const clearFoundItems = () => {
-    setFoundItems([]);
-  };
-
-  const resetGame = () => {
-    setGrid(board as BoardCell[][]);
-    setFoundItems([]);
-    setCurrentCell(null);
-    setCurrentPosition({ row: 0, col: 0 });
+  const getFoundItems = () => {
+    const flatGrid = grid.flat() as BoardCell[];
+    return flatGrid.flatMap(cell =>
+      cell.items?.filter(item => item.found) || []
+    );
   };
 
   const updateItemImage = (itemName: string, newImage: string, row: number, col: number) => {
@@ -123,11 +88,23 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const contextValue: BoardContextType = {
+    grid,
+    experiences,
+    interests,
+    currentCell,
+    currentPosition,
+    action,
+    updateItemImage,
+    setCurrentCell,
+    setCurrentPosition,
+    setAction,
+    setCurrentItem,
+    getFoundItems
+  };
+
   return (
-    <BoardContext.Provider value={{
-      grid, experiences, interests, foundItems, currentCell, currentPosition, action,
-      addFoundItem, updateItemImage, clearFoundItems, resetGame, setCurrentCell, setCurrentPosition, setAction
-    }}>
+    <BoardContext.Provider value={contextValue}>
       {children}
     </BoardContext.Provider>
   );
