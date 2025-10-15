@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useBoard } from '../../store/BoardContext';
 import { BoardItem } from '@/types/boardCell';
 import crossed from '@/datas/crossed';
-
+import { interests } from '@/datas/items';
 
 interface InterestsBarProps {
   foundInterests: BoardItem[];
@@ -19,7 +19,7 @@ interface ActionObj {
 }
 
 export default function InterestsBar({ foundInterests }: InterestsBarProps) {
-  const { grid, interests, currentCell, currentPosition, setAction, updateItemImage } = useBoard();
+  const { grid, currentCell, currentPosition, setAction, updateItemImage } = useBoard();
   const flattenedGrid = grid.flat();
   const [animatingItems, setAnimatingItems] = useState<Set<number>>(new Set());
 

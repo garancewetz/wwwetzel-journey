@@ -7,7 +7,6 @@ import TextBox from "@/components/organisms/TextBox";
 
 export default function Home() {
   const { getFoundItems } = useBoard();
-  console.log("TCL: Home -> getFoundItems", getFoundItems())
 
   const foundInterests = getFoundItems().filter((item) => item.type === "interest");
   const foundXps = getFoundItems().filter((item) => item.type === "xp");

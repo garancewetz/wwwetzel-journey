@@ -2,9 +2,6 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { board } from '@/datas/board';
-import { experiences, interests } from '@/datas/items';
-import xpsData from '@/datas/xps.json';
-import Project from '@/types/project';
 import BoardCell, { BoardItem, Item } from '@/types/boardCell';
 
 interface ActionObj {
@@ -17,14 +14,11 @@ interface ActionObj {
 
 interface BoardContextType {
   grid: BoardCell[][];
-  experiences: Item[];
-  interests: Item[];
   currentCell: BoardCell | null;
   currentPosition: { row: number; col: number };
   action: ActionObj | null;
 
   updateItemImage: (itemName: string, newImage: string, row: number, col: number) => void;
-  setCurrentCell: (cell: BoardCell | null) => void;
   setCurrentPosition: Dispatch<SetStateAction<{ row: number; col: number }>>;
   setAction: (action: ActionObj | null) => void;
   setCurrentItem: (cell: BoardCell, row: number, col: number) => void;
@@ -90,13 +84,10 @@ export function BoardProvider({ children }: { children: ReactNode }) {
 
   const contextValue: BoardContextType = {
     grid,
-    experiences,
-    interests,
     currentCell,
     currentPosition,
     action,
     updateItemImage,
-    setCurrentCell,
     setCurrentPosition,
     setAction,
     setCurrentItem,

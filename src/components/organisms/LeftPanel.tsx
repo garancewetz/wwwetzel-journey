@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Panel } from '@/components';
 import { useBoard } from '../../store/BoardContext';
 import xpsData from '../../datas/xps.json';
+import { experiences as experiencesObj } from '@/datas/items';
+
 interface Project {
   title: string;
   description: string;
@@ -28,7 +30,8 @@ interface LeftPanelProps {
 }
 
 export default function LeftPanel({ foundXps }: LeftPanelProps) {
-  const { grid, foundItems, experiences } = useBoard();
+  const { grid } = useBoard();
+  const experiences = experiencesObj;
   const flattenedGrid = grid.flat();
   const foundXpsCount = flattenedGrid.reduce((count, cell) => {
     const xpsInCell = cell.items?.filter(item => item.type === "xp").length || 0;
