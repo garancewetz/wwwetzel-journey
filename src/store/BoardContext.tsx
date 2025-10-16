@@ -18,7 +18,6 @@ interface BoardContextType {
   currentPosition: { row: number; col: number };
   action: ActionObj | null;
 
-  updateItemImage: (itemName: string, newImage: string, row: number, col: number) => void;
   setCurrentPosition: Dispatch<SetStateAction<{ row: number; col: number }>>;
   setAction: (action: ActionObj | null) => void;
   setCurrentItem: (cell: BoardCell, row: number, col: number) => void;
@@ -61,33 +60,11 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  const updateItemImage = (itemName: string, newImage: string, row: number, col: number) => {
-    setGrid(prevGrid =>
-      prevGrid.map((gridRow, rowIndex) =>
-        rowIndex === row
-          ? gridRow.map((cell, colIndex) =>
-            colIndex === col && cell.items
-              ? {
-                ...cell,
-                items: cell.items.map(cellItem =>
-                  cellItem.name === itemName
-                    ? { ...cellItem, image: newImage }
-                    : cellItem
-                )
-              }
-              : cell
-          )
-          : gridRow
-      )
-    );
-  };
-
   const contextValue: BoardContextType = {
     grid,
     currentCell,
     currentPosition,
     action,
-    updateItemImage,
     setCurrentPosition,
     setAction,
     setCurrentItem,

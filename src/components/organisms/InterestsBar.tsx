@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useBoard } from '../../store/BoardContext';
-import { BoardItem } from '@/types/boardCell';
+import BoardCell, { BoardItem } from '@/types/boardCell';
 import crossed from '@/datas/crossed';
 import { interests } from '@/datas/items';
 
@@ -19,7 +19,7 @@ interface ActionObj {
 }
 
 export default function InterestsBar({ foundInterests }: InterestsBarProps) {
-  const { grid, currentCell, currentPosition, setAction, updateItemImage } = useBoard();
+  const { grid, currentCell, currentPosition, setAction, setCurrentItem } = useBoard();
   const flattenedGrid = grid.flat();
   const [animatingItems, setAnimatingItems] = useState<Set<number>>(new Set());
 
@@ -42,7 +42,14 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
 
         // Si l'interaction a une image, mettre à jour l'image de la cellule
         if (interaction?.image) {
-          updateItemImage(currentCell.items[0].name, interaction.image, currentPosition.row, currentPosition.col);
+          console.log("--- CURRENT CELL ---", currentCell);
+          const newCell: BoardCell = {
+            ...currentCell,
+            items: [
+              { ...currentCell.items[0], image: interaction.image }
+            ]
+          }
+          setCurrentItem(newCell, currentPosition.row, currentPosition.col);
         }
 
         const actionObj: ActionObj = {
@@ -77,7 +84,7 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [foundInterests, interests, currentCell, currentPosition, setAction, updateItemImage]);
+  }, [foundInterests, interests, currentCell, currentPosition, setAction]);
 
   return (
     <div className={`${foundInterests.length > 0 ? 'translate-y-0' : 'translate-y-full'} transition-transform duration-300 border-t border-x rounded-t border-gray-600 flex items-center fixed right-1/2 translate-x-1/2 w-fit bottom-0 bg-gray-900 z-10 py-2 px-4`}>
