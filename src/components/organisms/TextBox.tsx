@@ -30,31 +30,10 @@ export default function TextBox() {
                 if (itemWithText && !itemWithText.found) {
                     setContent({ text: itemWithText.text || "", action: null, image: null });
                 }
-
             }
-
-
         }
     }, [currentCell, action]);
 
-
-
-
-    useEffect(() => {
-        if (content.action !== "attack") return;
-
-
-        const handleKeyPress = (e: KeyboardEvent) => {
-            if (e.key === ' ' || e.key === 'Escape') {
-                e.preventDefault();
-                console.log("e.key", e.key);
-
-                // setAction({ text: "", action: null, enemy: null, weapon: null });
-            }
-        };
-        window.addEventListener('keydown', handleKeyPress);
-        return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [content.action, setAction]);
 
 
     return (
