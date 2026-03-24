@@ -1,6 +1,6 @@
 # wwwetzel-journey
 
-Portfolio front-end interactif de Garance Etzel, construit comme une expérience de navigation gamifiée.
+Portfolio front-end interactif de Garance Wetzel, construit comme une expérience de navigation gamifiée.
 
 ## Demo
 
