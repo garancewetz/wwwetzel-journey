@@ -13,6 +13,7 @@ export default function Board() {
   const [isReady, setIsReady] = useState(false);
   const [circleRadius, setCircleRadius] = useState(150);
   const gridRef = useRef<HTMLDivElement>(null);
+  const hasInitializedRef = useRef(false);
 
   const heightCell = 120;
   const cellHalfHeight = heightCell / 2;
@@ -30,7 +31,7 @@ export default function Board() {
     return () => clearTimeout(timer);
   }, [foundXpsCount]);
 
-  const updateGridPosition = (row: number, col: number) => {
+  const updateGridPosition = useCallback((row: number, col: number) => {
     if (gridRef.current) {
       const targetInput = gridRef.current.querySelector(`[data-row="${row}"][data-col="${col}"]`) as HTMLElement;
       if (targetInput) {
@@ -49,9 +50,9 @@ export default function Board() {
         setGridOffset({ x: offsetX, y: offsetY });
       }
     }
-  };
+  }, [cellHalfHeight]);
 
-  const moveGridByOneCell = (direction: 'up' | 'down' | 'left' | 'right') => {
+  const moveGridByOneCell = useCallback((direction: 'up' | 'down' | 'left' | 'right') => {
     setGridOffset(prev => {
       switch (direction) {
         case 'up':
@@ -66,7 +67,7 @@ export default function Board() {
           return prev;
       }
     });
-  };
+  }, [cellHalfHeight]);
 
   const deselectActiveElement = useCallback(() => {
     if (document.activeElement instanceof HTMLElement) {
@@ -151,19 +152,19 @@ export default function Board() {
 
         setCurrentPosition(prev => {
           const currentCell = grid[prev.row][prev.col];
-          // Vérifier s'il y a des objets dans la case actuelle
-          if (currentCell.items && currentCell.items.length > 0) {
-            // Ajouter uniquement les objets qui ne sont ni obstacle ni danger
-            currentCell.items.forEach(item => {
-              if (item.type !== 'obstacle' && item.type !== 'danger') {
-                // mettre à jour le currentObj
-                const currentObj = grid[prev.row][prev.col].items?.find(item => item.type === 'xp' || item.type === 'interest');
-                if (currentObj) {
-                  currentObj.found = true;
-                }
-                setCurrentItem(currentCell, prev.row, prev.col);
-              }
-            });
+          const currentItems = currentCell.items ?? [];
+          const collectibleIndex = currentItems.findIndex(
+            (item) => (item.type === 'xp' || item.type === 'interest') && !item.found
+          );
+
+          if (collectibleIndex !== -1) {
+            const updatedCell = {
+              ...currentCell,
+              items: currentItems.map((item, index) =>
+                index === collectibleIndex ? { ...item, found: true } : item
+              ),
+            };
+            setCurrentItem(updatedCell, prev.row, prev.col);
           }
 
           // Sélectionner l'input de la case actuelle
@@ -178,7 +179,7 @@ export default function Board() {
         });
         break;
     }
-  }, [grid, deselectActiveElement]);
+  }, [grid, deselectActiveElement, moveGridByOneCell, setCurrentItem, setCurrentPosition]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -189,22 +190,23 @@ export default function Board() {
 
   // Initialiser la position de la grille au montage pour centrer la première case de la dernière ligne sous le character
   useEffect(() => {
-    if (grid && grid.length > 0 && !isInitialized) {
+    if (grid && grid.length > 0 && !hasInitializedRef.current) {
+      hasInitializedRef.current = true;
       // Attendre que le DOM soit chargé
       // Calculer dynamiquement l'index de la dernière ligne
       const timer = setTimeout(() => {
-        const lastRowIndex = grid.length - 2;
-        // Mettre à jour la position actuelle d'abord
-        setCurrentPosition({ row: lastRowIndex, col: 1 });
-        // Puis positionner la grille
-        updateGridPosition(lastRowIndex, 1);
+        const initialPosition = { row: 10, col: 1 };
+        // Rendre la grille puis positionner la vue sur la case de départ
+        setIsInitialized(true);
+        setCurrentPosition(initialPosition);
+        requestAnimationFrame(() => {
+          updateGridPosition(initialPosition.row, initialPosition.col);
+        });
       }, 200);
-      // Marquer comme initialisé
-      setIsInitialized(true);
 
       return () => clearTimeout(timer);
     }
-  }, [grid]);
+  }, [grid, setCurrentPosition, updateGridPosition]);
 
   // Attendre 1 seconde après l'initialisation avant de rendre la carte visible
   useEffect(() => {
@@ -243,7 +245,7 @@ export default function Board() {
       />
 
       {/* Personnage fixe au centre */}
-      <Character x={0} y={0} />
+      <Character />
 
       {/* Grille avec les inputs - se déplace selon gridOffset */}
       <div

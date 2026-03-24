@@ -1,11 +1,6 @@
 import Image from "next/image";
 
-interface CharacterProps {
-  x: number;
-  y: number;
-}
-
-export default function Character({ x, y }: CharacterProps) {
+export default function Character() {
   return (
     <div 
       className="fixed z-30"

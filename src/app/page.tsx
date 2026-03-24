@@ -18,7 +18,7 @@ export default function Home() {
           www.etzel garance
         </h1>
         <div className="text-center text-gray-400">
-          Utilisez les flèches et la barre d'espace pour interagir
+          Utilisez les flèches et la barre d&apos;espace pour interagir
         </div>
         <TextBox />
       </header>

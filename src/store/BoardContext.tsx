@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { board } from '@/datas/board';
-import BoardCell, { BoardItem, Item } from '@/types/boardCell';
+import BoardCell, { BoardItem } from '@/types/boardCell';
 
 interface ActionObj {
   text: string;
@@ -21,7 +21,7 @@ interface BoardContextType {
   setCurrentPosition: Dispatch<SetStateAction<{ row: number; col: number }>>;
   setAction: (action: ActionObj | null) => void;
   setCurrentItem: (cell: BoardCell, row: number, col: number) => void;
-  getFoundItems: () => Item[];
+  getFoundItems: () => BoardItem[];
 }
 
 const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -32,7 +32,6 @@ export function BoardProvider({ children }: { children: ReactNode }) {
   const [currentPosition, setCurrentPosition] = useState<{ row: number; col: number }>({ row: 0, col: 0 });
   const [action, setAction] = useState<ActionObj | null>(null);
 
-  console.log("--- CURRENT CELL ---", currentCell);
   // Initialiser la grille avec les données du board.json
   useEffect(() => {
     setGrid(board as BoardCell[][]);
@@ -42,7 +41,7 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     if (grid && grid.length > 0) {
       setCurrentCell(grid[currentPosition?.row][currentPosition?.col]);
     }
-  }, [currentPosition]);
+  }, [currentPosition, grid]);
 
   const setCurrentItem = (cell: BoardCell, row: number, col: number) => {
     setGrid(prevGrid => {
@@ -53,7 +52,7 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const getFoundItems = () => {
+  const getFoundItems = (): BoardItem[] => {
     const flatGrid = grid.flat() as BoardCell[];
     return flatGrid.flatMap(cell =>
       cell.items?.filter(item => item.found) || []

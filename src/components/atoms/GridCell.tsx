@@ -6,7 +6,6 @@ interface GridCellProps {
   rowIndex: number;
   colIndex: number;
   items?: { type: string, name: string, image: string, found: boolean }[];
-  isActive?: boolean;
   heightCell: number;
   cell: { id: number, isWay?: boolean, items?: { type: string, name: string, image: string, found: boolean }[], path?: string };
 }

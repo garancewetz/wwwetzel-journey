@@ -1,54 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# wwwetzel-journey
 
-## Getting Started
+Portfolio front-end interactif de Garance Etzel, construit comme une expérience de navigation gamifiée.
 
-First, run the development server:
+## Demo
+
+- Lien de démo live: `A renseigner`
+
+## Objectif du projet
+
+Ce projet présente des expériences et réalisations professionnelles via une interface interactive basée sur une grille, avec exploration clavier et découverte de contenus.
+
+## Fonctionnalités
+
+- Déplacement clavier dans une grille interactive
+- Collecte d'éléments d'intérêt et d'expériences
+- Affichage contextuel de contenus dans un panneau latéral
+- Animations UI avec Framer Motion
+
+## Stack technique
+
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+
+## Installation
+
+```bash
+npm install
+```
+
+## Lancer le projet
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Le projet est ensuite disponible sur [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts disponibles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` lance le serveur de développement
+- `npm run build` génère la version de production
+- `npm run start` lance le serveur de production
+- `npm run lint` exécute ESLint
+- `npm run lint:fix` corrige automatiquement les erreurs lint simples
+- `npm run typecheck` lance la vérification TypeScript
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+```text
+src/
+  app/           # Entrées App Router, layout global
+  components/    # UI atoms, molecules, organisms
+  datas/         # Données du jeu/portfolio
+  store/         # Contexte global (BoardContext)
+  types/         # Types TypeScript partagés
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Qualité
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Linting avec ESLint
+- Typage statique avec TypeScript
 
-## Deploy on Vercel
+## Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-
-###
-
-obstacles:
-- champignon maléfique
-intérêt:
-- soleil du sud:
-
-résultat: poudre de champignon aplatie
-
-
-
-
-- Karaoké
-- Fromage fondu
-- lecture
+- Portfolio: `A renseigner`
+- LinkedIn: `A renseigner`

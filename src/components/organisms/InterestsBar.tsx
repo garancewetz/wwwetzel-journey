@@ -42,7 +42,6 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
 
         // Si l'interaction a une image, mettre à jour l'image de la cellule
         if (interaction?.image) {
-          console.log("--- CURRENT CELL ---", currentCell);
           const newCell: BoardCell = {
             ...currentCell,
             items: [
@@ -84,7 +83,7 @@ export default function InterestsBar({ foundInterests }: InterestsBarProps) {
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [foundInterests, interests, currentCell, currentPosition, setAction]);
+  }, [foundInterests, currentCell, currentPosition, setAction, setCurrentItem]);
 
   return (
     <div className={`${foundInterests.length > 0 ? 'translate-y-0' : 'translate-y-full'} transition-transform duration-300 border-t border-x rounded-t border-gray-600 flex items-center fixed right-1/2 translate-x-1/2 w-fit bottom-0 bg-gray-900 z-10 py-2 px-4`}>

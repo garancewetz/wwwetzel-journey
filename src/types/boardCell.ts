@@ -4,7 +4,6 @@ export interface Item {
   image: string;
   type: string;
   text?: string;
-  projects?: any[];
 }
 
 export interface BoardItem extends Item {

@@ -6,16 +6,7 @@ import { Panel } from '@/components';
 import { useBoard } from '../../store/BoardContext';
 import xpsData from '../../datas/xps.json';
 import { experiences as experiencesObj } from '@/datas/items';
-
-interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  urlPage?: string;
-  content?: string;
-  created_at: string;
-
-}
+import { Project } from '@/types/project';
 
 interface FoundItem {
   name: string;
@@ -28,6 +19,8 @@ interface FoundItem {
 interface LeftPanelProps {
   foundXps: FoundItem[];
 }
+
+const XP_HOTKEYS = ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
 
 export default function LeftPanel({ foundXps }: LeftPanelProps) {
   const { grid } = useBoard();
@@ -44,16 +37,13 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
   const [panelActiveContent, setPanelActiveContent] = useState<Project[] | null>(null);
   const [clickedXps, setClickedXps] = useState<Set<string>>(new Set());
 
-  // Mapping des touches AZERTY aux indices des expériences visibles
-  const commands = ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
-
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     const key = event.key.toLowerCase();
     if (key === 'escape') {
       setIsOpen(false);
       return;
     }
-    const index = commands.indexOf(key);
+    const index = XP_HOTKEYS.indexOf(key);
     if (index === -1) return;
 
     const xp = experiences[index];
@@ -134,7 +124,6 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
             {experiences.map((xp, index) => {
               const foundItem = foundXps.find((fi) => fi.name === xp.name);
               const isClicked = foundItem ? clickedXps.has(foundItem.name) : false;
-              const commands = ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
               return (
                 <li
                   key={`${index}-${xp.name}`}
@@ -148,7 +137,7 @@ export default function LeftPanel({ foundXps }: LeftPanelProps) {
                 >
                   {foundItem ? (
                     <>
-                      <span className=" z-1 font-bold text-xs -top-1 right-0 absolute bg-black rounded p-0.25 aspect-square w-4 flex items-center justify-center uppercase">{commands[index]}</span>
+                      <span className=" z-1 font-bold text-xs -top-1 right-0 absolute bg-black rounded p-0.25 aspect-square w-4 flex items-center justify-center uppercase">{XP_HOTKEYS[index]}</span>
                       <Image
                         src={foundItem.image}
                         alt={foundItem.name}
