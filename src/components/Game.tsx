@@ -2,7 +2,7 @@
 
 import { CSSProperties, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { experiences, interests } from '@/datas/items';
-import { COLLECTIBLES_COUNT, START, gameReducer, haloRadius, initialState, xpCount as countXp } from '@/store/game';
+import { COLLECTIBLES_COUNT, START, gameReducer, haloRadius, initialState, maxMana, xpCount as countXp } from '@/store/game';
 import { useControls } from '@/store/controls';
 import { loadGame, saveGame } from '@/store/save';
 import { Direction } from '@/types/game';
@@ -18,7 +18,7 @@ const MOOD_COLORS = {
 
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { position, found, defeated, mood, message } = state;
+  const { position, found, defeated, mood, message, mana } = state;
   // Les transitions attendent la reprise de la partie, pour ne pas voir la carte défiler au chargement
   const [ready, setReady] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Game() {
     settle();
   };
 
-  // Touches 1 à 9 : utiliser un objet du sac
+  // Touches 1 à 8 : utiliser un objet du sac
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const interest = interests[Number(event.key) - 1];
@@ -78,16 +78,13 @@ export default function Game() {
       <div className="halo" />
       <img src="/garance.svg" alt="Garance" draggable={false} className="character" />
 
-      {/* Les points d'expérience : apparaissent à la première expérience trouvée */}
-      <div
-        aria-label={`${xpCount} XP sur ${experiences.length}`}
-        className={`fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 text-[11px] tracking-widest text-white/70 transition-opacity duration-700 ${xpCount ? 'opacity-100' : 'opacity-0'}`}
+      {/* XP et mana : apparaissent au premier objet trouvé */}
+      <dl
+        className={`fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 space-y-2 text-[11px] tracking-widest text-white/70 transition-opacity duration-700 ${found.length ? 'opacity-100' : 'opacity-0'}`}
       >
-        XP {xpCount}/{experiences.length}
-        <div className="mt-1 h-0.5 w-16 bg-white/15">
-          <div className="h-full bg-amber-200/80 transition-[width] duration-700" style={{ width: `${(xpCount / experiences.length) * 100}%` }} />
-        </div>
-      </div>
+        <Stat label="XP" value={xpCount} max={experiences.length} color="bg-amber-200/80" />
+        <Stat label="Mana" value={mana} max={maxMana(found)} color="bg-sky-400/80" />
+      </dl>
 
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
@@ -127,5 +124,16 @@ export default function Game() {
 
       <Inventory found={found} onUse={activate} />
     </main>
+  );
+}
+
+function Stat({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
+  return (
+    <div>
+      <dt className="inline uppercase">{label}</dt> <dd className="inline">{value}/{max}</dd>
+      <div className="mt-1 h-0.5 w-16 bg-white/15" aria-hidden>
+        <div className={`h-full ${color} transition-[width] duration-700`} style={{ width: `${(value / max) * 100}%` }} />
+      </div>
+    </div>
   );
 }

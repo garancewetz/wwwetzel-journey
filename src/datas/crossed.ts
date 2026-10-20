@@ -1,4 +1,4 @@
-import { sun, piano, wine, sarahBernhardt, queer, reading, cheese, karaoke, ruby } from "./items";
+import { sun, wine, sarahBernhardt, queer, reading, cheese, karaoke, ruby } from "./items";
 
 export interface Reaction {
     id?: string;
@@ -46,11 +46,6 @@ const crossed: Record<string, Reaction[]> = {
         {
             id: karaoke.id,
             text: "Je ne veux pas chanter avec le champignon maléfique !",
-            image: null
-        },
-        {
-            id: piano.id,
-            text: "Je ne veux pas jouer du piano pour le champignon maléfique !",
             image: null
         },
         {
@@ -103,11 +98,6 @@ const crossed: Record<string, Reaction[]> = {
             text: "Elle hurle déjà assez fort comme ça.",
             image: null
         },
-        {
-            id: piano.id,
-            text: "Une sonate ne calmera pas la Vierge de l'Angoisse.",
-            image: null
-        },
     ],
     "lifeguard": [
         {
@@ -144,11 +134,6 @@ const crossed: Record<string, Reaction[]> = {
         {
             id: karaoke.id,
             text: "Il ne veut pas chanter maintenant, il veut nager !",
-            image: null
-        },
-        {
-            id: piano.id,
-            text: "Il ne veut pas jouer du piano maintenant, il veut nager !",
             image: null
         },
         {

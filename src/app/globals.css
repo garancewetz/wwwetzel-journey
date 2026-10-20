@@ -98,8 +98,15 @@ body {
 }
 
 .item-small {
+  z-index: 1;
   width: 25%;
   filter: drop-shadow(0 0 6px rgb(255 240 180 / 0.45));
+}
+
+.item-peek {
+  left: 74%;
+  top: 62%;
+  width: 32%;
 }
 
 .item-found {

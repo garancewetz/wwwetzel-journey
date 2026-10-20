@@ -7,6 +7,8 @@ export interface Item {
   name: string;
   image: string;
   text?: string;
+  // Intérêts : ce qui se passe quand on les utilise loin des ennemis (les répliques alternent)
+  uses?: string[];
 }
 
 export interface Cell {

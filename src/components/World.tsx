@@ -22,6 +22,8 @@ function World({ found, defeated }: WorldProps) {
           )}
           {cell.items?.map((item, index) => {
             const isFound = isCollectible(item) && found.includes(item.id!);
+            // Un objet qui partage sa case avec un arbre en dépasse, sur le côté
+            const peeks = isCollectible(item) && cell.items!.some((other) => other.type === 'obstacle');
             // Danger parti sans laisser d'image (il nous a laissé passer)
             const isGone = item.id !== undefined && defeated[item.id] === '';
             return (
@@ -30,7 +32,7 @@ function World({ found, defeated }: WorldProps) {
                 src={(item.id && defeated[item.id]) || item.image}
                 alt=""
                 draggable={false}
-                className={`item ${isCollectible(item) ? 'item-small' : 'item-large'} ${isFound || isGone ? 'item-found' : ''}`}
+                className={`item ${isCollectible(item) ? 'item-small' : 'item-large'} ${peeks ? 'item-peek' : ''} ${isFound || isGone ? 'item-found' : ''}`}
               />
             );
           })}

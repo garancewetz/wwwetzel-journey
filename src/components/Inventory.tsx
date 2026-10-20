@@ -5,7 +5,7 @@ interface InventoryProps {
   onUse: (id: string) => void;
 }
 
-// Le sac : touches 1 à 9 au clavier, ou on touche l'objet
+// Le sac : touches 1 à 8 au clavier, ou on touche l'objet
 export default function Inventory({ found, onUse }: InventoryProps) {
   const isEmpty = !interests.some((interest) => found.includes(interest.id!));
 

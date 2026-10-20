@@ -93,7 +93,11 @@ const sarahBernhardt: Item = {
     "id": "sarahBernhardt",
     "name": "Sarah Bernhardt",
     "image": "/interests/sarahBernhardt.svg",
-    "text": "Mais que fait donc Sarah Bernhardt cachée derrière cet arbre ? Elle pêche à la ligne ?"
+    "text": "Mais que fait donc Sarah Bernhardt derrière cet arbre ? Elle pêche à la ligne ?",
+    "uses": [
+        "Sarah Bernhardt déclame une tirade. Les arbres applaudissent.",
+        "« Quand même ! » lance Sarah Bernhardt. C'était sa devise."
+    ]
 }
 
 const karaoke: Item = {
@@ -101,7 +105,11 @@ const karaoke: Item = {
     "id": "karaoke",
     "name": "Karaoké",
     "image": "/interests/karaoke.svg",
-    "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer..."
+    "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer...",
+    "uses": [
+        "Je chante à tue-tête. Personne pour m'entendre, c'est parfait.",
+        "Le micro grésille. Le karaoké attendra une meilleure acoustique."
+    ]
 }
 
 const cheese: Item = {
@@ -109,7 +117,11 @@ const cheese: Item = {
     "id": "cheese",
     "name": "Fromage",
     "image": "/interests/cheese.svg",
-    "text": "Oh, du fromage fondu ! J'adore ça !"
+    "text": "Oh, du fromage fondu ! J'adore ça !",
+    "uses": [
+        "Je grignote un bout de fromage. Ça va tout de suite mieux.",
+        "Je garde le reste pour l'apéro. On ne sait jamais."
+    ]
 }
 
 const reading: Item = {
@@ -117,7 +129,11 @@ const reading: Item = {
     "id": "reading",
     "name": "Lecture",
     "image": "/interests/reading.svg",
-    "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !"
+    "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !",
+    "uses": [
+        "Je lis trois pages en marchant. Je me cogne dans un arbre.",
+        "Je corne la page. Je reprendrai plus tard, promis."
+    ]
 }
 
 const wine: Item = {
@@ -125,7 +141,11 @@ const wine: Item = {
     "id": "wine",
     "name": "Un verre de vin",
     "image": "/interests/wine.svg",
-    "text": "Du vin ? C'est parti !"
+    "text": "Du vin ? C'est parti !",
+    "uses": [
+        "Je trinque avec un arbre. Il ne trinque pas.",
+        "Pas avant d'avoir trouvé toutes mes expériences. Bon, une gorgée."
+    ]
 }
 
 const sun: Item = {
@@ -133,7 +153,11 @@ const sun: Item = {
     "id": "sun",
     "name": "Soleil du sud",
     "image": "/interests/sun.svg",
-    "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances..."
+    "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances...",
+    "uses": [
+        "Je brandis le soleil du sud. Le noir ne bouge pas d'un pixel.",
+        "Deux minutes de bronzette. Vivement les vacances."
+    ]
 }
 
 const queer: Item = {
@@ -141,15 +165,11 @@ const queer: Item = {
     "id": "queer",
     "name": "Queer",
     "image": "/interests/rainbow.svg",
-    "text": "Queer, c'est beau !"
-}
-
-const piano: Item = {
-    "type": "interest",
-    "id": "piano",
-    "name": "Piano",
-    "image": "/interests/piano.svg",
-    "text": "Depuis le temps que je veux apprendre le piano. C'est une chance d'en trouver un ici !"
+    "text": "Queer, c'est beau !",
+    "uses": [
+        "Je déploie l'arc-en-ciel. Tout de suite, la balade est plus belle.",
+        "Un peu de fierté dans le noir, ça ne fait jamais de mal."
+    ]
 }
 
 const ruby: Item = {
@@ -157,12 +177,15 @@ const ruby: Item = {
     "id": "ruby",
     "name": "Rubis parfait",
     "image": "/interests/ruby.svg",
-    "text": "Un rubis parfait ! Serti dans une arme, il brûle tout ce qu'il touche."
+    "text": "Un rubis parfait ! Serti dans une arme, il brûle tout ce qu'il touche.",
+    "uses": [
+        "Je fais briller le rubis. Il me brûle un peu les doigts.",
+        "Un rubis parfait. Il irait bien sur une épée."
+    ]
 }
 
 const interests: Item[] = [
     sun,
-    piano,
     wine,
     sarahBernhardt,
     queer,
@@ -181,4 +204,4 @@ const experiences: Item[] = [
     okeiroXp
 ]
 
-export { mushroom, andariel, ruby, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard }
+export { mushroom, andariel, ruby, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, lifeguard }

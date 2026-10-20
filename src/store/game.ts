@@ -20,6 +20,11 @@ export type Mood = 'calm' | 'joy' | 'fear';
 // Après quelques pas sans événement, l'humeur redevient calme
 const MOOD_STEPS = 8;
 
+// Mana : chaque expérience l'agrandit et la remplit, chaque intérêt utilisé en coûte 1,
+// et elle revient en marchant (jamais de blocage)
+const MANA_STEPS = 6;
+export const maxMana = (found: string[]) => 3 + xpCount(found) * 2;
+
 export interface GameState {
   position: Position;
   // ids des expériences et des objets ramassés
@@ -30,11 +35,15 @@ export interface GameState {
   moodSteps: number;
   // key change à chaque message, même si le texte est identique
   message: { text: string; key: number } | null;
+  // combien de fois chaque intérêt a servi : ses répliques alternent
+  uses: Record<string, number>;
+  mana: number;
+  manaSteps: number;
   // danger contre lequel on vient de buter : on ne répète pas son texte à chaque pas
   bumped: string | null;
 }
 
-export type SavedGame = Pick<GameState, 'position' | 'found' | 'defeated'>;
+export type SavedGame = Pick<GameState, 'position' | 'found' | 'defeated' | 'mana'>;
 
 export type GameAction =
   // Plusieurs directions : la première praticable l'emporte (on glisse le long des obstacles)
@@ -60,6 +69,9 @@ function fresh(): GameState {
     moodSteps: 0,
     message: null,
     bumped: null,
+    uses: {},
+    mana: maxMana([]),
+    manaSteps: 0,
   };
 }
 
@@ -101,20 +113,29 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         }
 
         const found = state.found;
+        const regen = state.mana < maxMana(found) && state.manaSteps + 1 >= MANA_STEPS;
         const next: GameState = {
           ...state,
           position,
           bumped: null,
           moodSteps: state.moodSteps + 1,
           mood: state.moodSteps + 1 >= MOOD_STEPS ? 'calm' : state.mood,
+          mana: regen ? state.mana + 1 : state.mana,
+          manaSteps: regen ? 0 : state.manaSteps + 1,
         };
 
         // On ramasse en passant dessus
         const collectible = cell.items?.find((item) => isCollectible(item) && !found.includes(item.id!));
         if (collectible) {
           const nextFound = [...found, collectible.id!];
-          const text = collectible.type === 'xp' ? `${collectible.name}\n+1 XP` : collectible.text ?? collectible.name;
-          return say({ ...next, found: nextFound }, text, 'joy');
+          if (collectible.type === 'xp') {
+            return say(
+              { ...next, found: nextFound, mana: maxMana(nextFound) },
+              `${collectible.name}\n+1 XP · mana rechargée`,
+              'joy',
+            );
+          }
+          return say({ ...next, found: nextFound }, collectible.text ?? collectible.name, 'joy');
         }
 
         return next;
@@ -125,9 +146,15 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case 'use': {
       const item = interests.find((interest) => interest.id === action.id);
       if (!item || !state.found.includes(action.id)) return state;
+      if (state.mana < 1) return say(state, 'Plus de mana... Je marche un peu pour reprendre des forces.');
+      state = { ...state, mana: state.mana - 1 };
 
       const danger = dangerNextTo(state);
-      if (!danger) return say(state, `${item.name}. Qu'est-ce que je peux bien en faire ?`);
+      if (!danger) {
+        const count = state.uses[item.id!] ?? 0;
+        const lines = item.uses ?? [`${item.name}. Qu'est-ce que je peux bien en faire ?`];
+        return say({ ...state, uses: { ...state.uses, [item.id!]: count + 1 } }, lines[count % lines.length], 'joy');
+      }
 
       const reaction = crossed[danger.id!]?.find((r) => r.id === item.id);
       if (reaction && (reaction.image || reaction.defeats)) {

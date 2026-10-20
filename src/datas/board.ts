@@ -1,4 +1,4 @@
-import { mushroom, andariel, ruby, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard } from "./items";
+import { mushroom, andariel, ruby, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, lifeguard } from "./items";
 import { Cell } from "@/types/game";
 
 
@@ -266,8 +266,7 @@ const board: Cell[][] = [
     {
       "id": 53,
       "isWay": true,
-      "path": "bottomToLeft",
-      "items": [piano]
+      "path": "bottomToLeft"
     },
     {
       "id": 54,

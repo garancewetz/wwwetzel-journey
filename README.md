@@ -1,8 +1,8 @@
 # wwwetzel journey
 
-Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée rapporte un point d'XP et agrandit un peu la lumière.
+Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée rapporte un point d'XP, recharge la mana et agrandit un peu la lumière.
 
-- **Les intérêts** (le soleil, le vin, le piano, un rubis…) se ramassent en route et vont dans le sac.
+- **Les intérêts** (le soleil, le vin, le fromage, un rubis…) se ramassent en route et vont dans le sac. On peut les utiliser partout, pour 1 mana, avec des effets plus ou moins utiles. La mana revient en marchant.
 - **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, en clin d'œil à Diablo) barrent le passage vers certaines expériences : il faut trouver le bon intérêt à leur offrir. Les autres font juste réagir.
 - **L'humeur** teinte doucement le bord de la lumière : chaude quand tout va bien, froide face à un danger.
 - **La carte** se découvre pas à pas, à la seule lumière du halo.
@@ -13,7 +13,7 @@ La partie est gardée dans le navigateur : on reprend là où on s'était arrêt
 
 ## Comment jouer
 
-- **Ordinateur** : les flèches pour marcher (on peut les garder appuyées). On ramasse un objet en passant dessus. Les touches 1 à 9, ou un clic, utilisent un objet du sac.
+- **Ordinateur** : les flèches pour marcher (on peut les garder appuyées). On ramasse un objet en passant dessus. Les touches 1 à 8, ou un clic, utilisent un objet du sac.
 - **Téléphone** : un joystick vient se placer sous le doigt ; on garde appuyé et on glisse dans la direction voulue. On touche un objet du sac pour l'utiliser.
 
 ## Stack
