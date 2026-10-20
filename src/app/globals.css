@@ -63,7 +63,6 @@ body {
   left: 50%;
   top: 50%;
   display: grid;
-  grid-template-columns: repeat(11, var(--cell));
   grid-auto-rows: var(--cell);
   pointer-events: none;
   transform: translate(

@@ -58,22 +58,16 @@ const surpriseTree: Item = {
     "image": "/obstacles/surpriseTree.svg"
 }
 
-// Dangers
+// Ennemis : les vaincre coûte de la mana
 const mushroom: Item = {
     "type": "danger",
     "id": "mushroom",
     "name": "Champignon maléfique",
     "image": "/dangers/mushroom.svg",
-    "text": "Oh non, un champignon maléfique ! Il ne vit que dans l'ombre et l'humidité... Ai-je quelque chose de lumineux dans mon sac ?"
-}
-
-// Clin d'œil à Diablo II
-const andariel: Item = {
-    "type": "danger",
-    "id": "andariel",
-    "name": "Andariel",
-    "image": "/dangers/andariel.svg",
-    "text": "Andariel, la Vierge de l'Angoisse, me barre la route ! On dit qu'elle ne craint qu'une chose : une arme qui brûle."
+    "text": "Oh non, un champignon maléfique ! Il ne vit que dans l'ombre et l'humidité... Ai-je quelque chose de lumineux dans mon sac ?",
+    "key": "sun",
+    "solved": "Ha ! Le méchant champignon n'aime pas le soleil ! Le voilà réduit en poussière !",
+    "after": "/dangers/mushroomXsun.svg"
 }
 
 const lifeguard: Item = {
@@ -81,10 +75,78 @@ const lifeguard: Item = {
     "id": "lifeguard",
     "name": "Maître nageur musclé",
     "image": "/dangers/lifeguard.svg",
-    "text": "Un maître nageur musclé me barre la route. Il s'ennuie ferme sur sa plage... Un petit remontant le ferait peut-être bouger ?"
+    "text": "Un maître nageur musclé me barre la route de la plage. Il s'ennuie ferme... Un petit remontant le ferait peut-être bouger ?",
+    "key": "wine",
+    "solved": "Je lui offre un verre de vin. Il aime ça, et me laisse passer !"
 }
 
+// Clin d'œil à Diablo II : la boss finale
+const andariel: Item = {
+    "type": "danger",
+    "id": "andariel",
+    "name": "Andariel",
+    "image": "/dangers/andariel.svg",
+    "text": "Andariel, la Vierge de l'Angoisse, garde le dernier passage ! On dit qu'elle ne craint qu'une chose : une arme qui brûle.",
+    "key": "ruby",
+    "solved": "Le rubis s'embrase : Andariel ne supporte pas le feu. Elle disparaît dans un cri."
+}
 
+// Gardiens amicaux : il suffit du bon objet
+const curtain: Item = {
+    "type": "guard",
+    "id": "curtain",
+    "name": "Rideau de théâtre",
+    "image": "/guards/curtain.svg",
+    "text": "Un lourd rideau de théâtre ferme le passage. Il ne se lèvera que pour une grande actrice...",
+    "key": "sarahBernhardt",
+    "solved": "Sarah Bernhardt entre en scène. Le rideau se lève sous les applaudissements !",
+    "refuse": "Le rideau ne bouge pas. Il attend une vraie tragédienne."
+}
+
+const fox: Item = {
+    "type": "guard",
+    "id": "fox",
+    "name": "Renard affamé",
+    "image": "/guards/fox.svg",
+    "text": "Un renard affamé me barre la route. Il a l'air de rêver d'un bon morceau de fromage...",
+    "key": "cheese",
+    "solved": "« Que vous êtes joli ! » Je lui donne le fromage, il file avec, comme dans la fable.",
+    "refuse": "Le renard hausse les épaules. Ce n'est pas du fromage, ça."
+}
+
+// Autre clin d'œil à Diablo
+const cain: Item = {
+    "type": "guard",
+    "id": "cain",
+    "name": "Deckard Cain",
+    "image": "/guards/cain.svg",
+    "text": "Deckard Cain : « Restez un moment et écoutez... » Il ne s'arrête plus de parler. Un bon livre le ferait peut-être taire ?",
+    "key": "reading",
+    "solved": "Je lui offre un livre. Il s'y plonge et en oublie de parler. Je passe sur la pointe des pieds.",
+    "refuse": "« Restez un moment et écoutez... » Il n'écoute que lui-même."
+}
+
+const troll: Item = {
+    "type": "guard",
+    "id": "troll",
+    "name": "Troll grognon",
+    "image": "/guards/troll.svg",
+    "text": "Un troll grognon garde le passage du nord. Il ne laisse passer que ceux qui le font chanter.",
+    "key": "karaoke",
+    "solved": "Je lui tends le micro. Il chante faux, très fort, et s'en va en dansant.",
+    "refuse": "Le troll grogne. Il veut chanter, pas ça."
+}
+
+const cloud: Item = {
+    "type": "guard",
+    "id": "cloud",
+    "name": "Nuage de pluie",
+    "image": "/guards/cloud.svg",
+    "text": "Un nuage de pluie bouche le chemin de l'est. Il a le cafard... Il lui faudrait un peu de couleur.",
+    "key": "queer",
+    "solved": "Je déploie l'arc-en-ciel. Le nuage sourit et s'évapore.",
+    "refuse": "Il pleut de plus belle."
+}
 
 // Interests
 
@@ -204,4 +266,4 @@ const experiences: Item[] = [
     okeiroXp
 ]
 
-export { mushroom, andariel, ruby, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, lifeguard }
+export { mushroom, andariel, lifeguard, curtain, fox, cain, troll, cloud, ruby, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer }

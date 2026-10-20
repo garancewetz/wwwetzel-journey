@@ -1,9 +1,9 @@
-import { board } from '@/datas/board';
+import { board, START } from '@/datas/board';
 import crossed from '@/datas/crossed';
 import { experiences, interests } from '@/datas/items';
 import { Direction, Item, Position } from '@/types/game';
 
-export const START: Position = { row: 10, col: 1 };
+export { START };
 
 const STEPS: Record<Direction, [number, number]> = {
   up: [-1, 0],
@@ -14,7 +14,7 @@ const STEPS: Record<Direction, [number, number]> = {
 
 export const COLLECTIBLES_COUNT = experiences.length + interests.length;
 
-// joy : un objet, une expérience, un danger vaincu ; fear : face à un danger
+// joy : un objet, une expérience, un gardien passé ; fear : face à un ennemi
 export type Mood = 'calm' | 'joy' | 'fear';
 
 // Après quelques pas sans événement, l'humeur redevient calme
@@ -30,7 +30,7 @@ export interface GameState {
   position: Position;
   // ids des expériences et des objets ramassés
   found: string[];
-  // danger neutralisé -> sa nouvelle image ('' : il est parti)
+  // gardien ou ennemi passé -> sa nouvelle image ('' : il est parti)
   defeated: Record<string, string>;
   mood: Mood;
   moodSteps: number;
@@ -40,7 +40,7 @@ export interface GameState {
   uses: Record<string, number>;
   mana: number;
   manaSteps: number;
-  // danger contre lequel on vient de buter : on ne répète pas son texte à chaque pas
+  // gardien contre lequel on vient de buter : on ne répète pas son texte à chaque pas
   bumped: string | null;
 }
 
@@ -86,14 +86,16 @@ function say(state: GameState, text: string, mood?: Mood): GameState {
   };
 }
 
-const dangerIn = (state: GameState, { row, col }: Position) =>
-  board[row]?.[col]?.items?.find((item) => item.type === 'danger' && !(item.id! in state.defeated));
+const isGuard = (item: Item) => item.type === 'danger' || item.type === 'guard';
 
-// Le danger qui barre le chemin, juste à côté du personnage
-export function dangerNextTo(state: GameState) {
+const guardIn = (state: GameState, { row, col }: Position) =>
+  board[row]?.[col]?.items?.find((item) => isGuard(item) && !(item.id! in state.defeated));
+
+// Le gardien qui barre le chemin, juste à côté du personnage
+export function guardNextTo(state: GameState) {
   for (const [dRow, dCol] of Object.values(STEPS)) {
-    const danger = dangerIn(state, { row: state.position.row + dRow, col: state.position.col + dCol });
-    if (danger) return danger;
+    const guard = guardIn(state, { row: state.position.row + dRow, col: state.position.col + dCol });
+    if (guard) return guard;
   }
 }
 
@@ -106,11 +108,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const cell = board[position.row]?.[position.col];
         if (!cell?.isWay) continue;
 
-        // Un danger barre le passage tant qu'on ne l'a pas neutralisé
-        const danger = dangerIn(state, position);
-        if (danger) {
-          if (state.bumped === danger.id) return state;
-          return say({ ...state, bumped: danger.id! }, danger.text ?? danger.name, 'fear');
+        // Un gardien barre le passage tant qu'on ne lui a pas offert le bon objet
+        const guard = guardIn(state, position);
+        if (guard) {
+          if (state.bumped === guard.id) return state;
+          return say({ ...state, bumped: guard.id! }, guard.text ?? guard.name, guard.type === 'danger' ? 'fear' : undefined);
         }
 
         const found = state.found;
@@ -148,34 +150,32 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const item = interests.find((interest) => interest.id === action.id);
       if (!item || !state.found.includes(action.id)) return state;
 
-      const danger = dangerNextTo(state);
-      if (!danger) {
+      const guard = guardNextTo(state);
+      if (!guard) {
         const count = state.uses[item.id!] ?? 0;
         const lines = item.uses ?? [`${item.name}. Qu'est-ce que je peux bien en faire ?`];
         return say({ ...state, uses: { ...state.uses, [item.id!]: count + 1 } }, lines[count % lines.length], 'joy');
       }
 
-      const reaction = crossed[danger.id!]?.find((r) => r.id === item.id);
-      if (reaction && (reaction.image || reaction.defeats)) {
-        if (state.mana < SPELL_COST) {
-          return say(
-            state,
-            `${item.name} vacille... Il me manque de la mana. Une nouvelle expérience me donnerait de la force.`,
-            'fear',
-          );
-        }
-        return say(
-          {
-            ...state,
-            mana: state.mana - SPELL_COST,
-            defeated: { ...state.defeated, [danger.id!]: reaction.image ?? '' },
-            bumped: null,
-          },
-          reaction.text,
-          'joy',
-        );
+      const isEnemy = guard.type === 'danger';
+      if (item.id !== guard.key) {
+        const reaction = crossed[guard.id!]?.find((r) => r.id === item.id);
+        return say(state, reaction?.text ?? guard.refuse ?? `${item.name} ? Ça ne marche pas.`, isEnemy ? 'fear' : undefined);
       }
-      return say(state, reaction?.text ?? `Je veux vraiment attaquer ${danger.name} avec ${item.name} ?`, 'fear');
+      // Vaincre un ennemi demande de la mana ; un gardien amical cède au bon objet
+      if (isEnemy && state.mana < SPELL_COST) {
+        return say(state, `${item.name} vacille... Il me manque de la mana. Une nouvelle expérience me donnerait de la force.`, 'fear');
+      }
+      return say(
+        {
+          ...state,
+          mana: isEnemy ? state.mana - SPELL_COST : state.mana,
+          defeated: { ...state.defeated, [guard.id!]: guard.after ?? '' },
+          bumped: null,
+        },
+        guard.solved ?? '',
+        'joy',
+      );
     }
 
     case 'restore':

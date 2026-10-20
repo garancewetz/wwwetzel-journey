@@ -1,694 +1,97 @@
-import { mushroom, andariel, ruby, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, lifeguard } from "./items";
-import { Cell } from "@/types/game";
+import { Cell, Item, Position } from '@/types/game';
+import {
+  andariel, cain, cheese, cloud, colorzXp, curtain, fox, karaoke, lifeguard, mushroom, okeiroXp, openclassroomsXp,
+  queer, reading, ruby, sarahBernhardt, sorbonneXp, sun, surpriseTree, threeWXp, tree, troll, uptooXp, wine,
+} from './items';
 
-
-const board: Cell[][] = [
-  [
-    {
-      "id": 1,
-      "path": "water"
-    },
-    {
-      "id": 2,
-      "path": "water"
-    },
-    {
-      "id": 3,
-      "path": "water"
-    },
-    {
-      "id": 4,
-      "path": "water"
-    },
-    {
-      "id": 5,
-      "path": "water"
-    },
-    {
-      "id": 6,
-      "path": "water"
-    },
-    {
-      "id": 7,
-      "path": "water"
-    },
-    {
-      "id": 8,
-      "path": "water"
-    },
-    {
-      "id": 9,
-      "path": "water"
-    },
-    {
-      "id": 10,
-      "path": "water"
-    },
-    {
-      "id": 11,
-      "path": "water"
-    }
-  ],
-  [
-    {
-      "id": 12,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 13,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 14,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 15,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 16,
-      "isWay": true,
-      "path": "bottomToPlace",
-      "items": [okeiroXp]
-    },
-    {
-      "id": 17,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 18,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 19,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 20,
-      "isWay": true,
-      "path": "grass",
-      "items": [karaoke]
-    },
-    {
-      "id": 21,
-      "path": "water"
-    },
-    {
-      "id": 22,
-      "path": "water"
-    }
-  ],
-  [
-    {
-      "id": 23,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 24,
-      "isWay": true,
-      "path": "grass",
-      "items": [colorzXp]
-    },
-    {
-      "id": 25,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 26,
-      "isWay": true,
-      "path": "grass"
-
-    },
-    {
-      "id": 27,
-      "isWay": true,
-      "path": "topToRight",
-      "items": [lifeguard]
-    },
-    {
-      "id": 28,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 29,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 30,
-      "isWay": true,
-      "path": "bottomToLeft"
-    },
-    {
-      "id": 31,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 32,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 33,
-      "path": "water"
-    }
-  ],
-  [
-    {
-      "id": 34,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 35,
-      "isWay": true,
-      "path": "mud",
-      "items": [mushroom]
-    },
-    {
-      "id": 36,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 37,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 38,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 39,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 40,
-      "isWay": true,
-      "path": "grass",
-      "items": [wine]
-    },
-    {
-      "id": 41,
-      "isWay": true,
-      "path": "bottomToTop"
-    },
-    {
-      "id": 42,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 43,
-      "isWay": true,
-      "path": "grass",
-      "items": [reading]
-
-    },
-    {
-      "id": 44,
-      "path": "grass",
-      "items": [tree]
-    }
-  ],
-  [
-    {
-      "id": 45,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 46,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 47,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 48,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 49,
-      "path": "water"
-    },
-    {
-      "id": 50,
-      "path": "water"
-    },
-    {
-      "id": 51,
-      "path": "water"
-    },
-    {
-      "id": 52,
-      "isWay": true,
-      "path": "topToRight"
-    },
-    {
-      "id": 53,
-      "isWay": true,
-      "path": "bottomToLeft",
-      "items": [ruby]
-    },
-    {
-      "id": 54,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 55,
-      "path": "grass",
-      "items": [tree]
-    }
-  ],
-  [
-    {
-      "id": 56,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 57,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 58,
-      "isWay": true,
-      "path": "bottomToRight"
-    },
-    {
-      "id": 59,
-      "isWay": true,
-      "path": "leftToRight",
-      "items": [openclassroomsXp]
-    },
-    {
-      "id": 60,
-      "isWay": true,
-      "path": "bottomToLeft"
-    },
-    {
-      "id": 61,
-      "path": "water"
-    },
-    {
-      "id": 62,
-      "path": "water"
-    },
-    {
-      "id": 63,
-      "path": "water"
-    },
-    {
-      "id": 64,
-      "isWay": true,
-      "path": "bottomToTop"
-
-    },
-    {
-      "id": 65,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 66,
-      "path": "grass",
-      "items": [tree]
-    }
-  ],
-  [
-    {
-      "id": 67,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 68,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 69,
-      "isWay": true,
-      "path": "bottomToTop"
-
-    },
-    {
-      "id": 70,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 71,
-      "isWay": true,
-      "path": "topToRight"
-    },
-    {
-      "id": 72,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 73,
-      "isWay": true,
-      "path": "leftToRight"
-
-    },
-    {
-      "id": 74,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 75,
-      "isWay": true,
-      "path": "leftToTop"
-    },
-    {
-      "id": 76,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 77,
-      "isWay": true,
-      "path": "grass",
-      "items": [uptooXp]
-
-    }
-  ],
-  [
-    {
-      "id": 78,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 79,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 80,
-      "isWay": true,
-      "path": "bottomToTop"
-    },
-    {
-      "id": 81,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 82,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 83,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 84,
-      "isWay": true,
-      "path": "grass",
-      "items": [sarahBernhardt, surpriseTree]
-    },
-    {
-      "id": 85,
-      "path": "water"
-    },
-    {
-      "id": 86,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 87,
-      "isWay": true,
-      "path": "grass",
-      "items": [queer]
-    },
-    {
-      "id": 88,
-      "isWay": true,
-      "path": "grass",
-      "items": [andariel]
-
-    }
-  ],
-  [
-    {
-      "id": 89,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 90,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 91,
-      "isWay": true,
-      "path": "rightToTop"
-    },
-    {
-      "id": 92,
-      "isWay": true,
-      "path": "leftToRight",
-      "items": [threeWXp]
-    },
-    {
-      "id": 93,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 94,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 95,
-      "isWay": true,
-      "path": "bottomToLeft"
-    },
-    {
-      "id": 96,
-      "path": "water"
-    },
-    {
-      "id": 97,
-      "path": "water"
-    },
-    {
-      "id": 98,
-      "path": "grass",
-      "isWay": true
-    },
-    {
-      "id": 99,
-      "path": "grass",
-      "items": [tree]
-    }
-  ],
-  [
-    {
-      "id": 100,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 101,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 102,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 103,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 104,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 105,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 106,
-      "isWay": true,
-      "path": "bottomToTop"
-    },
-    {
-      "id": 107,
-      "isWay": true,
-      "path": "grass"
-    },
-    {
-      "id": 108,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 109,
-      "isWay": true,
-      "path": "grass",
-      "items": [cheese]
-    },
-    {
-      "id": 110,
-
-      "path": "grass",
-      "items": [tree]
-    }
-  ],
-  [
-    {
-      "id": 111,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 112,
-      "isWay": true,
-      "path": "placeToRight"
-    },
-    {
-      "id": 113,
-      "isWay": true,
-      "path": "leftToRight",
-      "items": [sun]
-    },
-    {
-      "id": 114,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 115,
-      "isWay": true,
-      "path": "leftToRight",
-      "items": [sorbonneXp]
-    },
-    {
-      "id": 116,
-      "isWay": true,
-      "path": "leftToRight"
-    },
-    {
-      "id": 117,
-      "isWay": true,
-      "path": "leftToTop"
-    },
-    {
-      "id": 118,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 119,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 120,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 121,
-      "path": "grass",
-      "items": [tree]
-    }
-  ],
-  [
-    {
-      "id": 122,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 123,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 124,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 125,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 126,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 127,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 128,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 129,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 130,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 131,
-      "path": "grass",
-      "items": [tree]
-    },
-    {
-      "id": 132,
-      "path": "grass",
-      "items": [tree]
-    }
-  ]
+// La carte, vue du dessus. Chaque région s'ouvre par un gardien, que l'on passe avec l'objet trouvé juste avant.
+// Sol : T arbre, ~ eau, . herbe, = chemin, P place, m boue
+const GROUND = [
+  'TTTTTTTTTTTTTTTTTTTTT',
+  'T~....~Tmmmmmm...TTTT',
+  'T~....~TmmmmmmTTTTTTT',
+  'T~~~=~~TTTT=TTTTTTTTT',
+  'TTT.=......=.....TmmT',
+  'TTT.==============mmT',
+  'TTT.........=....TmmT',
+  'TTTTTTTTTTTT=TTTTTmmT',
+  'T.......T...=.TTTTmmT',
+  'T...=========..TTTmmT',
+  'T...=...T.......TTmmT',
+  'T...=.T.T.......TTmmT',
+  'TTTT=TTTT.......TTmmT',
+  'T...=....TTTTTTTTTmmT',
+  'T...=....TTTTTTTTT.TT',
+  'T...=....TTTTTTTT.=.T',
+  'T.P==...TTTTTTTTT.P.T',
+  'T.....~~.TTTTTTT....T',
+  'TTTTTTTTTTTTTTTTTTTTT',
 ];
 
-export { board };
+// Objets et gardiens, aux mêmes coordonnées. @ : départ
+const ITEMS = [
+  '.....................',
+  '...5..........M.u....',
+  '.....................',
+  '....L......G.........',
+  '........4......q.....',
+  '.................N...',
+  '......k..............',
+  '............C........',
+  '......c..............',
+  '........F............',
+  '..2.......r..........',
+  '..............3......',
+  '....R........w.......',
+  '.......a.............',
+  '..s...............A..',
+  '......1..............',
+  '..@...............6..',
+  '.....................',
+  '.....................',
+];
+
+const LEGEND: Record<string, Item[]> = {
+  // Expériences, dans l'ordre du parcours
+  '1': [sorbonneXp], '2': [threeWXp], '3': [uptooXp], '4': [openclassroomsXp], '5': [colorzXp], '6': [okeiroXp],
+  // Intérêts
+  s: [sun], a: [sarahBernhardt, surpriseTree], c: [cheese], r: [reading], w: [wine], k: [karaoke], q: [queer], u: [ruby],
+  // Gardiens : R rideau, F renard, C Deckard Cain, G troll, N nuage ; ennemis : L maître nageur, M champignon, A Andariel
+  R: [curtain], F: [fox], C: [cain], G: [troll], N: [cloud], L: [lifeguard], M: [mushroom], A: [andariel],
+};
+
+const ROAD = '=P';
+const SIDES: [string, number, number][] = [['t', -1, 0], ['r', 0, 1], ['b', 1, 0], ['l', 0, -1]];
+
+// Tuile d'un chemin ou d'une place : ses bras partent vers les chemins voisins
+function roadTile(row: number, col: number) {
+  const sides = SIDES.filter(([, dr, dc]) => ROAD.includes(GROUND[row + dr]?.[col + dc] ?? '')).map(([side]) => side);
+  return `${GROUND[row][col] === 'P' ? 'place' : 'road'}-${sides.join('')}`;
+}
+
+function cell(ground: string, mark: string, row: number, col: number): Cell {
+  const id = row * GROUND[0].length + col;
+  const items = LEGEND[mark] ?? [];
+  switch (ground) {
+    case 'T':
+      return { id, path: 'grass', items: [tree] };
+    case '~':
+      return { id, path: 'water' };
+    case 'm':
+      return { id, path: 'mud', isWay: true, items };
+    case '=':
+    case 'P':
+      return { id, path: roadTile(row, col), isWay: true, items };
+    default:
+      return { id, path: 'grass', isWay: true, items };
+  }
+}
+
+export const board: Cell[][] = GROUND.map((line, row) => [...line].map((ground, col) => cell(ground, ITEMS[row][col], row, col)));
+
+export const START: Position = (() => {
+  const row = ITEMS.findIndex((line) => line.includes('@'));
+  return { row, col: ITEMS[row].indexOf('@') };
+})();
+
+export const COLUMNS = GROUND[0].length;

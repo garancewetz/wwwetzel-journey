@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { board } from '@/datas/board';
+import { board, COLUMNS } from '@/datas/board';
 import { Item } from '@/types/game';
 
 interface WorldProps {
@@ -12,7 +12,7 @@ const isCollectible = (item: Item) => item.type === 'xp' || item.type === 'inter
 // La carte entière ; elle glisse sous le personnage grâce à --row et --col (voir .world)
 function World({ found, defeated }: WorldProps) {
   return (
-    <div className="world" aria-hidden>
+    <div className="world" style={{ gridTemplateColumns: `repeat(${COLUMNS}, var(--cell))` }} aria-hidden>
       {board.flat().map((cell) => (
         <div key={cell.id} className="relative">
           {cell.path && (
