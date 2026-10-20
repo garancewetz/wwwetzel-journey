@@ -67,6 +67,15 @@ const mushroom: Item = {
     "text": "Oh non, un champignon maléfique ! JE SUIS EN DANGER ! Ai-je quelque chose dans mon sac pour le neutraliser ?"
 }
 
+// Clin d'œil à Diablo II
+const andariel: Item = {
+    "type": "danger",
+    "id": "andariel",
+    "name": "Andariel",
+    "image": "/dangers/andariel.svg",
+    "text": "Andariel, la Vierge de l'Angoisse, me barre la route ! On dit qu'elle craint le feu... Ai-je quelque chose de brûlant dans mon sac ?"
+}
+
 const lifeguard: Item = {
     "type": "danger",
     "id": "lifeguard",
@@ -143,6 +152,14 @@ const piano: Item = {
     "text": "Depuis le temps que je veux apprendre le piano. C'est une chance d'en trouver un ici !"
 }
 
+const ruby: Item = {
+    "type": "interest",
+    "id": "ruby",
+    "name": "Rubis parfait",
+    "image": "/interests/ruby.svg",
+    "text": "Un rubis parfait ! Serti dans une arme, il brûle tout ce qu'il touche."
+}
+
 const interests: Item[] = [
     sun,
     piano,
@@ -151,7 +168,8 @@ const interests: Item[] = [
     queer,
     reading,
     cheese,
-    karaoke
+    karaoke,
+    ruby
 ]
 
 const experiences: Item[] = [
@@ -163,4 +181,4 @@ const experiences: Item[] = [
     okeiroXp
 ]
 
-export { mushroom, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard }
+export { mushroom, andariel, ruby, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard }

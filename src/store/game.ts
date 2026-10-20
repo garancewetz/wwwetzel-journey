@@ -26,8 +26,8 @@ export interface GameState {
   found: string[];
   // danger neutralisé -> sa nouvelle image ('' : il est parti)
   defeated: Record<string, string>;
-  // cases déjà aperçues ("row,col") : la carte s'en souvient
-  seen: string[];
+  // cases où l'on a marché ("row,col") : ces chemins restent faiblement éclairés
+  walked: string[];
   mood: Mood;
   moodSteps: number;
   // key change à chaque message, même si le texte est identique
@@ -36,7 +36,7 @@ export interface GameState {
   bumped: string | null;
 }
 
-export type SavedGame = Pick<GameState, 'position' | 'found' | 'defeated' | 'seen'>;
+export type SavedGame = Pick<GameState, 'position' | 'found' | 'defeated' | 'walked'>;
 
 export type GameAction =
   // Plusieurs directions : la première praticable l'emporte (on glisse le long des obstacles)
@@ -52,27 +52,17 @@ export const xpCount = (found: string[]) => experiences.filter((xp) => found.inc
 // Rayon du halo, en cases : il grandit un peu à chaque expérience
 export const haloRadius = (found: string[]) => 1.25 + xpCount(found) * 0.125;
 
-// Les cases qui touchent le halo deviennent « vues »
-function look(seen: string[], { row, col }: Position, radius: number) {
-  const next = new Set(seen);
-  const centerRow = row + 0.5;
-  const centerCol = col + 0.5;
-  board.forEach((cells, r) =>
-    cells.forEach((_, c) => {
-      const dRow = Math.max(r - centerRow, 0, centerRow - (r + 1));
-      const dCol = Math.max(c - centerCol, 0, centerCol - (c + 1));
-      if (Math.hypot(dRow, dCol) < radius) next.add(`${r},${c}`);
-    }),
-  );
-  return next.size === seen.length ? seen : [...next];
-}
+const key = ({ row, col }: Position) => `${row},${col}`;
+
+const walk = (walked: string[], position: Position) =>
+  walked.includes(key(position)) ? walked : [...walked, key(position)];
 
 function fresh(): GameState {
   return {
     position: START,
     found: [],
     defeated: {},
-    seen: look([], START, haloRadius([])),
+    walked: [key(START)],
     mood: 'calm',
     moodSteps: 0,
     message: null,
@@ -121,6 +111,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const next: GameState = {
           ...state,
           position,
+          walked: walk(state.walked, position),
           bumped: null,
           moodSteps: state.moodSteps + 1,
           mood: state.moodSteps + 1 >= MOOD_STEPS ? 'calm' : state.mood,
@@ -131,14 +122,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         if (collectible) {
           const nextFound = [...found, collectible.id!];
           const text = collectible.type === 'xp' ? `${collectible.name}\n+1 XP` : collectible.text ?? collectible.name;
-          return say(
-            { ...next, found: nextFound, seen: look(state.seen, position, haloRadius(nextFound)) },
-            text,
-            'joy',
-          );
+          return say({ ...next, found: nextFound }, text, 'joy');
         }
 
-        return { ...next, seen: look(state.seen, position, haloRadius(found)) };
+        return next;
       }
       return state;
     }

@@ -1,4 +1,4 @@
-import { mushroom, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard } from "./items";
+import { mushroom, andariel, ruby, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard } from "./items";
 import { Cell } from "@/types/game";
 
 
@@ -331,8 +331,8 @@ const board: Cell[][] = [
     },
     {
       "id": 66,
-      "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [tree]
     }
   ],
   [
@@ -382,8 +382,7 @@ const board: Cell[][] = [
     {
       "id": 75,
       "isWay": true,
-      "path": "leftToTop",
-      "items": [uptooXp]
+      "path": "leftToTop"
     },
     {
       "id": 76,
@@ -393,7 +392,8 @@ const board: Cell[][] = [
     {
       "id": 77,
       "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [uptooXp]
 
     }
   ],
@@ -452,7 +452,8 @@ const board: Cell[][] = [
     {
       "id": 88,
       "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [andariel]
 
     }
   ],
@@ -465,7 +466,8 @@ const board: Cell[][] = [
     {
       "id": 90,
       "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [ruby]
     },
     {
       "id": 91,

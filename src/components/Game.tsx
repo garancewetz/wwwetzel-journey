@@ -18,7 +18,7 @@ const MOOD_COLORS = {
 
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { position, found, defeated, seen, mood, message } = state;
+  const { position, found, defeated, walked, mood, message } = state;
   // Les transitions attendent la reprise de la partie, pour ne pas voir la carte défiler au chargement
   const [ready, setReady] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Game() {
     settle();
   };
 
-  // Touches 1 à 8 : utiliser un objet du sac
+  // Touches 1 à 9 : utiliser un objet du sac
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const interest = interests[Number(event.key) - 1];
@@ -73,7 +73,8 @@ export default function Game() {
       }
       {...pointer}
     >
-      <World found={found} defeated={defeated} seen={seen} />
+      <World found={found} defeated={defeated} />
+      <World found={found} defeated={defeated} lit={walked} />
       <div className="mood" />
       <div className="halo" />
       <img src="/garance.svg" alt="Garance" draggable={false} className="character" />
@@ -108,7 +109,7 @@ export default function Game() {
         </p>
       </header>
 
-      <p aria-live="polite" className="fixed inset-x-0 top-[18%] z-30 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-white/85">
+      <p aria-live="polite" className="fixed inset-x-0 top-[18%] z-30 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-white/85 [text-shadow:0_1px_3px_#000]">
         {message && (
           <span
             key={message.key}

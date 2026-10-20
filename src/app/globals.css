@@ -85,22 +85,23 @@ body {
   shape-rendering: crispEdges;
 }
 
-/* Le noir des cases jamais aperçues ; une fois vues, elles restent en mémoire, très atténuées */
-.fog {
+/* Les chemins parcourus, au-dessus du noir : une trace faible de la balade */
+.world-lit {
+  z-index: 12;
+}
+
+.lit-cell {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  width: calc(100% + 1px);
-  height: calc(100% + 1px);
-  background: #000;
+  opacity: 0.4;
 }
 
-.fog-seen {
-  opacity: 0;
+[data-ready="true"] .lit-cell {
+  animation: light-up 900ms ease-out;
 }
 
-[data-ready="true"] .fog {
-  transition: opacity 400ms ease-out;
+@keyframes light-up {
+  from { opacity: 0; }
 }
 
 .item {
@@ -129,7 +130,7 @@ body {
 .mood {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  z-index: 15;
   pointer-events: none;
   background: radial-gradient(
     circle at 50% 50%,
@@ -139,13 +140,13 @@ body {
   );
 }
 
-/* Autour du personnage, la lumière ; ailleurs, le noir, où la carte déjà vue reste à peine visible */
+/* Autour du personnage, la lumière ; ailleurs, le noir */
 .halo {
   position: absolute;
   inset: 0;
   z-index: 10;
   pointer-events: none;
-  background: rgb(0 0 0 / 0.95);
+  background: #000;
   -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
   mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
 }

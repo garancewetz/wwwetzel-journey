@@ -1,4 +1,4 @@
-import { sun, piano, wine, sarahBernhardt, queer, reading, cheese, karaoke } from "./items";
+import { sun, piano, wine, sarahBernhardt, queer, reading, cheese, karaoke, ruby } from "./items";
 
 export interface Reaction {
     id?: string;
@@ -53,7 +53,61 @@ const crossed: Record<string, Reaction[]> = {
             text: "Je ne veux pas jouer du piano pour le champignon maléfique !",
             image: null
         },
+        {
+            id: ruby.id,
+            text: "Le rubis ne lui fait ni chaud ni froid. Il lui faudrait du vrai soleil.",
+            image: null
+        },
 
+    ],
+    "andariel": [
+        {
+            id: sun.id,
+            text: "Le soleil du sud brûle comme les enfers. Andariel y retourne aussitôt !",
+            image: null,
+            defeats: true
+        },
+        {
+            id: ruby.id,
+            text: "Le rubis s'embrase : Andariel ne supporte pas le feu. Elle disparaît dans un cri.",
+            image: null,
+            defeats: true
+        },
+        {
+            id: sarahBernhardt.id,
+            text: "Sarah Bernhardt a joué des reines plus terrifiantes. Andariel n'impressionne personne.",
+            image: null
+        },
+        {
+            id: wine.id,
+            text: "Elle ne boit que du poison. Mon vin ne l'intéresse pas.",
+            image: null
+        },
+        {
+            id: queer.id,
+            text: "Andariel ne se laisse pas attendrir. Même pas par un arc-en-ciel.",
+            image: null
+        },
+        {
+            id: reading.id,
+            text: "« Restez un moment et écoutez... » Non, pas le temps de lire Deckard Cain maintenant !",
+            image: null
+        },
+        {
+            id: cheese.id,
+            text: "Elle préfère les âmes au fromage.",
+            image: null
+        },
+        {
+            id: karaoke.id,
+            text: "Elle hurle déjà assez fort comme ça.",
+            image: null
+        },
+        {
+            id: piano.id,
+            text: "Une sonate ne calmera pas la Vierge de l'Angoisse.",
+            image: null
+        },
     ],
     "lifeguard": [
         {
@@ -95,6 +149,11 @@ const crossed: Record<string, Reaction[]> = {
         {
             id: piano.id,
             text: "Il ne veut pas jouer du piano maintenant, il veut nager !",
+            image: null
+        },
+        {
+            id: ruby.id,
+            text: "Un rubis ? Il le trouve joli, mais ne bouge pas d'un pouce.",
             image: null
         },
     ]
