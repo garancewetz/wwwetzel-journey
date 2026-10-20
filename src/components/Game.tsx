@@ -1,21 +1,49 @@
 'use client'
 
-import { CSSProperties, useCallback, useEffect, useReducer, useRef } from 'react';
+import { CSSProperties, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { experiences, interests } from '@/datas/items';
-import { COLLECTIBLES_COUNT, START, gameReducer, initialState } from '@/store/game';
+import { COLLECTIBLES_COUNT, START, gameReducer, haloRadius, initialState, xpCount as countXp } from '@/store/game';
 import { useControls } from '@/store/controls';
+import { loadGame, saveGame } from '@/store/save';
 import { Direction } from '@/types/game';
 import World from './World';
 import Inventory from './Inventory';
 
+// Teinte du halo selon l'humeur : chaude quand ça va, froide face à un danger
+const MOOD_COLORS = {
+  calm: 'rgb(0 0 0 / 0)',
+  joy: 'rgb(255 190 110 / 0.14)',
+  fear: 'rgb(90 120 255 / 0.16)',
+};
+
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { position, found, defeated, message } = state;
+  const { position, found, defeated, seen, mood, message } = state;
+  // Les transitions attendent la reprise de la partie, pour ne pas voir la carte défiler au chargement
+  const [ready, setReady] = useState(false);
 
   const move = useCallback((directions: Direction[]) => dispatch({ type: 'move', directions }), []);
   const activate = useCallback((id: string) => dispatch({ type: 'use', id }), []);
   const joystick = useRef<HTMLDivElement>(null);
   const pointer = useControls(move, joystick);
+
+  const settle = () => window.setTimeout(() => setReady(true), 50);
+
+  useEffect(() => {
+    const saved = loadGame();
+    if (saved) dispatch({ type: 'restore', saved });
+    settle();
+  }, []);
+
+  useEffect(() => {
+    if (ready) saveGame(state);
+  }, [ready, state]);
+
+  const restart = () => {
+    setReady(false);
+    dispatch({ type: 'restart' });
+    settle();
+  };
 
   // Touches 1 à 8 : utiliser un objet du sac
   useEffect(() => {
@@ -27,20 +55,26 @@ export default function Game() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [activate]);
 
-  const xpCount = experiences.filter((xp) => found.includes(xp.id!)).length;
+  const xpCount = countXp(found);
   const isComplete = found.length === COLLECTIBLES_COUNT;
   const hasMoved = position.row !== START.row || position.col !== START.col;
-
-  // Le halo s'agrandit un peu à chaque expérience, sans jamais tout éclairer
-  const halo = 1.25 + xpCount * 0.125;
 
   return (
     <main
       className="game"
-      style={{ '--row': position.row, '--col': position.col, '--halo': halo } as CSSProperties}
+      data-ready={ready}
+      style={
+        {
+          '--row': position.row,
+          '--col': position.col,
+          '--halo': haloRadius(found),
+          '--mood': MOOD_COLORS[mood],
+        } as CSSProperties
+      }
       {...pointer}
     >
-      <World found={found} defeated={defeated} />
+      <World found={found} defeated={defeated} seen={seen} />
+      <div className="mood" />
       <div className="halo" />
       <img src="/garance.svg" alt="Garance" draggable={false} className="character" />
 
@@ -59,7 +93,12 @@ export default function Game() {
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         <p className={`mt-1 text-xs text-white/40 transition-opacity duration-700 ${hasMoved && !isComplete ? 'opacity-0' : 'opacity-100'}`}>
           {isComplete ? (
-            'Merci pour la balade.'
+            <>
+              Merci pour la balade.{' '}
+              <button type="button" onClick={restart} className="underline decoration-white/20 underline-offset-4 hover:text-white/70">
+                Recommencer
+              </button>
+            </>
           ) : (
             <>
               <span className="pointer-coarse:hidden">Les flèches pour marcher</span>

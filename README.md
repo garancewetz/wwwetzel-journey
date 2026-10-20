@@ -1,6 +1,13 @@
 # wwwetzel journey
 
-Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée rapporte un point d'XP et agrandit la lumière. Des objets ramassés en route aident à se tirer de quelques rencontres.
+Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée rapporte un point d'XP et agrandit un peu la lumière.
+
+- **Les intérêts** (le soleil, le vin, le piano…) se ramassent en route et vont dans le sac.
+- **Les ennemis** barrent le passage vers certaines expériences : il faut trouver le bon intérêt à leur offrir. Les autres font juste réagir.
+- **L'humeur** teinte doucement le bord de la lumière : chaude quand tout va bien, froide face à un danger.
+- **La carte** se souvient : les endroits déjà vus restent à peine visibles dans le noir.
+
+La partie est gardée dans le navigateur : on reprend là où on s'était arrêté.
 
 **Jouer : à renseigner après la mise en ligne**
 
@@ -36,7 +43,7 @@ src/
   app/         # page et layout
   components/  # Game (la partie), World (la carte), Inventory (le sac), PathsSprite (les tuiles)
   datas/       # la carte, les objets, les réactions des dangers
-  store/       # règles du jeu (reducer) et contrôles clavier / tactile
+  store/       # règles du jeu (reducer), contrôles clavier / tactile, sauvegarde
   types/
 ```
 

@@ -73,12 +73,13 @@ const board: Cell[][] = [
     {
       "id": 16,
       "isWay": true,
-      "path": "bottomToPlace"
+      "path": "bottomToPlace",
+      "items": [okeiroXp]
     },
     {
       "id": 17,
-      "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [tree]
     },
     {
       "id": 18,
@@ -131,7 +132,7 @@ const board: Cell[][] = [
       "id": 27,
       "isWay": true,
       "path": "topToRight",
-      "items": [okeiroXp]
+      "items": [lifeguard]
     },
     {
       "id": 28,
@@ -193,8 +194,7 @@ const board: Cell[][] = [
     {
       "id": 39,
       "isWay": true,
-      "path": "grass",
-      "items": [lifeguard]
+      "path": "grass"
     },
     {
       "id": 40,
@@ -266,7 +266,7 @@ const board: Cell[][] = [
       "id": 53,
       "isWay": true,
       "path": "bottomToLeft",
-      "items": [colorzXp]
+      "items": [piano]
     },
     {
       "id": 54,
@@ -556,14 +556,14 @@ const board: Cell[][] = [
     },
     {
       "id": 108,
-      "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [tree]
     },
     {
       "id": 109,
       "isWay": true,
       "path": "grass",
-      "items": [piano]
+      "items": [colorzXp]
     },
     {
       "id": 110,

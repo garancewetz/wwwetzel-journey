@@ -3,10 +3,14 @@ import { sun, piano, wine, sarahBernhardt, queer, reading, cheese, karaoke } fro
 export interface Reaction {
     id?: string;
     text: string;
+    // Nouvelle image du danger une fois neutralisé
     image: string | null;
+    // Le danger s'écarte (sans nouvelle image : il disparaît)
+    defeats?: boolean;
 }
 
-// Ce qui se passe quand on utilise un objet du sac face à un danger
+// Ce qui se passe quand on utilise un objet du sac face à un danger.
+// Une réaction avec image ou defeats neutralise le danger, qui laisse alors passer.
 const crossed: Record<string, Reaction[]> = {
     "mushroom": [
         {
@@ -64,8 +68,9 @@ const crossed: Record<string, Reaction[]> = {
         },
         {
             id: wine.id,
-            text: "Je lui offre un verre de vin. Il aime ça !",
-            image: null
+            text: "Je lui offre un verre de vin. Il aime ça, et me laisse passer !",
+            image: null,
+            defeats: true
         },
         {
             id: queer.id,

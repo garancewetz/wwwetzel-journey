@@ -11,6 +11,13 @@
   initial-value: 1.25;
 }
 
+/* Teinte de l'humeur, déclarée pour passer en douceur d'une couleur à l'autre */
+@property --mood {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 :root {
   --cell: 96px;
   --step: 220ms; /* = STEP_MS dans store/controls.ts */
@@ -42,7 +49,12 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  transition: --halo 900ms ease-out;
+  --radius: calc(var(--cell) * var(--halo));
+}
+
+/* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
+.game[data-ready="true"] {
+  transition: --halo 900ms ease-out, --mood 1200ms ease-in-out;
 }
 
 /* La case (--row, --col) est toujours au centre de l'écran, sous le personnage */
@@ -58,6 +70,9 @@ body {
     calc((var(--col) + 0.5) * var(--cell) * -1),
     calc((var(--row) + 0.5) * var(--cell) * -1)
   );
+}
+
+[data-ready="true"] .world {
   transition: transform var(--step) linear;
 }
 
@@ -68,6 +83,24 @@ body {
   width: calc(100% + 1px);
   height: calc(100% + 1px);
   shape-rendering: crispEdges;
+}
+
+/* Le noir des cases jamais aperçues ; une fois vues, elles restent en mémoire, très atténuées */
+.fog {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  background: #000;
+}
+
+.fog-seen {
+  opacity: 0;
+}
+
+[data-ready="true"] .fog {
+  transition: opacity 400ms ease-out;
 }
 
 .item {
@@ -92,14 +125,27 @@ body {
   scale: 1.8;
 }
 
-/* Tout est noir, sauf autour du personnage */
+/* L'humeur colore doucement le bord du halo */
+.mood {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent calc(var(--radius) * 0.6),
+    var(--mood) var(--radius),
+    transparent var(--radius)
+  );
+}
+
+/* Autour du personnage, la lumière ; ailleurs, le noir, où la carte déjà vue reste à peine visible */
 .halo {
   position: absolute;
   inset: 0;
   z-index: 10;
   pointer-events: none;
-  background: #000;
-  --radius: calc(var(--cell) * var(--halo));
+  background: rgb(0 0 0 / 0.95);
   -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
   mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
 }
@@ -171,7 +217,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .game,
+  .game[data-ready="true"],
   .item {
     transition: none;
   }
