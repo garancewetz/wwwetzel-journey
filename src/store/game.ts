@@ -63,7 +63,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       // On ramasse en passant dessus
       const collectible = items.find((item) => isCollectible(item) && !state.found.includes(item.id!));
       if (collectible) {
-        return say({ ...next, found: [...state.found, collectible.id!] }, collectible.text ?? collectible.name);
+        const text = collectible.type === 'xp' ? `${collectible.name}\n+1 XP` : collectible.text ?? collectible.name;
+        return say({ ...next, found: [...state.found, collectible.id!] }, text);
       }
 
       const danger = dangerAt(state, position);

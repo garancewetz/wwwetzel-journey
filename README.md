@@ -1,6 +1,6 @@
 # wwwetzel journey
 
-Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée agrandit la lumière. Des objets ramassés en route aident à se tirer de quelques rencontres.
+Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée rapporte un point d'XP et agrandit la lumière. Des objets ramassés en route aident à se tirer de quelques rencontres.
 
 **Jouer : à renseigner après la mise en ligne**
 

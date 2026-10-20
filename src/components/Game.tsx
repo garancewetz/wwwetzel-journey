@@ -44,6 +44,17 @@ export default function Game() {
       <div className="halo" />
       <img src="/garance.svg" alt="Garance" draggable={false} className="character" />
 
+      {/* Les points d'expérience : apparaissent à la première expérience trouvée */}
+      <div
+        aria-label={`${xpCount} XP sur ${experiences.length}`}
+        className={`fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 text-[11px] tracking-widest text-white/70 transition-opacity duration-700 ${xpCount ? 'opacity-100' : 'opacity-0'}`}
+      >
+        XP {xpCount}/{experiences.length}
+        <div className="mt-1 h-0.5 w-16 bg-white/15">
+          <div className="h-full bg-amber-200/80 transition-[width] duration-700" style={{ width: `${(xpCount / experiences.length) * 100}%` }} />
+        </div>
+      </div>
+
       <header className="fixed inset-x-0 top-0 z-30 bg-linear-to-b from-black via-black/70 to-transparent px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-10 text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         <p className={`mt-1 text-xs text-white/40 transition-opacity duration-700 ${hasMoved && !isComplete ? 'opacity-0' : 'opacity-100'}`}>
@@ -62,7 +73,7 @@ export default function Game() {
         {message && (
           <span
             key={message.key}
-            className="message"
+            className="message whitespace-pre-line"
             style={{ '--duration': `${Math.max(4000, message.text.length * 70)}ms` } as CSSProperties}
           >
             {message.text}
