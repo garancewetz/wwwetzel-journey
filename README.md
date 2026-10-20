@@ -7,7 +7,7 @@ Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le pe
 ## Comment jouer
 
 - **Ordinateur** : les flèches pour marcher (on peut les garder appuyées). On ramasse un objet en passant dessus. Les touches 1 à 8, ou un clic, utilisent un objet du sac.
-- **Téléphone** : garder le doigt appuyé et glisser dans la direction voulue. On touche un objet du sac pour l'utiliser.
+- **Téléphone** : un joystick vient se placer sous le doigt ; on garde appuyé et on glisse dans la direction voulue. On touche un objet du sac pour l'utiliser.
 
 ## Stack
 

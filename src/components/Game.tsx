@@ -1,6 +1,6 @@
 'use client'
 
-import { CSSProperties, useCallback, useEffect, useReducer } from 'react';
+import { CSSProperties, useCallback, useEffect, useReducer, useRef } from 'react';
 import { experiences, interests } from '@/datas/items';
 import { COLLECTIBLES_COUNT, START, gameReducer, initialState } from '@/store/game';
 import { useControls } from '@/store/controls';
@@ -14,7 +14,8 @@ export default function Game() {
 
   const move = useCallback((directions: Direction[]) => dispatch({ type: 'move', directions }), []);
   const activate = useCallback((id: string) => dispatch({ type: 'use', id }), []);
-  const pointer = useControls(move);
+  const joystick = useRef<HTMLDivElement>(null);
+  const pointer = useControls(move, joystick);
 
   // Touches 1 à 8 : utiliser un objet du sac
   useEffect(() => {
@@ -68,6 +69,11 @@ export default function Game() {
           </span>
         )}
       </p>
+
+      {/* Sur écran tactile seulement : il vient se placer sous le doigt */}
+      <div ref={joystick} className="joystick" aria-hidden>
+        <div className="joystick-knob" />
+      </div>
 
       <Inventory found={found} onUse={activate} />
     </main>

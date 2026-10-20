@@ -113,6 +113,51 @@ body {
   pointer-events: none;
 }
 
+/* Au repos en bas de l'écran, puis sous le doigt (--jx, --jy) ; la pastille suit le doigt (--kx, --ky) */
+.joystick {
+  display: none;
+  position: fixed;
+  left: var(--jx, 50%);
+  top: var(--jy, calc(100% - 9rem - env(safe-area-inset-bottom)));
+  z-index: 30;
+  width: 96px;
+  height: 96px;
+  translate: -50% -50%;
+  border: 2px solid rgb(255 255 255 / 0.5);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.04);
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 300ms ease-out;
+}
+
+.joystick[data-active="true"] {
+  opacity: 0.9;
+}
+
+@media (pointer: coarse) {
+  .joystick {
+    display: block;
+  }
+}
+
+.joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  border: 2px solid rgb(255 255 255 / 0.8);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.25);
+  translate: calc(-50% + var(--kx, 0px)) calc(-50% + var(--ky, 0px));
+  transition: translate 150ms ease-out;
+}
+
+.joystick[data-active="true"] .joystick-knob {
+  transition: none;
+}
+
 .message {
   display: inline-block;
   animation: message var(--duration) ease-in-out forwards;
