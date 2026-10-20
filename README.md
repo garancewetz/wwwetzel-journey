@@ -1,70 +1,47 @@
-# wwwetzel-journey
+# wwwetzel journey
 
-Portfolio front-end interactif de Garance Wetzel, construit comme une expérience de navigation gamifiée.
+Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée agrandit la lumière. Des objets ramassés en route aident à se tirer de quelques rencontres.
 
-## Demo
+**Jouer : à renseigner après la mise en ligne**
 
-- Lien de démo live: `A renseigner`
+## Comment jouer
 
-## Objectif du projet
+- **Ordinateur** : les flèches pour marcher (on peut les garder appuyées). On ramasse un objet en passant dessus. Les touches 1 à 8, ou un clic, utilisent un objet du sac.
+- **Téléphone** : garder le doigt appuyé et glisser dans la direction voulue. On touche un objet du sac pour l'utiliser.
 
-Ce projet présente des expériences et réalisations professionnelles via une interface interactive basée sur une grille, avec exploration clavier et découverte de contenus.
+## Stack
 
-## Fonctionnalités
+Next.js 15 (App Router, export statique), React 19, TypeScript, Tailwind CSS 4. Aucune bibliothèque d'animation : les déplacements et fondus sont en CSS.
 
-- Déplacement clavier dans une grille interactive
-- Collecte d'éléments d'intérêt et d'expériences
-- Affichage contextuel de contenus dans un panneau latéral
-- Animations UI avec Framer Motion
-
-## Stack technique
-
-- Next.js 15 (App Router)
-- React 19
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-
-## Installation
+## Lancer en local
 
 ```bash
 npm install
-```
-
-## Lancer le projet
-
-```bash
 npm run dev
 ```
 
-Le projet est ensuite disponible sur [http://localhost:3000](http://localhost:3000).
+Le jeu est alors sur [http://localhost:3000](http://localhost:3000).
 
-## Scripts disponibles
+## Scripts
 
-- `npm run dev` lance le serveur de développement
-- `npm run build` génère la version de production
-- `npm run start` lance le serveur de production
-- `npm run lint` exécute ESLint
-- `npm run lint:fix` corrige automatiquement les erreurs lint simples
-- `npm run typecheck` lance la vérification TypeScript
+- `npm run dev` : serveur de développement
+- `npm run build` : site statique dans `out/`
+- `npm run lint` : ESLint
+- `npm run typecheck` : vérification TypeScript
 
-## Architecture
+## Organisation
 
 ```text
 src/
-  app/           # Entrées App Router, layout global
-  components/    # UI atoms, molecules, organisms
-  datas/         # Données du jeu/portfolio
-  store/         # Contexte global (BoardContext)
-  types/         # Types TypeScript partagés
+  app/         # page et layout
+  components/  # Game (la partie), World (la carte), Inventory (le sac), PathsSprite (les tuiles)
+  datas/       # la carte, les objets, les réactions des dangers
+  store/       # règles du jeu (reducer) et contrôles clavier / tactile
+  types/
 ```
 
-## Qualité
+Pour modifier la carte, voir `src/datas/board.ts` : chaque case a un décor (`path`), peut être praticable (`isWay`) et porter des objets.
 
-- Linting avec ESLint
-- Typage statique avec TypeScript
+## Mise en ligne
 
-## Contact
-
-- Portfolio: `A renseigner`
-- LinkedIn: `A renseigner`
+Netlify, réglages dans `netlify.toml` : `npm run build`, dossier publié `out/`.

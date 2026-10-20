@@ -1,6 +1,13 @@
 import { sun, piano, wine, sarahBernhardt, queer, reading, cheese, karaoke } from "./items";
 
-const crossed = {
+export interface Reaction {
+    id?: string;
+    text: string;
+    image: string | null;
+}
+
+// Ce qui se passe quand on utilise un objet du sac face à un danger
+const crossed: Record<string, Reaction[]> = {
     "mushroom": [
         {
             id: sun.id,

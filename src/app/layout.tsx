@@ -1,22 +1,21 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist } from "next/font/google";
 import "./globals.css";
-import { BoardProvider } from "../store/BoardContext";
-import PathsSprite from "../components/atoms/PathsSprite";
+import PathsSprite from "@/components/PathsSprite";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "wwwetzel-journey | Portfolio interactif",
-  description: "Portfolio front-end interactif de Garance Etzel, développé avec Next.js et TypeScript.",
+  title: "wwwetzel journey",
+  description: "Un petit jeu en pixel art : on marche dans le noir et on découvre en chemin le parcours de Garance Wetzel.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -26,13 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} antialiased`}>
         <PathsSprite />
-        <BoardProvider>
-          {children}
-        </BoardProvider>
+        {children}
       </body>
     </html>
   );

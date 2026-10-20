@@ -1,41 +1,132 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Rayon du halo : déclaré pour pouvoir l'animer */
+@property --halo {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 150px;
+}
+
+:root {
+  --cell: 96px;
+  --step: 220ms; /* = STEP_MS dans store/controls.ts */
+}
+
+@media (min-width: 640px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --cell: 120px;
   }
+}
+
+html,
+body {
+  height: 100%;
+  background: #000;
+  color: #fff;
+  overscroll-behavior: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(234, 179, 8, 0.5), 0 0 10px rgba(234, 179, 8, 0.3);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(234, 179, 8, 0.8), 0 0 25px rgba(234, 179, 8, 0.5);
-    transform: scale(1.1);
-  }
+.game {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: --halo 900ms ease-out;
 }
 
-.pulse-glow-animation {
-  animation: pulse-glow 2s ease-in-out infinite;
+/* La case (--row, --col) est toujours au centre de l'écran, sous le personnage */
+.world {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  grid-template-columns: repeat(11, var(--cell));
+  grid-auto-rows: var(--cell);
+  pointer-events: none;
+  transform: translate(
+    calc((var(--col) + 0.5) * var(--cell) * -1),
+    calc((var(--row) + 0.5) * var(--cell) * -1)
+  );
+  transition: transform var(--step) linear;
+}
+
+/* 1px de recouvrement : pas de fine ligne entre deux cases quand la carte tombe entre deux pixels */
+.tile {
+  position: absolute;
+  inset: 0;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  shape-rendering: crispEdges;
+}
+
+.item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  transition: opacity 500ms ease-out, scale 500ms ease-out;
+}
+
+.item-large {
+  width: 83%;
+}
+
+.item-small {
+  width: 25%;
+  filter: drop-shadow(0 0 6px rgb(255 240 180 / 0.45));
+}
+
+.item-found {
+  opacity: 0;
+  scale: 1.8;
+}
+
+/* Tout est noir, sauf autour du personnage */
+.halo {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: #000;
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--halo), #000 var(--halo));
+  mask: radial-gradient(circle at 50% 50%, transparent var(--halo), #000 var(--halo));
+}
+
+.character {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  width: calc(var(--cell) * 0.42);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+.message {
+  display: inline-block;
+  animation: message var(--duration) ease-in-out forwards;
+}
+
+@keyframes message {
+  0% { opacity: 0; }
+  8%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game,
+  .item {
+    transition: none;
+  }
 }

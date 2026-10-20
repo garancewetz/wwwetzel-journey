@@ -1,7 +1,8 @@
 import { mushroom, tree, surpriseTree, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard } from "./items";
+import { Cell } from "@/types/game";
 
 
-const board = [
+const board: Cell[][] = [
   [
     {
       "id": 1,
