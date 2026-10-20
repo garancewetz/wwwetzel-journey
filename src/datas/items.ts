@@ -64,7 +64,7 @@ const mushroom: Item = {
     "id": "mushroom",
     "name": "Champignon maléfique",
     "image": "/dangers/mushroom.svg",
-    "text": "Oh non, un champignon maléfique ! JE SUIS EN DANGER ! Ai-je quelque chose dans mon sac pour le neutraliser ?"
+    "text": "Oh non, un champignon maléfique ! Il ne vit que dans l'ombre et l'humidité... Ai-je quelque chose de lumineux dans mon sac ?"
 }
 
 // Clin d'œil à Diablo II
@@ -73,7 +73,7 @@ const andariel: Item = {
     "id": "andariel",
     "name": "Andariel",
     "image": "/dangers/andariel.svg",
-    "text": "Andariel, la Vierge de l'Angoisse, me barre la route ! On dit qu'elle craint le feu... Ai-je quelque chose de brûlant dans mon sac ?"
+    "text": "Andariel, la Vierge de l'Angoisse, me barre la route ! On dit qu'elle ne craint qu'une chose : une arme qui brûle."
 }
 
 const lifeguard: Item = {
@@ -81,7 +81,7 @@ const lifeguard: Item = {
     "id": "lifeguard",
     "name": "Maître nageur musclé",
     "image": "/dangers/lifeguard.svg",
-    "text": "Un maître nageur musclé ? Mais c'est horrible ! Je déteste les bonnets de bain, et je n'ai pas de tee-shirt à lui proposer..."
+    "text": "Un maître nageur musclé me barre la route. Il s'ennuie ferme sur sa plage... Un petit remontant le ferait peut-être bouger ?"
 }
 
 

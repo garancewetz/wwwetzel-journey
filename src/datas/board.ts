@@ -200,7 +200,8 @@ const board: Cell[][] = [
     {
       "id": 40,
       "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [wine]
     },
     {
       "id": 41,
@@ -266,7 +267,8 @@ const board: Cell[][] = [
     {
       "id": 53,
       "isWay": true,
-      "path": "bottomToLeft"
+      "path": "bottomToLeft",
+      "items": [ruby]
     },
     {
       "id": 54,
@@ -344,8 +346,7 @@ const board: Cell[][] = [
     {
       "id": 68,
       "isWay": true,
-      "path": "grass",
-      "items": [wine]
+      "path": "grass"
     },
     {
       "id": 69,
@@ -466,8 +467,7 @@ const board: Cell[][] = [
     {
       "id": 90,
       "isWay": true,
-      "path": "grass",
-      "items": [ruby]
+      "path": "grass"
     },
     {
       "id": 91,

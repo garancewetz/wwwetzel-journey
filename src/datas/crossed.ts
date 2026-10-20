@@ -58,9 +58,8 @@ const crossed: Record<string, Reaction[]> = {
     "andariel": [
         {
             id: sun.id,
-            text: "Le soleil du sud brûle comme les enfers. Andariel y retourne aussitôt !",
-            image: null,
-            defeats: true
+            text: "Le soleil ? En enfer il fait déjà bien assez chaud. Andariel ricane.",
+            image: null
         },
         {
             id: ruby.id,
@@ -102,8 +101,8 @@ const crossed: Record<string, Reaction[]> = {
     "lifeguard": [
         {
             id: sun.id,
-            text: "Hahaha ! Le maître nageur musclé a pris un coup de soleil. ",
-            image: "/dangers/lifeguardXsun.svg"
+            text: "Il est déjà bronzé à point. Le soleil ne lui fait ni chaud ni froid.",
+            image: null
         },
         {
             id: sarahBernhardt.id,

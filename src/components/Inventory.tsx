@@ -3,34 +3,47 @@ import { interests } from '@/datas/items';
 interface InventoryProps {
   found: string[];
   onUse: (id: string) => void;
+  // 'first' : on vient de ramasser un objet ; 'facing' : un ennemi barre la route
+  hint: 'first' | 'facing' | null;
 }
 
+const HINTS = {
+  first: { keys: '1 à 8 pour utiliser un objet', touch: 'Touche un objet pour l’utiliser' },
+  facing: { keys: 'Quel objet du sac ? 1 à 8', touch: 'Quel objet du sac ? Touche-le' },
+};
+
 // Le sac : touches 1 à 8 au clavier, ou on touche l'objet
-export default function Inventory({ found, onUse }: InventoryProps) {
+export default function Inventory({ found, onUse, hint }: InventoryProps) {
   const isEmpty = !interests.some((interest) => found.includes(interest.id!));
 
   return (
-    <ul
-      className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-30 flex -translate-x-1/2 gap-1.5 sm:gap-2 transition-opacity duration-700 ${isEmpty ? 'opacity-0' : 'opacity-100'}`}
+    <div
+      className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-30 -translate-x-1/2 transition-opacity duration-700 ${isEmpty ? 'opacity-0' : 'opacity-100'}`}
     >
-      {interests.map((interest, index) => (
-        <li key={interest.id} className="size-8 sm:size-10">
-          {found.includes(interest.id!) ? (
-            <button
-              type="button"
-              onClick={() => onUse(interest.id!)}
-              title={interest.name}
-              aria-label={`Utiliser : ${interest.name}`}
-              className="relative flex size-full items-center justify-center rounded transition-transform active:scale-90"
-            >
-              <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8" />
-              <span className="absolute -top-1 -left-1 text-[10px] text-white/40 pointer-coarse:hidden">{index + 1}</span>
-            </button>
-          ) : (
-            <span className="block size-full rounded border border-white/10" />
-          )}
-        </li>
-      ))}
-    </ul>
+      <p aria-live="polite" className={`mb-2 text-center text-xs text-white/50 transition-opacity duration-500 ${hint ? 'opacity-100' : 'opacity-0'}`}>
+        <span className="pointer-coarse:hidden">{hint ? HINTS[hint].keys : '\u00a0'}</span>
+        <span className="hidden pointer-coarse:inline">{hint ? HINTS[hint].touch : '\u00a0'}</span>
+      </p>
+      <ul className="flex gap-1.5 sm:gap-2">
+        {interests.map((interest, index) => (
+          <li key={interest.id} className="size-8 sm:size-10">
+            {found.includes(interest.id!) ? (
+              <button
+                type="button"
+                onClick={() => onUse(interest.id!)}
+                title={interest.name}
+                aria-label={`Utiliser : ${interest.name}`}
+                className="relative flex size-full items-center justify-center rounded transition-transform active:scale-90"
+              >
+                <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8" />
+                <span className="absolute -top-1 -left-1 text-[10px] text-white/40 pointer-coarse:hidden">{index + 1}</span>
+              </button>
+            ) : (
+              <span className="block size-full rounded border border-white/10" />
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

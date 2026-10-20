@@ -20,9 +20,10 @@ export type Mood = 'calm' | 'joy' | 'fear';
 // Après quelques pas sans événement, l'humeur redevient calme
 const MOOD_STEPS = 8;
 
-// Mana : chaque expérience l'agrandit et la remplit, chaque intérêt utilisé en coûte 1,
+// Mana : la force de vaincre un ennemi. Chaque expérience l'agrandit et la recharge,
 // et elle revient en marchant (jamais de blocage)
 const MANA_STEPS = 6;
+export const SPELL_COST = 3;
 export const maxMana = (found: string[]) => 3 + xpCount(found) * 2;
 
 export interface GameState {
@@ -89,7 +90,7 @@ const dangerIn = (state: GameState, { row, col }: Position) =>
   board[row]?.[col]?.items?.find((item) => item.type === 'danger' && !(item.id! in state.defeated));
 
 // Le danger qui barre le chemin, juste à côté du personnage
-function dangerNextTo(state: GameState) {
+export function dangerNextTo(state: GameState) {
   for (const [dRow, dCol] of Object.values(STEPS)) {
     const danger = dangerIn(state, { row: state.position.row + dRow, col: state.position.col + dCol });
     if (danger) return danger;
@@ -146,8 +147,6 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case 'use': {
       const item = interests.find((interest) => interest.id === action.id);
       if (!item || !state.found.includes(action.id)) return state;
-      if (state.mana < 1) return say(state, 'Plus de mana... Je marche un peu pour reprendre des forces.');
-      state = { ...state, mana: state.mana - 1 };
 
       const danger = dangerNextTo(state);
       if (!danger) {
@@ -158,8 +157,20 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
       const reaction = crossed[danger.id!]?.find((r) => r.id === item.id);
       if (reaction && (reaction.image || reaction.defeats)) {
+        if (state.mana < SPELL_COST) {
+          return say(
+            state,
+            `${item.name} vacille... Il me manque de la mana. Une nouvelle expérience me donnerait de la force.`,
+            'fear',
+          );
+        }
         return say(
-          { ...state, defeated: { ...state.defeated, [danger.id!]: reaction.image ?? '' }, bumped: null },
+          {
+            ...state,
+            mana: state.mana - SPELL_COST,
+            defeated: { ...state.defeated, [danger.id!]: reaction.image ?? '' },
+            bumped: null,
+          },
           reaction.text,
           'joy',
         );

@@ -2,7 +2,7 @@
 
 import { CSSProperties, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { experiences, interests } from '@/datas/items';
-import { COLLECTIBLES_COUNT, START, gameReducer, haloRadius, initialState, maxMana, xpCount as countXp } from '@/store/game';
+import { COLLECTIBLES_COUNT, START, dangerNextTo, gameReducer, haloRadius, initialState, maxMana, xpCount as countXp } from '@/store/game';
 import { useControls } from '@/store/controls';
 import { loadGame, saveGame } from '@/store/save';
 import { Direction } from '@/types/game';
@@ -58,6 +58,12 @@ export default function Game() {
   const xpCount = countXp(found);
   const isComplete = found.length === COLLECTIBLES_COUNT;
   const hasMoved = position.row !== START.row || position.col !== START.col;
+
+  // Comment se servir du sac : au premier objet, puis chaque fois qu'un ennemi barre la route
+  const hasItems = interests.some((interest) => found.includes(interest.id!));
+  const hasUsed = Object.keys(state.uses).length > 0 || Object.keys(defeated).length > 0;
+  const facing = dangerNextTo(state);
+  const hint = !hasItems ? null : facing ? 'facing' : hasUsed ? null : 'first';
 
   return (
     <main
@@ -122,7 +128,7 @@ export default function Game() {
         <div className="joystick-knob" />
       </div>
 
-      <Inventory found={found} onUse={activate} />
+      <Inventory found={found} onUse={activate} hint={hint} />
     </main>
   );
 }
