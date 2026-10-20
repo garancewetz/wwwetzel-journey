@@ -26,8 +26,6 @@ export interface GameState {
   found: string[];
   // danger neutralisé -> sa nouvelle image ('' : il est parti)
   defeated: Record<string, string>;
-  // cases où l'on a marché ("row,col") : ces chemins restent faiblement éclairés
-  walked: string[];
   mood: Mood;
   moodSteps: number;
   // key change à chaque message, même si le texte est identique
@@ -36,7 +34,7 @@ export interface GameState {
   bumped: string | null;
 }
 
-export type SavedGame = Pick<GameState, 'position' | 'found' | 'defeated' | 'walked'>;
+export type SavedGame = Pick<GameState, 'position' | 'found' | 'defeated'>;
 
 export type GameAction =
   // Plusieurs directions : la première praticable l'emporte (on glisse le long des obstacles)
@@ -52,17 +50,12 @@ export const xpCount = (found: string[]) => experiences.filter((xp) => found.inc
 // Rayon du halo, en cases : il grandit un peu à chaque expérience
 export const haloRadius = (found: string[]) => 1.25 + xpCount(found) * 0.125;
 
-const key = ({ row, col }: Position) => `${row},${col}`;
-
-const walk = (walked: string[], position: Position) =>
-  walked.includes(key(position)) ? walked : [...walked, key(position)];
 
 function fresh(): GameState {
   return {
     position: START,
     found: [],
     defeated: {},
-    walked: [key(START)],
     mood: 'calm',
     moodSteps: 0,
     message: null,
@@ -111,7 +104,6 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const next: GameState = {
           ...state,
           position,
-          walked: walk(state.walked, position),
           bumped: null,
           moodSteps: state.moodSteps + 1,
           mood: state.moodSteps + 1 >= MOOD_STEPS ? 'calm' : state.mood,

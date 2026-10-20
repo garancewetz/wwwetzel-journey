@@ -115,12 +115,13 @@ const board: Cell[][] = [
     {
       "id": 24,
       "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [colorzXp]
     },
     {
       "id": 25,
-      "isWay": true,
-      "path": "grass"
+      "path": "grass",
+      "items": [tree]
     },
     {
       "id": 26,
@@ -173,8 +174,8 @@ const board: Cell[][] = [
     {
       "id": 35,
       "isWay": true,
-      "path": "grass",
-      "items": [cheese]
+      "path": "mud",
+      "items": [mushroom]
     },
     {
       "id": 36,
@@ -505,9 +506,8 @@ const board: Cell[][] = [
     },
     {
       "id": 98,
-      "path": "mud",
-      "isWay": true,
-      "items": [mushroom]
+      "path": "grass",
+      "isWay": true
     },
     {
       "id": 99,
@@ -565,7 +565,7 @@ const board: Cell[][] = [
       "id": 109,
       "isWay": true,
       "path": "grass",
-      "items": [colorzXp]
+      "items": [cheese]
     },
     {
       "id": 110,

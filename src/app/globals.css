@@ -85,25 +85,6 @@ body {
   shape-rendering: crispEdges;
 }
 
-/* Les chemins parcourus, au-dessus du noir : une trace faible de la balade */
-.world-lit {
-  z-index: 12;
-}
-
-.lit-cell {
-  position: absolute;
-  inset: 0;
-  opacity: 0.4;
-}
-
-[data-ready="true"] .lit-cell {
-  animation: light-up 900ms ease-out;
-}
-
-@keyframes light-up {
-  from { opacity: 0; }
-}
-
 .item {
   position: absolute;
   left: 50%;
@@ -130,7 +111,7 @@ body {
 .mood {
   position: absolute;
   inset: 0;
-  z-index: 15;
+  z-index: 5;
   pointer-events: none;
   background: radial-gradient(
     circle at 50% 50%,

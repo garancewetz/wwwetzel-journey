@@ -18,7 +18,7 @@ const MOOD_COLORS = {
 
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { position, found, defeated, walked, mood, message } = state;
+  const { position, found, defeated, mood, message } = state;
   // Les transitions attendent la reprise de la partie, pour ne pas voir la carte défiler au chargement
   const [ready, setReady] = useState(false);
 
@@ -74,7 +74,6 @@ export default function Game() {
       {...pointer}
     >
       <World found={found} defeated={defeated} />
-      <World found={found} defeated={defeated} lit={walked} />
       <div className="mood" />
       <div className="halo" />
       <img src="/garance.svg" alt="Garance" draggable={false} className="character" />

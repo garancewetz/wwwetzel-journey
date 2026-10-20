@@ -5,7 +5,7 @@ Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le pe
 - **Les intérêts** (le soleil, le vin, le piano, un rubis…) se ramassent en route et vont dans le sac.
 - **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, en clin d'œil à Diablo) barrent le passage vers certaines expériences : il faut trouver le bon intérêt à leur offrir. Les autres font juste réagir.
 - **L'humeur** teinte doucement le bord de la lumière : chaude quand tout va bien, froide face à un danger.
-- **La carte** se souvient : les chemins parcourus restent faiblement éclairés dans le noir.
+- **La carte** se découvre pas à pas, à la seule lumière du halo.
 
 La partie est gardée dans le navigateur : on reprend là où on s'était arrêté.
 
