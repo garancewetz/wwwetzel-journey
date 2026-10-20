@@ -4,11 +4,11 @@
   --font-sans: var(--font-geist-sans);
 }
 
-/* Rayon du halo : déclaré pour pouvoir l'animer */
+/* Rayon du halo, en nombre de cases : déclaré pour pouvoir l'animer */
 @property --halo {
-  syntax: "<length>";
+  syntax: "<number>";
   inherits: true;
-  initial-value: 150px;
+  initial-value: 1.25;
 }
 
 :root {
@@ -99,8 +99,9 @@ body {
   z-index: 10;
   pointer-events: none;
   background: #000;
-  -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--halo), #000 var(--halo));
-  mask: radial-gradient(circle at 50% 50%, transparent var(--halo), #000 var(--halo));
+  --radius: calc(var(--cell) * var(--halo));
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
+  mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
 }
 
 .character {

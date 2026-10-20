@@ -31,8 +31,8 @@ export default function Game() {
   const isComplete = found.length === COLLECTIBLES_COUNT;
   const hasMoved = position.row !== START.row || position.col !== START.col;
 
-  // Le halo s'agrandit à chaque expérience ; à la fin, la nuit se lève
-  const halo = isComplete ? '150vmax' : `calc(var(--cell) * ${1.25 + xpCount * 0.125})`;
+  // Le halo s'agrandit un peu à chaque expérience, sans jamais tout éclairer
+  const halo = 1.25 + xpCount * 0.125;
 
   return (
     <main
@@ -55,11 +55,11 @@ export default function Game() {
         </div>
       </div>
 
-      <header className="fixed inset-x-0 top-0 z-30 bg-linear-to-b from-black via-black/70 to-transparent px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-10 text-center">
+      <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         <p className={`mt-1 text-xs text-white/40 transition-opacity duration-700 ${hasMoved && !isComplete ? 'opacity-0' : 'opacity-100'}`}>
           {isComplete ? (
-            'Tout est éclairé. Merci pour la balade.'
+            'Merci pour la balade.'
           ) : (
             <>
               <span className="pointer-coarse:hidden">Les flèches pour marcher</span>
@@ -69,7 +69,7 @@ export default function Game() {
         </p>
       </header>
 
-      <p aria-live="polite" className="fixed inset-x-0 top-[18%] z-30 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-white/85 [text-shadow:0_1px_3px_#000]">
+      <p aria-live="polite" className="fixed inset-x-0 top-[18%] z-30 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-white/85">
         {message && (
           <span
             key={message.key}
