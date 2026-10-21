@@ -15,6 +15,41 @@ const ARROWS: Record<string, Direction> = {
 // Au doigt : en dessous de DEAD_ZONE on ne bouge pas ; la pastille du joystick reste dans RADIUS
 const DEAD_ZONE = 14;
 const RADIUS = 40;
+// On ne change d'axe qu'une fois la diagonale nettement dépassée (~52°), pour ne pas trembler entre deux directions
+const SWITCH_RATIO = 1.3;
+
+const isHorizontal = (direction?: Direction) => direction === 'left' || direction === 'right';
+const isVertical = (direction?: Direction) => direction === 'up' || direction === 'down';
+
+// La direction principale, puis la secondaire pour glisser le long d'un mur si la principale est bloquée
+export function stickDirections(dx: number, dy: number, previous?: Direction): Direction[] {
+  if (Math.hypot(dx, dy) < DEAD_ZONE) return [];
+  const horizontal: Direction = dx > 0 ? 'right' : 'left';
+  const vertical: Direction = dy > 0 ? 'down' : 'up';
+  const [ax, ay] = [Math.abs(dx), Math.abs(dy)];
+
+  let mainIsHorizontal = ax > ay;
+  if (isHorizontal(previous)) mainIsHorizontal = ay <= ax * SWITCH_RATIO;
+  else if (isVertical(previous)) mainIsHorizontal = ax > ay * SWITCH_RATIO;
+
+  const [main, minor] = mainIsHorizontal ? [horizontal, vertical] : [vertical, horizontal];
+  const minorAmount = mainIsHorizontal ? ay : ax;
+  return minorAmount > DEAD_ZONE ? [main, minor] : [main];
+}
+
+// Au-delà du rayon, le centre du joystick suit le doigt : repartir dans l'autre sens est immédiat
+export function followFinger(anchor: { x: number; y: number }, finger: { x: number; y: number }) {
+  const dx = finger.x - anchor.x;
+  const dy = finger.y - anchor.y;
+  const distance = Math.hypot(dx, dy);
+  if (distance <= RADIUS) return { anchor, dx, dy };
+  const pull = (distance - RADIUS) / distance;
+  return {
+    anchor: { x: anchor.x + dx * pull, y: anchor.y + dy * pull },
+    dx: dx * (1 - pull),
+    dy: dy * (1 - pull),
+  };
+}
 
 type Step = (directions: Direction[]) => void;
 
@@ -73,12 +108,15 @@ function createControls(step: Step, joystick: { current: HTMLElement | null }) {
   const release = () => {
     keys.length = 0;
     drag = null;
+    queued = [];
     showJoystick(joystick.current, null);
   };
 
   const endDrag = (event: PointerEvent) => {
     if (drag?.id !== event.pointerId) return;
     drag = null;
+    // Lever le doigt arrête net : pas de pas en attente
+    queued = [];
     showJoystick(joystick.current, null);
   };
 
@@ -107,21 +145,12 @@ function createControls(step: Step, joystick: { current: HTMLElement | null }) {
       },
       onPointerMove(event: PointerEvent) {
         if (drag?.id !== event.pointerId) return;
-        const dx = event.clientX - drag.x;
-        const dy = event.clientY - drag.y;
-        const distance = Math.hypot(dx, dy);
-        const clamp = Math.min(1, RADIUS / distance);
-        showJoystick(joystick.current, drag, dx * clamp, dy * clamp);
-        if (distance < DEAD_ZONE) {
-          drag.directions = [];
-          return;
-        }
-        const horizontal: Direction = dx > 0 ? 'right' : 'left';
-        const vertical: Direction = dy > 0 ? 'down' : 'up';
-        const [main, minor] = Math.abs(dx) > Math.abs(dy) ? [horizontal, vertical] : [vertical, horizontal];
-        const minorAmount = Math.min(Math.abs(dx), Math.abs(dy));
-        drag.directions = minorAmount > DEAD_ZONE ? [main, minor] : [main];
-        wake(drag.directions);
+        const { anchor, dx, dy } = followFinger(drag, { x: event.clientX, y: event.clientY });
+        drag.x = anchor.x;
+        drag.y = anchor.y;
+        showJoystick(joystick.current, drag, dx, dy);
+        drag.directions = stickDirections(dx, dy, drag.directions[0]);
+        if (drag.directions.length) wake(drag.directions);
       },
       onPointerUp: endDrag,
       onPointerCancel: endDrag,
