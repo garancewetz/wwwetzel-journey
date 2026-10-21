@@ -259,7 +259,7 @@ svg {
   display: none;
   position: fixed;
   left: var(--jx, 50%);
-  top: var(--jy, calc(100% - 9rem - env(safe-area-inset-bottom)));
+  top: var(--jy, calc(100% - 12rem - env(safe-area-inset-bottom)));
   z-index: 30;
   width: 96px;
   height: 96px;
