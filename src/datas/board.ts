@@ -1,34 +1,34 @@
 import { Cell, Item, Position } from '@/types/game';
 import {
-  andariel, cain, cheese, cloud, colorzXp, curtain, fox, karaoke, lifeguard, mushroom, okeiroXp, openclassroomsXp,
-  queer, reading, ruby, sarahBernhardt, sorbonneXp, sun, surpriseTree, threeWXp, tree, troll, uptooXp, wine,
+  andariel, bush, cain, cheese, cloud, colorzXp, curtain, fox, karaoke, lifeguard, mushroom, okeiroXp, openclassroomsXp,
+  queer, reading, ruby, salameche, sarahBernhardt, sorbonneXp, sun, threeWXp, tree, troll, uptooXp, wine,
 } from './items';
 
 // La carte, vue du dessus. Chaque région s'ouvre par un gardien, que l'on passe avec l'objet trouvé juste avant.
-// Sol : T arbre, ~ eau, . herbe, = chemin, P place, m boue
+// Sol : T arbre, b buisson, X maison, ~ eau, . herbe, * fleurs, h hautes herbes, = chemin, P place, m boue
 const GROUND = [
-  'TTTTTTTTTTTTTTTTTTTTT',
-  'T~....~Tmmmmmm...TTTT',
-  'T~....~TmmmmmmTTTTTTT',
-  'T~~~=~~TTTT=TTTTTTTTT',
-  'TTT.=......=.....TmmT',
+  'TTXXXTTTTTTTTTTTTTTTT',
+  'T~X.X.~Tmmmmmm...TTTT',
+  'T~*..*~TmmmmmmTTTTTTT',
+  'T~~~=~~XXXT=TTTTTTTTT',
+  'TTT.=..X.X.=.....TmmT',
   'TTT.==============mmT',
-  'TTT.........=....TmmT',
+  'TTT.........=hhhhTmmT',
   'TTTTTTTTTTTT=TTTTTmmT',
-  'T.......T...=.TTTTmmT',
-  'T...=========..TTTmmT',
-  'T...=...T.......TTmmT',
-  'T...=.T.T.......TTmmT',
+  'T.......T...=**bTTmmT',
+  'TXXX=========..bTTmmT',
+  'TX.X=hhhT....XXXTTmmT',
+  'T...=hhhT....X.XTTmmT',
   'TTTT=TTTT.......TTmmT',
-  'T...=....TTTTTTTTTmmT',
-  'T...=....TTTTTTTTT.TT',
-  'T...=....TTTTTTTT.=.T',
-  'T.P==...TTTTTTTTT.P.T',
-  'T.....~~.TTTTTTT....T',
+  'T**.=....TTTTTTTTTmmT',
+  'Th..=XXX.TTTTTTTTTT.T',
+  'Thh.=X.X.TTTTTTTXXX.T',
+  'T.P==...bTTTTTTTX.X.T',
+  'T.**..~~.TTTTTTT*..*T',
   'TTTTTTTTTTTTTTTTTTTTT',
 ];
 
-// Objets et gardiens, aux mêmes coordonnées. @ : départ
+// Objets et gardiens, aux mêmes coordonnées. @ : départ ; une expérience est la porte d'une maison
 const ITEMS = [
   '.....................',
   '...5..........M.u....',
@@ -41,12 +41,12 @@ const ITEMS = [
   '......c..............',
   '........F............',
   '..2.......r..........',
-  '..............3......',
+  '......z.......3......',
   '....R........w.......',
   '.......a.............',
-  '..s...............A..',
+  '..s................A.',
   '......1..............',
-  '..@...............6..',
+  '..@..............6...',
   '.....................',
   '.....................',
 ];
@@ -55,7 +55,9 @@ const LEGEND: Record<string, Item[]> = {
   // Expériences, dans l'ordre du parcours
   '1': [sorbonneXp], '2': [threeWXp], '3': [uptooXp], '4': [openclassroomsXp], '5': [colorzXp], '6': [okeiroXp],
   // Intérêts
-  s: [sun], a: [sarahBernhardt, surpriseTree], c: [cheese], r: [reading], w: [wine], k: [karaoke], q: [queer], u: [ruby],
+  s: [sun], a: [sarahBernhardt],
+  // Caché dans les hautes herbes
+  z: [salameche], c: [cheese], r: [reading], w: [wine], k: [karaoke], q: [queer], u: [ruby],
   // Gardiens : R rideau, F renard, C Deckard Cain, G troll, N nuage ; ennemis : L maître nageur, M champignon, A Andariel
   R: [curtain], F: [fox], C: [cain], G: [troll], N: [cloud], L: [lifeguard], M: [mushroom], A: [andariel],
 };
@@ -75,6 +77,15 @@ function cell(ground: string, mark: string, row: number, col: number): Cell {
   switch (ground) {
     case 'T':
       return { id, path: 'grass', items: [tree] };
+    case 'b':
+      return { id, path: 'grass', items: [bush] };
+    case 'X':
+      // sous une maison, dessinée depuis sa porte
+      return { id, path: 'grass' };
+    case 'h':
+      return { id, path: 'tallgrass', isWay: true, items };
+    case '*':
+      return { id, path: 'flowers', isWay: true, items };
     case '~':
       return { id, path: 'water' };
     case 'm':

@@ -1,13 +1,13 @@
 # wwwetzel journey
 
-Un petit jeu en pixel art. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience trouvée rapporte un point d'XP, recharge la mana et agrandit un peu la lumière.
+Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience est une maison où l'on trouve une étoile, qui rapporte un point d'XP, recharge la mana et agrandit un peu la lumière.
 
 - **Les intérêts** (Sarah Bernhardt, le fromage, un livre, le vin, un micro, un arc-en-ciel, le soleil, un rubis) se ramassent en route et vont dans le sac. Chacun ouvre un passage, et fait rire le reste du temps.
 - **Les gardiens** barrent la route d'une région à l'autre : un rideau de théâtre, un renard (La Fontaine), Deckard Cain, un troll, un nuage de pluie. Leur réplique donne un indice sur l'objet à leur offrir, toujours trouvé juste avant.
-- **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, clin d'œil à Diablo) se battent de la même façon, mais il faut de la mana.
-- **La mana** est la force de vaincre : chaque expérience l'agrandit et la recharge, et elle revient doucement en marchant.
+- **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, clin d'œil à Diablo) se battent de la même façon, mais il faut de la mana. Le maître nageur, une fois apaisé, apprend à nager.
+- **XP et mana** se lisent dans deux orbes, à la Diablo, de chaque côté du sac.
+- **Salamèche** se cache dans les hautes herbes. Trouvé, il suit le personnage et sa flamme éclaire plus loin.
 - **L'humeur** teinte doucement le bord de la lumière : chaude quand tout va bien, froide face à un danger.
-- **La carte** se découvre pas à pas, à la seule lumière du halo.
 
 La partie est gardée dans le navigateur : on reprend là où on s'était arrêté.
 

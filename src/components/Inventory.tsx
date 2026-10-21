@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { interests } from '@/datas/items';
 
 interface InventoryProps {
@@ -5,6 +6,9 @@ interface InventoryProps {
   onUse: (id: string) => void;
   // 'first' : on vient de ramasser un objet ; 'facing' : un ennemi barre la route
   hint: 'first' | 'facing' | null;
+  // les orbes d'XP et de mana, de chaque côté
+  left: ReactNode;
+  right: ReactNode;
 }
 
 const HINTS = {
@@ -13,8 +17,8 @@ const HINTS = {
 };
 
 // Le sac : touches 1 à 8 au clavier, ou on touche l'objet
-export default function Inventory({ found, onUse, hint }: InventoryProps) {
-  const isEmpty = !interests.some((interest) => found.includes(interest.id!));
+export default function Inventory({ found, onUse, hint, left, right }: InventoryProps) {
+  const isEmpty = found.length === 0;
 
   return (
     <div
@@ -24,9 +28,11 @@ export default function Inventory({ found, onUse, hint }: InventoryProps) {
         <span className="pointer-coarse:hidden">{hint ? HINTS[hint].keys : '\u00a0'}</span>
         <span className="hidden pointer-coarse:inline">{hint ? HINTS[hint].touch : '\u00a0'}</span>
       </p>
-      <ul className="flex gap-1.5 sm:gap-2">
+      <div className="flex items-end gap-2 sm:gap-4">
+      {left}
+      <ul className="mb-5 flex gap-0.5 sm:gap-2">
         {interests.map((interest, index) => (
-          <li key={interest.id} className="size-8 sm:size-10">
+          <li key={interest.id} className="size-7 sm:size-10">
             {found.includes(interest.id!) ? (
               <button
                 type="button"
@@ -35,7 +41,7 @@ export default function Inventory({ found, onUse, hint }: InventoryProps) {
                 aria-label={`Utiliser : ${interest.name}`}
                 className="relative flex size-full items-center justify-center rounded transition-transform active:scale-90"
               >
-                <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8" />
+                <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8 [image-rendering:pixelated]" />
                 <span className="absolute -top-1 -left-1 text-[10px] text-white/40 pointer-coarse:hidden">{index + 1}</span>
               </button>
             ) : (
@@ -44,6 +50,8 @@ export default function Inventory({ found, onUse, hint }: InventoryProps) {
           </li>
         ))}
       </ul>
+      {right}
+      </div>
     </div>
   );
 }

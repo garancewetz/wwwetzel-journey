@@ -12,7 +12,8 @@ const STEPS: Record<Direction, [number, number]> = {
   right: [0, 1],
 };
 
-export const COLLECTIBLES_COUNT = experiences.length + interests.length;
+// La fin : toutes les expériences et tous les intérêts (Salamèche est un bonus)
+export const isComplete = (found: string[]) => [...experiences, ...interests].every((item) => found.includes(item.id!));
 
 // joy : un objet, une expérience, un gardien passé ; fear : face à un ennemi
 export type Mood = 'calm' | 'joy' | 'fear';
@@ -30,6 +31,8 @@ export interface GameState {
   position: Position;
   // dernière direction demandée : le personnage regarde par là, même quand il bute
   facing: Direction;
+  // case précédente : le compagnon y marche, un pas derrière
+  trail: Position;
   // ids des expériences et des objets ramassés
   found: string[];
   // gardien ou ennemi passé -> sa nouvelle image ('' : il est parti)
@@ -55,18 +58,20 @@ export type GameAction =
   | { type: 'restore'; saved: SavedGame }
   | { type: 'restart' };
 
-const isCollectible = (item: Item) => item.type === 'xp' || item.type === 'interest';
+const isCollectible = (item: Item) => item.type === 'xp' || item.type === 'interest' || item.type === 'companion';
 
 export const xpCount = (found: string[]) => experiences.filter((xp) => found.includes(xp.id!)).length;
 
 // Rayon du halo, en cases : il grandit un peu à chaque expérience
-export const haloRadius = (found: string[]) => 1.25 + xpCount(found) * 0.125;
+// La flamme de Salamèche l'agrandit encore
+export const haloRadius = (found: string[]) => 2 + xpCount(found) * 0.25 + (found.includes('salameche') ? 0.75 : 0);
 
 
 function fresh(): GameState {
   return {
     position: START,
     facing: 'down',
+    trail: START,
     found: [],
     defeated: {},
     mood: 'calm',
@@ -88,6 +93,8 @@ function say(state: GameState, text: string, mood?: Mood): GameState {
     ...(mood && { mood, moodSteps: 0 }),
   };
 }
+
+export const canSwim = (state: GameState) => 'lifeguard' in state.defeated;
 
 const isGuard = (item: Item) => item.type === 'danger' || item.type === 'guard';
 
@@ -111,7 +118,9 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const [dRow, dCol] = STEPS[direction];
         const position = { row: state.position.row + dRow, col: state.position.col + dCol };
         const cell = board[position.row]?.[position.col];
-        if (!cell?.isWay) continue;
+        // Comme avec Surf : une fois que le maître nageur nous a appris, on nage
+        const swims = cell?.path === 'water' && canSwim(state);
+        if (!cell?.isWay && !swims) continue;
 
         // Un gardien barre le passage tant qu'on ne lui a pas offert le bon objet
         const guard = guardIn(state, position);
@@ -125,6 +134,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const next: GameState = {
           ...state,
           position,
+          trail: state.position,
           bumped: null,
           moodSteps: state.moodSteps + 1,
           mood: state.moodSteps + 1 >= MOOD_STEPS ? 'calm' : state.mood,
@@ -139,13 +149,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           if (collectible.type === 'xp') {
             return say(
               { ...next, found: nextFound, mana: maxMana(nextFound) },
-              `${collectible.name}\n+1 XP · mana rechargée`,
+              `Une étoile dans la maison !\n${collectible.name}\n+1 XP · mana rechargée`,
               'joy',
             );
           }
           return say({ ...next, found: nextFound }, collectible.text ?? collectible.name, 'joy');
         }
 
+        // La première brasse
+        if (swims && !state.uses.swim) {
+          return say({ ...next, uses: { ...next.uses, swim: 1 } }, 'Je nage ! Comme avec Surf, en moins rapide.', 'joy');
+        }
         return next;
       }
       return state;
@@ -184,7 +198,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'restore':
-      return { ...fresh(), ...action.saved };
+      return { ...fresh(), ...action.saved, trail: action.saved.position };
 
     case 'restart':
       return fresh();

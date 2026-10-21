@@ -21,18 +21,31 @@ function World({ found, defeated }: WorldProps) {
             </svg>
           )}
           {cell.items?.map((item, index) => {
+            // Salamèche reste caché dans les hautes herbes ; une fois trouvé, il suit (voir Companion)
+            if (item.type === 'companion') return null;
             const isFound = isCollectible(item) && found.includes(item.id!);
-            // Un objet qui partage sa case avec un arbre en dépasse, sur le côté
-            const peeks = isCollectible(item) && cell.items!.some((other) => other.type === 'obstacle');
-            // Danger parti sans laisser d'image (il nous a laissé passer)
+            // Une expérience est une maison : sa fenêtre s'allume une fois qu'on y est entré
+            if (item.type === 'xp') {
+              return (
+                <img
+                  key={index}
+                  src={isFound ? item.image.replace('.svg', '-lit.svg') : item.image}
+                  alt=""
+                  draggable={false}
+                  className="item item-house"
+                />
+              );
+            }
+            // Gardien parti sans laisser d'image (il nous a laissé passer)
             const isGone = item.id !== undefined && defeated[item.id] === '';
+            const size = item.type === 'danger' || item.type === 'guard' ? 'item-large' : isCollectible(item) ? 'item-small' : '';
             return (
               <img
                 key={index}
                 src={(item.id && defeated[item.id]) || item.image}
                 alt=""
                 draggable={false}
-                className={`item ${isCollectible(item) ? 'item-small' : 'item-large'} ${peeks ? 'item-peek' : ''} ${isFound || isGone ? 'item-found' : ''}`}
+                className={`item ${size} ${isFound || isGone ? 'item-found' : ''}`}
               />
             );
           })}

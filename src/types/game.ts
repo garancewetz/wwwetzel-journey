@@ -1,5 +1,6 @@
 // danger : un ennemi, le vaincre coûte de la mana ; guard : un gardien amical, il suffit du bon objet
-export type ItemType = 'xp' | 'interest' | 'obstacle' | 'danger' | 'guard';
+// companion : un compagnon trouvé en chemin, qui suit le personnage
+export type ItemType = 'xp' | 'interest' | 'obstacle' | 'danger' | 'guard' | 'companion';
 
 export interface Item {
   // Seuls les objets avec lesquels on interagit ont un id (xp, interest, danger)

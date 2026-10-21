@@ -8,7 +8,7 @@
 @property --halo {
   syntax: "<number>";
   inherits: true;
-  initial-value: 1.25;
+  initial-value: 2;
 }
 
 /* Teinte de l'humeur, déclarée pour passer en douceur d'une couleur à l'autre */
@@ -19,13 +19,14 @@
 }
 
 :root {
-  --cell: 96px;
+  /* Une case = une tuile de 16 pixels Game Boy, agrandie d'un facteur entier (×4, ×5 sur grand écran) */
+  --cell: 64px;
   --step: 220ms; /* = STEP_MS dans store/controls.ts */
 }
 
 @media (min-width: 640px) {
   :root {
-    --cell: 120px;
+    --cell: 80px;
   }
 }
 
@@ -58,7 +59,14 @@ body {
 }
 
 /* La case (--row, --col) est toujours au centre de l'écran, sous le personnage */
-.world {
+img,
+svg {
+  image-rendering: pixelated;
+}
+
+/* Calques qui suivent la carte : la carte elle-même, et celui du compagnon */
+.world,
+.layer {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -71,7 +79,8 @@ body {
   );
 }
 
-[data-ready="true"] .world {
+[data-ready="true"] .world,
+[data-ready="true"] .layer {
   transition: transform var(--step) linear;
 }
 
@@ -84,28 +93,38 @@ body {
   shape-rendering: crispEdges;
 }
 
+/* Tous les sprites partagent la même taille de pixel : 16 px de dessin = une case */
 .item {
   position: absolute;
   left: 50%;
   top: 50%;
+  width: 100%;
+  max-width: none;
   translate: -50% -50%;
   transition: opacity 500ms ease-out, scale 500ms ease-out;
 }
 
+/* Gardiens et ennemis, dessinés sur 24 px : une case et demie, posés sur leur case */
 .item-large {
-  width: 83%;
+  z-index: 1;
+  width: 150%;
+  top: auto;
+  bottom: 0;
+  translate: -50% 0;
 }
 
 .item-small {
   z-index: 1;
-  width: 25%;
-  filter: drop-shadow(0 0 6px rgb(255 240 180 / 0.45));
 }
 
-.item-peek {
-  left: 74%;
-  top: 62%;
-  width: 32%;
+/* Une maison (48 × 32 px) s'élève au-dessus de sa porte */
+.item-house {
+  z-index: 2;
+  width: 300%;
+  top: auto;
+  bottom: 0;
+  translate: -50% 0;
+  transition: none;
 }
 
 .item-found {
@@ -139,31 +158,61 @@ body {
 }
 
 /* Le personnage : une planche de 4 images (repos, pas, repos, pas) qui défile pendant la marche */
-.hero {
+/* Personnage et compagnon : une planche de 4 images (repos, pas, repos, pas) qui défile pendant la marche */
+.sprite {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 20;
-  width: calc(var(--cell) * 0.83);
+  width: var(--cell);
   aspect-ratio: 1;
   overflow: hidden;
-  translate: -50% -58%;
   pointer-events: none;
 }
 
-.hero[data-facing="left"] {
+.sprite[data-facing="left"] {
   scale: -1 1;
 }
 
-.hero img {
+.sprite img {
   width: 400%;
   max-width: none;
   height: 100%;
 }
 
-.hero-walking img {
+.sprite.walking img {
   animation: walk calc(var(--step) * 2) steps(4) infinite;
   animation-delay: calc(var(--step) * -0.5);
+}
+
+.hero {
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  translate: -50% -60%;
+}
+
+/* Le compagnon est posé sur la carte, un pas derrière */
+.follower {
+  left: 0;
+  top: 0;
+  z-index: 8;
+  transform: translate(calc(var(--tcol) * var(--cell)), calc(var(--trow) * var(--cell) - var(--cell) * 0.1));
+}
+
+[data-ready="true"] .follower {
+  transition: transform var(--step) linear;
+}
+
+/* Les hautes herbes cachent le bas du corps ; dans l'eau, on ne voit que la tête et les épaules */
+.in-grass,
+.in-water {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(62% 0 0 0);
+}
+
+.in-water {
+  clip-path: inset(48% 0 0 0);
 }
 
 @keyframes walk {

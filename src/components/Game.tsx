@@ -2,13 +2,16 @@
 
 import { CSSProperties, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { experiences, interests } from '@/datas/items';
-import { COLLECTIBLES_COUNT, START, guardNextTo, gameReducer, haloRadius, initialState, maxMana, xpCount as countXp } from '@/store/game';
-import { useControls } from '@/store/controls';
+import { START, guardNextTo, gameReducer, haloRadius, initialState, isComplete as complete, maxMana, xpCount as countXp } from '@/store/game';
+import { STEP_MS, useControls } from '@/store/controls';
 import { loadGame, saveGame } from '@/store/save';
 import { Direction } from '@/types/game';
 import World from './World';
 import Inventory from './Inventory';
 import Hero from './Hero';
+import Companion from './Companion';
+import Orb from './Orb';
+import { board } from '@/datas/board';
 
 // Teinte du halo selon l'humeur : chaude quand ça va, froide face à un danger
 const MOOD_COLORS = {
@@ -19,7 +22,7 @@ const MOOD_COLORS = {
 
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { position, facing, found, defeated, mood, message, mana } = state;
+  const { position, facing, trail, found, defeated, mood, message, mana } = state;
   // Les transitions attendent la reprise de la partie, pour ne pas voir la carte défiler au chargement
   const [ready, setReady] = useState(false);
 
@@ -29,6 +32,15 @@ export default function Game() {
   const pointer = useControls(move, joystick);
 
   const settle = () => window.setTimeout(() => setReady(true), 50);
+
+  // On marche tant que les pas s'enchaînent : le cycle de pas suit
+  const [walking, setWalking] = useState(false);
+  useEffect(() => {
+    setWalking(true);
+    const timer = window.setTimeout(() => setWalking(false), STEP_MS + 80);
+    return () => window.clearTimeout(timer);
+  }, [position]);
+  const groundAt = (p: { row: number; col: number }) => board[p.row][p.col].path ?? 'grass';
 
   useEffect(() => {
     const saved = loadGame();
@@ -57,7 +69,7 @@ export default function Game() {
   }, [activate]);
 
   const xpCount = countXp(found);
-  const isComplete = found.length === COLLECTIBLES_COUNT;
+  const isComplete = complete(found);
   const hasMoved = position.row !== START.row || position.col !== START.col;
 
   // Comment se servir du sac : au premier objet, puis chaque fois qu'un ennemi barre la route
@@ -83,15 +95,10 @@ export default function Game() {
       <World found={found} defeated={defeated} />
       <div className="mood" />
       <div className="halo" />
-      <Hero facing={facing} position={position} />
-
-      {/* XP et mana : apparaissent au premier objet trouvé */}
-      <dl
-        className={`fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 space-y-2 text-[11px] tracking-widest text-white/70 transition-opacity duration-700 ${found.length ? 'opacity-100' : 'opacity-0'}`}
-      >
-        <Stat label="XP" value={xpCount} max={experiences.length} color="bg-amber-200/80" />
-        <Stat label="Mana" value={mana} max={maxMana(found)} color="bg-sky-400/80" />
-      </dl>
+      {found.includes('salameche') && (
+        <Companion trail={trail} position={position} walking={walking} ground={groundAt(trail)} />
+      )}
+      <Hero facing={facing} walking={walking} ground={groundAt(position)} />
 
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
@@ -129,18 +136,13 @@ export default function Game() {
         <div className="joystick-knob" />
       </div>
 
-      <Inventory found={found} onUse={activate} hint={hint} />
+      <Inventory
+        found={found}
+        onUse={activate}
+        hint={hint}
+        left={<Orb label="XP" value={xpCount} max={experiences.length} colors={['#f8e890', '#f0c030', '#b88010']} />}
+        right={<Orb label="MANA" value={mana} max={maxMana(found)} colors={['#a8d0ff', '#4878f0', '#2848a8']} />}
+      />
     </main>
-  );
-}
-
-function Stat({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
-  return (
-    <div>
-      <dt className="inline uppercase">{label}</dt> <dd className="inline">{value}/{max}</dd>
-      <div className="mt-1 h-0.5 w-16 bg-white/15" aria-hidden>
-        <div className={`h-full ${color} transition-[width] duration-700`} style={{ width: `${(value / max) * 100}%` }} />
-      </div>
-    </div>
   );
 }

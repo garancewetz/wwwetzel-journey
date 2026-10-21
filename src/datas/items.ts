@@ -1,47 +1,47 @@
 import { Item } from '@/types/game';
 
-// XP
+// Expériences : une maison chacune, on y trouve une étoile en entrant
 
 const sorbonneXp: Item = {
     "type": "xp",
     "id": "sorbonne",
     "name": "Sorbonne Nouvelle · Master de lettres · 2015",
-    "image": "/xps/book.svg"
+    "image": "/houses/slate.svg"
 }
 
 const threeWXp: Item = {
     "type": "xp",
     "id": "3w",
     "name": "3W Academy · Développeuse web · 2018",
-    "image": "/xps/computer.svg"
+    "image": "/houses/orange.svg"
 }
 
 const openclassroomsXp: Item = {
     "type": "xp",
     "id": "openclassrooms",
     "name": "OpenClassrooms · Développeuse d'application web · 2022",
-    "image": "/xps/website.svg"
+    "image": "/houses/purple.svg"
 }
 
 const uptooXp: Item = {
     "type": "xp",
     "id": "uptoo",
     "name": "Uptoo · Développeuse front · 2019",
-    "image": "/xps/star.svg"
+    "image": "/houses/green.svg"
 }
 
 const colorzXp: Item = {
     "type": "xp",
     "id": "colorz",
     "name": "Colorz · Développeuse front · 2022",
-    "image": "/xps/star.svg"
+    "image": "/houses/pink.svg"
 }
 
 const okeiroXp: Item = {
     "type": "xp",
     "id": "okeiro",
     "name": "Okeiro · Développeuse front · 2025",
-    "image": "/xps/star.svg"
+    "image": "/houses/teal.svg"
 }
 
 
@@ -52,10 +52,10 @@ const tree: Item = {
     "image": "/obstacles/tree.svg"
 }
 
-const surpriseTree: Item = {
+const bush: Item = {
     "type": "obstacle",
-    "name": "Arbre surprise",
-    "image": "/obstacles/surpriseTree.svg"
+    "name": "Buisson",
+    "image": "/obstacles/bush.svg"
 }
 
 // Ennemis : les vaincre coûte de la mana
@@ -77,7 +77,7 @@ const lifeguard: Item = {
     "image": "/dangers/lifeguard.svg",
     "text": "Un maître nageur musclé me barre la route de la plage. Il s'ennuie ferme... Un petit remontant le ferait peut-être bouger ?",
     "key": "wine",
-    "solved": "Je lui offre un verre de vin. Il aime ça, et me laisse passer !"
+    "solved": "Je lui offre un verre de vin. Ravi, il me laisse passer... et m'apprend à nager !"
 }
 
 // Clin d'œil à Diablo II : la boss finale
@@ -148,6 +148,15 @@ const cloud: Item = {
     "refuse": "Il pleut de plus belle."
 }
 
+// Clin d'œil à Pokémon : il attend dans les hautes herbes, puis il suit et sa flamme éclaire le chemin
+const salameche: Item = {
+    "type": "companion",
+    "id": "salameche",
+    "name": "Salamèche",
+    "image": "/companion/salameche.svg",
+    "text": "Un Salamèche sauvage apparaît !\nIl a l'air de vouloir me suivre. Sa flamme éclaire le chemin."
+}
+
 // Interests
 
 const sarahBernhardt: Item = {
@@ -155,7 +164,7 @@ const sarahBernhardt: Item = {
     "id": "sarahBernhardt",
     "name": "Sarah Bernhardt",
     "image": "/interests/sarahBernhardt.svg",
-    "text": "Mais que fait donc Sarah Bernhardt derrière cet arbre ? Elle pêche à la ligne ?",
+    "text": "Sarah Bernhardt, en pleine prairie ! Elle répète une tirade pour ce soir.",
     "uses": [
         "Sarah Bernhardt déclame une tirade. Les arbres applaudissent.",
         "« Quand même ! » lance Sarah Bernhardt. C'était sa devise."
@@ -266,4 +275,4 @@ const experiences: Item[] = [
     okeiroXp
 ]
 
-export { mushroom, andariel, lifeguard, curtain, fox, cain, troll, cloud, ruby, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer }
+export { bush, salameche, mushroom, andariel, lifeguard, curtain, fox, cain, troll, cloud, ruby, tree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer }
