@@ -109,6 +109,17 @@ function lastStarRegion(found: string[]) {
   return 'le bout du chemin';
 }
 
+// À la reprise, le compagnon se pose sur une case voisine (de préférence derrière), pas sous le personnage
+function besideOf(position: Position): Position {
+  for (const direction of ['down', 'left', 'right', 'up'] as Direction[]) {
+    const [dRow, dCol] = STEPS[direction];
+    const near = { row: position.row + dRow, col: position.col + dCol };
+    const cell = board[near.row]?.[near.col];
+    if (cell?.isWay && !cell.items?.some((item) => item.type === 'danger' || item.type === 'guard')) return near;
+  }
+  return position;
+}
+
 export const canSwim = (state: GameState) => 'lifeguard' in state.defeated;
 
 const isGuard = (item: Item) => item.type === 'danger' || item.type === 'guard';
@@ -217,7 +228,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'restore':
-      return { ...fresh(), ...action.saved, trail: action.saved.position };
+      return { ...fresh(), ...action.saved, trail: besideOf(action.saved.position) };
 
     case 'restart':
       return fresh();

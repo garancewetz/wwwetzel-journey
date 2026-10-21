@@ -220,15 +220,16 @@ svg {
 }
 
 /* Le compagnon est posé sur la carte, un pas derrière */
+/* translate (et non transform) : le miroir vers la gauche ne retourne pas son déplacement */
 .follower {
   left: 0;
   top: 0;
   z-index: 8;
-  transform: translate(calc(var(--tcol) * var(--cell)), calc(var(--trow) * var(--cell) - var(--cell) * 0.1));
+  translate: calc(var(--tcol) * var(--cell)) calc(var(--trow) * var(--cell) - var(--cell) * 0.1);
 }
 
 [data-ready="true"] .follower {
-  transition: transform var(--step) linear;
+  transition: translate var(--step) linear;
 }
 
 /* Les hautes herbes cachent le bas du corps ; dans l'eau, on ne voit que la tête et les épaules */
