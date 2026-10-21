@@ -1,41 +1,379 @@
 @import "tailwindcss";
 
+
+/* Lumière gagnée, de 0 (départ) à 1 (six étoiles) : déclarée pour pouvoir l'animer */
+@property --halo {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Teinte de l'humeur, déclarée pour passer en douceur d'une couleur à l'autre */
+@property --mood {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Une case = une tuile de 16 pixels Game Boy, agrandie d'un facteur entier (×4, ×5 sur grand écran) */
+  --cell: 64px;
+  --step: 220ms; /* = STEP_MS dans store/controls.ts */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 640px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --cell: 80px;
   }
+}
+
+html,
+body {
+  height: 100%;
+  background: #000;
+  color: #fff;
+  overscroll-behavior: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-pixel), system-ui, sans-serif;
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(234, 179, 8, 0.5), 0 0 10px rgba(234, 179, 8, 0.3);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(234, 179, 8, 0.8), 0 0 25px rgba(234, 179, 8, 0.5);
-    transform: scale(1.1);
+.game {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  /* Le halo part à une taille confortable et grandit doucement ; la sixième étoile atteint toute la place entre la bulle et le sac */
+  --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 11.5rem), calc(50vw - 0.75rem));
+  --start-radius: calc(var(--max-radius) * 0.7);
+  --radius: calc(var(--start-radius) + (var(--max-radius) - var(--start-radius)) * var(--halo));
+}
+
+/* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
+.game[data-ready="true"] {
+  transition: --halo 1200ms ease-out, --mood 1200ms ease-in-out;
+}
+
+/* La case (--row, --col) est toujours au centre de l'écran, sous le personnage */
+img,
+svg {
+  image-rendering: pixelated;
+}
+
+/* Calques qui suivent la carte : la carte elle-même, et celui du compagnon */
+.world,
+.layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  grid-auto-rows: var(--cell);
+  pointer-events: none;
+  transform: translate(
+    calc((var(--col) + 0.5) * var(--cell) * -1),
+    calc((var(--row) + 0.5) * var(--cell) * -1)
+  );
+}
+
+[data-ready="true"] .world,
+[data-ready="true"] .layer {
+  transition: transform var(--step) linear;
+}
+
+/* 1px de recouvrement : pas de fine ligne entre deux cases quand la carte tombe entre deux pixels */
+.tile {
+  position: absolute;
+  inset: 0;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  shape-rendering: crispEdges;
+}
+
+/* Tous les sprites partagent la même taille de pixel : 16 px de dessin = une case */
+.item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  max-width: none;
+  translate: -50% -50%;
+  transition: opacity 500ms ease-out, scale 500ms ease-out;
+}
+
+/* Gardiens et ennemis, dessinés sur 24 px : une case et demie, posés sur leur case */
+.item-large {
+  z-index: 1;
+  width: 150%;
+  top: auto;
+  bottom: 0;
+  translate: -50% 0;
+}
+
+.item-small {
+  z-index: 1;
+}
+
+/* Une maison (48 × 32 px) s'élève au-dessus de sa porte */
+.item-house {
+  z-index: 2;
+  width: 300%;
+  top: auto;
+  bottom: 0;
+  translate: -50% 0;
+  transition: none;
+}
+
+/* Le « ! » de quête flotte au-dessus du gardien (sa tête dépasse d'une demi-case) */
+.quest-mark {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: calc(var(--cell) * -0.95);
+  width: calc(var(--cell) * 5 / 16);
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+/* Une colonne de lumière dorée, comme une montée de niveau dans Diablo II */
+.level-up {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  z-index: 19;
+  width: calc(var(--cell) * 0.75);
+  height: calc(var(--cell) * 3.5);
+  translate: -50% calc(var(--cell) * 0.4);
+  transform-origin: bottom;
+  background: linear-gradient(to top, #fff4a0 0 12%, #f8d030 12% 40%, rgb(248 208 48 / 0.6) 40% 70%, rgb(248 208 48 / 0) 100%);
+  pointer-events: none;
+  /* invisible par défaut : si l'animation ne se joue pas, rien ne reste à l'écran */
+  opacity: 0;
+  animation: level-up 900ms ease-out forwards;
+}
+
+@keyframes level-up {
+  0% { opacity: 0; scale: 1 0; }
+  25% { opacity: 0.85; scale: 1 1; }
+  100% { opacity: 0; scale: 0.3 1; }
+}
+
+.item-found {
+  opacity: 0;
+  scale: 1.8;
+}
+
+/* L'humeur colore doucement le bord du halo */
+.mood {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent calc(var(--radius) * 0.6),
+    var(--mood) var(--radius),
+    transparent var(--radius)
+  );
+}
+
+/* Autour du personnage, la lumière ; ailleurs, le noir */
+.halo {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: #000;
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
+  mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
+}
+
+/* Le personnage : une planche de 4 images (repos, pas, repos, pas) qui défile pendant la marche */
+/* Personnage et compagnon : une planche de 4 images (repos, pas, repos, pas) qui défile pendant la marche */
+.sprite {
+  position: absolute;
+  width: var(--cell);
+  aspect-ratio: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sprite[data-facing="left"] {
+  scale: -1 1;
+}
+
+.sprite img {
+  width: 400%;
+  max-width: none;
+  height: 100%;
+}
+
+.sprite.walking img {
+  animation: walk calc(var(--step) * 2) steps(4) infinite;
+  animation-delay: calc(var(--step) * -0.5);
+}
+
+.hero {
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  translate: -50% -60%;
+}
+
+/* Le compagnon est posé sur la carte, un pas derrière */
+/* translate (et non transform) : le miroir vers la gauche ne retourne pas son déplacement */
+.follower {
+  left: 0;
+  top: 0;
+  z-index: 8;
+  translate: calc(var(--tcol) * var(--cell)) calc(var(--trow) * var(--cell) - var(--cell) * 0.1);
+}
+
+[data-ready="true"] .follower {
+  transition: translate var(--step) linear;
+}
+
+/* Les hautes herbes cachent le bas du corps ; dans l'eau, on ne voit que la tête et les épaules */
+.in-grass,
+.in-water {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(62% 0 0 0);
+}
+
+.in-water {
+  clip-path: inset(48% 0 0 0);
+}
+
+@keyframes walk {
+  to { transform: translateX(-100%); }
+}
+
+/* Au repos en bas de l'écran, puis sous le doigt (--jx, --jy) ; la pastille suit le doigt (--kx, --ky) */
+.joystick {
+  display: none;
+  position: fixed;
+  left: var(--jx, 50%);
+  top: var(--jy, calc(100% - 9rem - env(safe-area-inset-bottom)));
+  z-index: 30;
+  width: 96px;
+  height: 96px;
+  translate: -50% -50%;
+  border: 2px solid rgb(255 255 255 / 0.5);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.04);
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 300ms ease-out;
+}
+
+.joystick[data-active="true"] {
+  opacity: 0.9;
+}
+
+@media (pointer: coarse) {
+  .joystick {
+    display: block;
   }
 }
 
-.pulse-glow-animation {
-  animation: pulse-glow 2s ease-in-out infinite;
+.joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  border: 2px solid rgb(255 255 255 / 0.8);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.25);
+  translate: calc(-50% + var(--kx, 0px)) calc(-50% + var(--ky, 0px));
+  transition: translate 150ms ease-out;
 }
+
+.joystick[data-active="true"] .joystick-knob {
+  transition: none;
+}
+
+/* La boîte de dialogue, comme dans Pokémon */
+.dialog {
+  display: block;
+  padding: 0.75rem 1rem;
+  border: 3px solid #183018;
+  border-radius: 6px;
+  background: #f8f8f0;
+  box-shadow: inset 0 0 0 2px #f8f8f0, inset 0 0 0 4px #6890c0;
+  color: #183018;
+  text-align: left;
+}
+
+.wow-error {
+  display: block;
+  text-align: center;
+  text-shadow: 0 2px 0 #000, 0 0 6px #000;
+}
+
+.place-name {
+  animation: place-in 900ms ease-out;
+}
+
+@keyframes place-in {
+  from { opacity: 0; translate: 0 -4px; }
+}
+
+.message {
+  animation: message var(--duration) ease-in-out forwards;
+}
+
+@keyframes message {
+  0% { opacity: 0; translate: 0 6px; }
+  6%, 88% { opacity: 1; translate: 0 0; }
+  100% { opacity: 0; }
+}
+
+/* Une orbe qui change s'éclaire un instant, et son gain s'envole au-dessus */
+.orb-flash {
+  animation: orb-flash 700ms ease-out;
+}
+
+@keyframes orb-flash {
+  30% { filter: brightness(1.6); scale: 1.12; }
+}
+
+.orb-delta {
+  animation: orb-delta 1400ms ease-out forwards;
+}
+
+@keyframes orb-delta {
+  0% { opacity: 0; translate: 0 4px; }
+  15% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; translate: 0 -18px; }
+}
+
+/* « Réduire les animations » : plus de glissements ni d'éclats, le jeu reste le même */
+@media (prefers-reduced-motion: reduce) {
+  .game[data-ready="true"],
+  .item,
+  [data-ready="true"] .world,
+  [data-ready="true"] .layer,
+  [data-ready="true"] .follower {
+    transition: none;
+  }
+
+  .sprite.walking img,
+  .orb-flash,
+  .place-name {
+    animation: none;
+  }
+
+  .level-up,
+  .orb-delta {
+    display: none;
+  }
+}
+

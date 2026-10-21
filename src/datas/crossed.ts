@@ -1,89 +1,77 @@
-import { sun, piano, wine, sarahBernhardt, queer, reading, cheese, karaoke } from "./items";
+import { sun, wine, sarahBernhardt, reading, cheese, ruby } from "./items";
 
-const crossed = {
+export interface Reaction {
+    id?: string;
+    text: string;
+}
+
+// Ce que répondent les ennemis aux objets qui ne les font pas céder (la bonne clé est dans items.ts)
+const crossed: Record<string, Reaction[]> = {
     "mushroom": [
         {
-            id: sun.id,
-            text: "Ha ! Le méchant champignon n'aime pas le soleil ! Le voilà réduit en poussière !",
-            image: "/dangers/mushroomXsun.svg"
-        },
-        {
             id: sarahBernhardt.id,
-            text: "Oh ! Sarah Bernhardt refuse d'être mélée à toute cette histoire...",
-            image: null
+            text: "Oh ! Sarah Bernhardt refuse d'être mélée à toute cette histoire..."
         },
         {
             id: wine.id,
-            text: "Il me dit non-merci. Il ne boit plus du tout.",
-            image: null
-        },
-        {
-            id: queer.id,
-            text: "Je ne veux pas faire de bisou au champignon maléfique !",
-            image: null
+            text: "Il me dit non-merci. Il ne boit plus du tout."
         },
         {
             id: reading.id,
-            text: "Mais non, ne lui donne pas ce livre ! Les pages risqueraient de pourrir.",
-            image: null
+            text: "Mais non, ne lui donne pas ce livre ! Les pages risqueraient de pourrir."
         },
         {
             id: cheese.id,
-            text: "Pfff, je n'aime pas le roquefort ! Ne mélange pas mon bon fromage avec ça !",
-            image: null
+            text: "Pfff, je n'aime pas le roquefort ! Ne mélange pas mon bon fromage avec ça !"
         },
         {
-            id: karaoke.id,
-            text: "Je ne veux pas chanter avec le champignon maléfique !",
-            image: null
-        },
-        {
-            id: piano.id,
-            text: "Je ne veux pas jouer du piano pour le champignon maléfique !",
-            image: null
+            id: ruby.id,
+            text: "Le rubis ne lui fait ni chaud ni froid."
         },
 
+    ],
+    "andariel": [
+        {
+            id: sun.id,
+            text: "Le soleil ? En enfer il fait déjà bien assez chaud. Andariel ricane."
+        },
+        {
+            id: sarahBernhardt.id,
+            text: "Sarah Bernhardt a joué des reines plus terrifiantes. Andariel n'impressionne personne."
+        },
+        {
+            id: wine.id,
+            text: "Elle ne boit que du poison. Mon vin ne l'intéresse pas."
+        },
+        {
+            id: reading.id,
+            text: "« Restez un moment et écoutez... » Non, pas le temps de lire Deckard Cain maintenant !"
+        },
+        {
+            id: cheese.id,
+            text: "Elle préfère les âmes au fromage."
+        },
     ],
     "lifeguard": [
         {
             id: sun.id,
-            text: "Hahaha ! Le maître nageur musclé a pris un coup de soleil. ",
-            image: "/dangers/lifeguardXsun.svg"
+            text: "Il est déjà bronzé à point. Le soleil ne lui fait ni chaud ni froid."
         },
         {
             id: sarahBernhardt.id,
-            text: "Oh ! Sarah Bernhardt lui conseille de se mettre aux cols roulés.",
-            image: null
-        },
-        {
-            id: wine.id,
-            text: "Je lui offre un verre de vin. Il aime ça !",
-            image: null
-        },
-        {
-            id: queer.id,
-            text: "Je ne veux pas faire de bisou au maître nageur musclé ! Je ne suis pas une bisoulette.",
-            image: null
+            text: "Oh ! Sarah Bernhardt lui conseille de se mettre aux cols roulés."
         },
         {
             id: reading.id,
-            text: "Il ne veut pas lire maintenant, il veut nager !",
-            image: null
+            text: "Il ne veut pas lire maintenant, il veut nager !"
         },
         {
             id: cheese.id,
-            text: "Il ne veut pas manger maintenant, il veut nager !",
-            image: null
+            text: "Il ne veut pas manger maintenant, il veut nager !"
         },
         {
-            id: karaoke.id,
-            text: "Il ne veut pas chanter maintenant, il veut nager !",
-            image: null
-        },
-        {
-            id: piano.id,
-            text: "Il ne veut pas jouer du piano maintenant, il veut nager !",
-            image: null
+            id: ruby.id,
+            text: "Un rubis ? Il le trouve joli, mais ne bouge pas d'un pouce."
         },
     ]
 }

@@ -1,188 +1,242 @@
-// XP
+import { Item } from '@/types/game';
 
-const sorbonneXp = {
+// Expériences : une maison chacune, on y trouve une étoile en entrant
+
+const sorbonneXp: Item = {
     "type": "xp",
     "id": "sorbonne",
-    "name": "Master de lettres - Sorbonne Nouvelle - 2015",
-    "image": "/xps/book.svg",
-    "found": false,
-    "text": "Un master de lettres, c'est intéressant !",
-    "content": "Sorbonne"
+    "track": "formation",
+    "name": "Sorbonne Nouvelle · Master de lettres · 2015",
+    "image": "/houses/slate.svg"
 }
 
-const threeWXp = {
+const threeWXp: Item = {
     "type": "xp",
     "id": "3w",
-    "name": "Développeuse web - 3W Academy - 2018",
-    "image": "/xps/computer.svg",
-    "found": false,
-    "text": "Un diplôme de développeuse web, c'est intéressant !",
-    "content": "3W"
+    "track": "formation",
+    "name": "3W Academy · Développeuse web · 2018",
+    "image": "/houses/orange.svg"
 }
 
-const openclassroomsXp = {
+const openclassroomsXp: Item = {
     "type": "xp",
     "id": "openclassrooms",
-    "name": "Développeuse d'application web - OpenClassrooms - 2022",
-    "image": "/xps/website.svg",
-    "found": false,
-    "text": "Un diplôme de développeuse d'application web, c'est intéressant !",
-    "content": "OpenClassrooms"
+    "track": "formation",
+    "name": "OpenClassrooms · Développeuse d'application web · 2022",
+    "image": "/houses/purple.svg"
 }
 
-const uptooXp = {
+const uptooXp: Item = {
     "type": "xp",
     "id": "uptoo",
-    "name": "Uptoo - Développeuse front - 2019",
-    "image": "/xps/star.svg",
-    "found": false,
-    "content": "Uptoo",
-    "text": "Je gagne en expérience !"
+    "track": "pro",
+    "name": "Uptoo · Développeuse front · 2019",
+    "image": "/houses/green.svg"
 }
 
-const colorzXp = {
+const colorzXp: Item = {
     "type": "xp",
     "id": "colorz",
-    "name": "Colorz - Développeuse front - 2022",
-    "image": "/xps/star.svg",
-    "found": false,
-    "content": "Colorz",
-    "text": "Je gagne en expérience !"
+    "track": "pro",
+    "name": "Colorz · Développeuse front · 2022",
+    "image": "/houses/pink.svg"
 }
 
-const okeiroXp = {
+const okeiroXp: Item = {
     "type": "xp",
     "id": "okeiro",
-    "name": "Okeiro - Développeuse front - 2025",
-    "image": "/xps/star.svg",
-    "found": false,
-    "content": "Okeiro",
-    "text": "Je gagne en expérience !"
+    "track": "pro",
+    "name": "Okeiro · Développeuse front · 2025",
+    "image": "/houses/teal.svg"
 }
 
 
 // Obstacles
-const tree = {
+const tree: Item = {
     "type": "obstacle",
     "name": "Arbre",
-    "image": "/obstacles/tree.svg",
-    "found": false
+    "image": "/obstacles/tree.svg"
 }
 
-const surpriseTree = {
+const bush: Item = {
     "type": "obstacle",
-    "name": "Arbre surprise",
-    "image": "/obstacles/surpriseTree.svg",
-    "found": false
+    "name": "Buisson",
+    "image": "/obstacles/bush.svg"
 }
 
-// Dangers
-const mushroom = {
+// Ennemis : les vaincre coûte de la mana
+const mushroom: Item = {
     "type": "danger",
     "id": "mushroom",
     "name": "Champignon maléfique",
     "image": "/dangers/mushroom.svg",
-    "found": false,
-    "text": "Oh non, un champignon maléfique ! JE SUIS EN DANGER ! Ai-je quelque chose dans mon sac pour le neutraliser ?"
+    "text": "Oh non, un champignon maléfique me barre la route !",
+    "key": "sun",
+    "solved": "Ha ! Le méchant champignon n'aime pas le soleil ! Le voilà réduit en poussière !",
+    "after": "/dangers/mushroomXsun.svg"
 }
 
-const lifeguard = {
+const lifeguard: Item = {
     "type": "danger",
     "id": "lifeguard",
     "name": "Maître nageur musclé",
     "image": "/dangers/lifeguard.svg",
-    "found": false,
-    "text": "Un maître nageur musclé ? Mais c'est horrible ! Je déteste les bonnets de bain, et je n'ai pas de tee-shirt à lui proposer..."
+    "text": "Un maître nageur musclé me barre la route de la plage. Il croise les bras.",
+    "key": "wine",
+    "solved": "Je lui offre un verre de vin. Ravi, il me laisse passer... et m'apprend à nager !"
 }
 
+// Clin d'œil à Diablo II : la boss finale
+const andariel: Item = {
+    "type": "danger",
+    "id": "andariel",
+    "name": "Andariel",
+    "image": "/dangers/andariel.svg",
+    "text": "Andariel, la Vierge de l'Angoisse, garde le dernier passage !",
+    "key": "ruby",
+    "solved": "Le rubis s'embrase : Andariel ne supporte pas le feu. Elle disparaît dans un cri."
+}
 
+// Gardiens amicaux : il suffit du bon objet
+const curtain: Item = {
+    "type": "guard",
+    "id": "curtain",
+    "name": "Rideau de théâtre",
+    "image": "/guards/curtain.svg",
+    "text": "Un lourd rideau de théâtre ferme le passage.",
+    "key": "sarahBernhardt",
+    "solved": "Sarah Bernhardt entre en scène. Le rideau se lève sous les applaudissements !",
+    "refuse": "Le rideau ne bouge pas d'un pouce."
+}
+
+const fox: Item = {
+    "type": "guard",
+    "id": "fox",
+    "name": "Renard affamé",
+    "image": "/guards/fox.svg",
+    "text": "Un renard affamé me barre la route.",
+    "key": "cheese",
+    "solved": "« Que vous êtes joli ! » Je lui donne le fromage, il file avec, comme dans la fable.",
+    "refuse": "Le renard hausse les épaules."
+}
+
+// Autre clin d'œil à Diablo
+const cain: Item = {
+    "type": "guard",
+    "id": "cain",
+    "name": "Deckard Cain",
+    "image": "/guards/cain.svg",
+    "text": "Deckard Cain : « Restez un moment et écoutez... » Il ne s'arrête plus de parler.",
+    "key": "reading",
+    "solved": "Je lui offre un livre. Il s'y plonge et en oublie de parler. Je passe sur la pointe des pieds.",
+    "refuse": "« Restez un moment et écoutez... » Il n'écoute que lui-même."
+}
+
+// Clin d'œil à Pokémon : il attend dans les hautes herbes, puis il suit et sa flamme éclaire le chemin
+const salameche: Item = {
+    "type": "companion",
+    "id": "salameche",
+    "name": "Salamèche",
+    "image": "/companion/salameche.svg",
+    "text": "Un Salamèche sauvage apparaît !\nIl a l'air de vouloir me suivre. Sa flamme éclaire le chemin."
+}
 
 // Interests
 
-const sarahBernhardt = {
+const sarahBernhardt: Item = {
     "type": "interest",
     "id": "sarahBernhardt",
+    "rarity": "unique",
+    "words": ["Sarah Bernhardt"],
     "name": "Sarah Bernhardt",
     "image": "/interests/sarahBernhardt.svg",
-    "found": false,
-    "text": "Mais que fait donc Sarah Bernhardt cachée derrière cet arbre ? Elle pêche à la ligne ?"
+    "text": "Sarah Bernhardt, en pleine prairie ! Elle répète une tirade pour ce soir.",
+    "uses": [
+        "Sarah Bernhardt déclame une tirade. Les arbres applaudissent.",
+        "« Quand même ! » lance Sarah Bernhardt. C'était sa devise."
+    ]
 }
 
-const karaoke = {
-    "type": "interest",
-    "id": "karaoke",
-    "name": "Karaoké",
-    "image": "/interests/karaoke.svg",
-    "found": false,
-    "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer..."
-}
-
-const cheese = {
+const cheese: Item = {
     "type": "interest",
     "id": "cheese",
+    "rarity": "normal",
+    "words": ["fromage"],
     "name": "Fromage",
     "image": "/interests/cheese.svg",
-    "found": false,
-    "text": "Oh, du fromage fondu ! J'adore ça !"
+    "text": "Quelque chose bouge dans les hautes herbes... Du fromage fondu ! J'adore ça !",
+    "uses": [
+        "Je grignote un bout de fromage. Ça va tout de suite mieux.",
+        "Je garde le reste pour l'apéro. On ne sait jamais."
+    ]
 }
 
-const reading = {
+const reading: Item = {
     "type": "interest",
     "id": "reading",
+    "rarity": "magic",
+    "words": ["livre", "lecture"],
     "name": "Lecture",
     "image": "/interests/reading.svg",
-    "found": false,
-    "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !"
+    "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !",
+    "uses": [
+        "Je lis trois pages en marchant. Je me cogne dans un arbre.",
+        "Je corne la page. Je reprendrai plus tard, promis."
+    ]
 }
 
-const wine = {
+const wine: Item = {
     "type": "interest",
     "id": "wine",
+    "rarity": "magic",
+    "words": ["verre de vin", "vin"],
     "name": "Un verre de vin",
     "image": "/interests/wine.svg",
-    "found": false,
-    "text": "Du vin ? C'est parti !"
+    "text": "Du vin ? C'est parti !",
+    "uses": [
+        "Je trinque avec un arbre. Il ne trinque pas.",
+        "Pas avant d'avoir trouvé toutes mes expériences. Bon, une gorgée."
+    ]
 }
 
-const sun = {
+const sun: Item = {
     "type": "interest",
     "id": "sun",
+    "rarity": "rare",
+    "words": ["soleil du sud", "soleil"],
     "name": "Soleil du sud",
     "image": "/interests/sun.svg",
-    "found": false,
-    "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances..."
+    "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances...",
+    "uses": [
+        "Je brandis le soleil du sud. Le noir ne bouge pas d'un pixel.",
+        "Deux minutes de bronzette. Vivement les vacances."
+    ]
 }
 
-const queer = {
+const ruby: Item = {
     "type": "interest",
-    "id": "queer",
-    "name": "Queer",
-    "image": "/interests/rainbow.svg",
-    "found": false,
-    "text": "Queer, c'est beau !"
+    "id": "ruby",
+    "rarity": "unique",
+    "words": ["rubis parfait", "rubis"],
+    "name": "Rubis parfait",
+    "image": "/interests/ruby.svg",
+    "text": "Un rubis parfait ! Il brille d'un drôle d'éclat.",
+    "uses": [
+        "Je fais briller le rubis. Il me brûle un peu les doigts.",
+        "Un rubis parfait. Il irait bien sur une épée."
+    ]
 }
 
-const piano = {
-    "type": "interest",
-    "id": "piano",
-    "name": "Piano",
-    "image": "/interests/piano.svg",
-    "found": false,
-    "text": "Depuis le temps que je veux apprendre le piano. C'est une chance d'en trouver un ici !"
-}
-
-const interests = [
+const interests: Item[] = [
     sun,
-    piano,
     wine,
     sarahBernhardt,
-    queer,
     reading,
     cheese,
-    karaoke
+    ruby
 ]
 
-const experiences = [
+const experiences: Item[] = [
     sorbonneXp,
     threeWXp,
     openclassroomsXp,
@@ -191,4 +245,4 @@ const experiences = [
     okeiroXp
 ]
 
-export { mushroom, tree, surpriseTree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer, piano, lifeguard }
+export { bush, salameche, mushroom, andariel, lifeguard, curtain, fox, cain, ruby, tree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, cheese, reading, wine, sun }

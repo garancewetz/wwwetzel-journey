@@ -1,0 +1,27 @@
+# Déploiement sur Netlify (réglages lus automatiquement depuis le dépôt).
+# Le public ne voit pas ce site : le portfolio le sert sous garancewetz.netlify.app/journey.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Le jeu est construit pour l'adresse /journey : ses fichiers sont ici à la racine
+[[redirects]]
+  from = "/journey/*"
+  to = "/:splat"
+  status = 200
+
+# Les fichiers du build ont un nom qui change à chaque version : on peut les garder en cache longtemps
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
