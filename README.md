@@ -60,3 +60,5 @@ Le jeu est servi par le portfolio, à l'adresse `garancewetz.netlify.app/journey
 - ce dépôt a son propre site Netlify (réglages dans `netlify.toml` : `npm run build`, dossier publié `out/`), que le public ne voit pas ;
 - le portfolio relaie `/journey/*` vers ce site (règle de proxy dans son `netlify.toml`) ;
 - les deux se déploient chacun de leur côté, à chaque push sur `main`.
+
+Si un push sur `main` ne déclenche plus de déploiement, vérifier que le dépôt figure bien dans les accès de l'application Netlify sur GitHub (Settings → Applications → Netlify → Configure).
