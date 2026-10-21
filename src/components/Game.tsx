@@ -61,7 +61,9 @@ export default function Game() {
     if (ready) saveGame(state);
   }, [ready, state]);
 
+  const [confirmRestart, setConfirmRestart] = useState(false);
   const restart = () => {
+    setConfirmRestart(false);
     setReady(false);
     dispatch({ type: 'restart' });
     settle();
@@ -131,6 +133,28 @@ export default function Game() {
       {beam && <div key={levelUp} className="level-up" aria-hidden />}
       <Hero facing={facing} walking={walking} ground={groundAt(position)} />
 
+      {/* Recommencer : la partie est gardée dans le navigateur, même après un rechargement ; on confirme d'un second clic */}
+      {(hasMoved || found.length > 0) && !isComplete && (
+        <div className="fixed top-[max(1rem,env(safe-area-inset-top))] right-4 z-40 text-sm text-white/50">
+          {confirmRestart ? (
+            <span>
+              Recommencer ?{' '}
+              <button type="button" onClick={restart} className="text-white/85 underline underline-offset-4">
+                Oui
+              </button>
+              {' · '}
+              <button type="button" onClick={() => setConfirmRestart(false)} className="hover:text-white/85">
+                Non
+              </button>
+            </span>
+          ) : (
+            <button type="button" onClick={() => setConfirmRestart(true)} className="transition-colors hover:text-white/85">
+              Recommencer
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Retour à la fiche du jeu dans le portfolio (on y arrive par là) */}
       <a
         href="https://garancewetz.netlify.app/#journey"
@@ -139,7 +163,7 @@ export default function Game() {
         ← Portfolio
       </a>
 
-      <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
+      <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(2.75rem,calc(env(safe-area-inset-top)+1.75rem))] text-center sm:pt-[max(1rem,env(safe-area-inset-top))]">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         {/* Le but du jeu : une étoile par maison */}
         <Stars found={found} />
@@ -157,7 +181,7 @@ export default function Game() {
         )}
       </header>
 
-      <div aria-live="polite" className="fixed inset-x-0 top-[max(6.75rem,calc(env(safe-area-inset-top)+6rem))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
+      <div aria-live="polite" className="fixed inset-x-0 top-[max(8.5rem,calc(env(safe-area-inset-top)+7.75rem))] sm:top-[max(6.75rem,calc(env(safe-area-inset-top)+6rem))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
         {isComplete ? (
           // La fin reste affichée
           <div className="dialog text-base">
