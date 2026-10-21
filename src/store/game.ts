@@ -28,6 +28,8 @@ export const maxMana = (found: string[]) => 3 + xpCount(found) * 2;
 
 export interface GameState {
   position: Position;
+  // dernière direction demandée : le personnage regarde par là, même quand il bute
+  facing: Direction;
   // ids des expériences et des objets ramassés
   found: string[];
   // gardien ou ennemi passé -> sa nouvelle image ('' : il est parti)
@@ -64,6 +66,7 @@ export const haloRadius = (found: string[]) => 1.25 + xpCount(found) * 0.125;
 function fresh(): GameState {
   return {
     position: START,
+    facing: 'down',
     found: [],
     defeated: {},
     mood: 'calm',
@@ -102,6 +105,8 @@ export function guardNextTo(state: GameState) {
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'move': {
+      const facing = action.directions[0];
+      if (facing !== state.facing) state = { ...state, facing };
       for (const direction of action.directions) {
         const [dRow, dCol] = STEPS[direction];
         const position = { row: state.position.row + dRow, col: state.position.col + dCol };

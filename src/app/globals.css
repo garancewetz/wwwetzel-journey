@@ -138,14 +138,36 @@ body {
   mask: radial-gradient(circle at 50% 50%, transparent var(--radius), #000 var(--radius));
 }
 
-.character {
+/* Le personnage : une planche de 4 images (repos, pas, repos, pas) qui défile pendant la marche */
+.hero {
   position: absolute;
   left: 50%;
   top: 50%;
   z-index: 20;
-  width: calc(var(--cell) * 0.42);
-  translate: -50% -50%;
+  width: calc(var(--cell) * 0.83);
+  aspect-ratio: 1;
+  overflow: hidden;
+  translate: -50% -58%;
   pointer-events: none;
+}
+
+.hero[data-facing="left"] {
+  scale: -1 1;
+}
+
+.hero img {
+  width: 400%;
+  max-width: none;
+  height: 100%;
+}
+
+.hero-walking img {
+  animation: walk calc(var(--step) * 2) steps(4) infinite;
+  animation-delay: calc(var(--step) * -0.5);
+}
+
+@keyframes walk {
+  to { transform: translateX(-100%); }
 }
 
 /* Au repos en bas de l'écran, puis sous le doigt (--jx, --jy) ; la pastille suit le doigt (--kx, --ky) */

@@ -8,6 +8,7 @@ import { loadGame, saveGame } from '@/store/save';
 import { Direction } from '@/types/game';
 import World from './World';
 import Inventory from './Inventory';
+import Hero from './Hero';
 
 // Teinte du halo selon l'humeur : chaude quand ça va, froide face à un danger
 const MOOD_COLORS = {
@@ -18,7 +19,7 @@ const MOOD_COLORS = {
 
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { position, found, defeated, mood, message, mana } = state;
+  const { position, facing, found, defeated, mood, message, mana } = state;
   // Les transitions attendent la reprise de la partie, pour ne pas voir la carte défiler au chargement
   const [ready, setReady] = useState(false);
 
@@ -62,8 +63,8 @@ export default function Game() {
   // Comment se servir du sac : au premier objet, puis chaque fois qu'un ennemi barre la route
   const hasItems = interests.some((interest) => found.includes(interest.id!));
   const hasUsed = Object.keys(state.uses).length > 0 || Object.keys(defeated).length > 0;
-  const facing = guardNextTo(state);
-  const hint = !hasItems ? null : facing ? 'facing' : hasUsed ? null : 'first';
+  const blocker = guardNextTo(state);
+  const hint = !hasItems ? null : blocker ? 'facing' : hasUsed ? null : 'first';
 
   return (
     <main
@@ -82,7 +83,7 @@ export default function Game() {
       <World found={found} defeated={defeated} />
       <div className="mood" />
       <div className="halo" />
-      <img src="/garance.svg" alt="Garance" draggable={false} className="character" />
+      <Hero facing={facing} position={position} />
 
       {/* XP et mana : apparaissent au premier objet trouvé */}
       <dl
