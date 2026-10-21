@@ -148,13 +148,15 @@ svg {
   transform-origin: bottom;
   background: linear-gradient(to top, #fff4a0 0 12%, #f8d030 12% 40%, rgb(248 208 48 / 0.6) 40% 70%, rgb(248 208 48 / 0) 100%);
   pointer-events: none;
-  animation: level-up 1300ms ease-out forwards;
+  /* invisible par défaut : si l'animation ne se joue pas, rien ne reste à l'écran */
+  opacity: 0;
+  animation: level-up 900ms ease-out forwards;
 }
 
 @keyframes level-up {
   0% { opacity: 0; scale: 1 0; }
-  20% { opacity: 0.9; scale: 1 1; }
-  100% { opacity: 0; scale: 0.4 1; }
+  25% { opacity: 0.85; scale: 1 1; }
+  100% { opacity: 0; scale: 0.3 1; }
 }
 
 .item-found {

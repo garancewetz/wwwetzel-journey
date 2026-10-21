@@ -85,6 +85,14 @@ export default function Game() {
     if (ready && xpCount > lastXp.current) setLevelUp((n) => n + 1);
     lastXp.current = xpCount;
   }, [xpCount, ready]);
+  // La colonne s'efface d'elle-même, et disparaît pour de bon peu après (même si l'animation n'a pas tourné)
+  const [beam, setBeam] = useState(false);
+  useEffect(() => {
+    if (!levelUp) return;
+    setBeam(true);
+    const timer = window.setTimeout(() => setBeam(false), 1000);
+    return () => window.clearTimeout(timer);
+  }, [levelUp]);
   const isComplete = complete(found);
   const hasMoved = position.row !== START.row || position.col !== START.col;
 
@@ -114,7 +122,7 @@ export default function Game() {
       {found.includes('salameche') && (
         <Companion trail={trail} position={position} walking={walking} ground={groundAt(trail)} />
       )}
-      {levelUp > 0 && <div key={levelUp} className="level-up" aria-hidden />}
+      {beam && <div key={levelUp} className="level-up" aria-hidden />}
       <Hero facing={facing} walking={walking} ground={groundAt(position)} />
 
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
