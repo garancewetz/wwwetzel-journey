@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import PathsSprite from "@/components/PathsSprite";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Une police pixel, lisible et avec les accents, pour rester dans l'esprit Game Boy
+const pixel = Pixelify_Sans({
+  variable: "--font-pixel",
+  subsets: ["latin", "latin-ext"],
 });
 
 export const metadata: Metadata = {
@@ -24,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
-      <body className={`${geistSans.variable} antialiased`}>
+    <html lang="fr" className={pixel.variable}>
+      <body>
         <PathsSprite />
         {children}
       </body>

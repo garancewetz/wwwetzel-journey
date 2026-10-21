@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-}
 
 /* Rayon du halo, en nombre de cases : déclaré pour pouvoir l'animer */
 @property --halo {
@@ -39,7 +36,7 @@ body {
 }
 
 body {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-pixel), system-ui, sans-serif;
 }
 
 .game {
@@ -264,15 +261,46 @@ svg {
   transition: none;
 }
 
+/* La boîte de dialogue, comme dans Pokémon */
+.dialog {
+  display: block;
+  padding: 0.75rem 1rem;
+  border: 3px solid #183018;
+  border-radius: 6px;
+  background: #f8f8f0;
+  box-shadow: inset 0 0 0 2px #f8f8f0, inset 0 0 0 4px #6890c0;
+  color: #183018;
+  text-align: left;
+}
+
 .message {
-  display: inline-block;
   animation: message var(--duration) ease-in-out forwards;
 }
 
 @keyframes message {
-  0% { opacity: 0; }
-  8%, 85% { opacity: 1; }
+  0% { opacity: 0; translate: 0 6px; }
+  6%, 88% { opacity: 1; translate: 0 0; }
   100% { opacity: 0; }
+}
+
+/* Une orbe qui change s'éclaire un instant, et son gain s'envole au-dessus */
+.orb-flash {
+  animation: orb-flash 700ms ease-out;
+}
+
+@keyframes orb-flash {
+  30% { filter: brightness(1.6); scale: 1.12; }
+}
+
+.orb-delta {
+  animation: orb-delta 1400ms ease-out forwards;
+}
+
+@keyframes orb-delta {
+  0% { opacity: 0; translate: 0 4px; }
+  15% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; translate: 0 -18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -119,12 +119,12 @@ export default function Game() {
         </p>
       </header>
 
-      <p aria-live="polite" className="fixed inset-x-0 top-[18%] z-30 mx-auto max-w-md px-6 text-center text-sm leading-relaxed text-white/85 [text-shadow:0_1px_3px_#000]">
+      <p aria-live="polite" className="fixed inset-x-0 top-[max(4.5rem,calc(50%_-_var(--cell)*4.6))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
         {message && (
           <span
             key={message.key}
-            className="message whitespace-pre-line"
-            style={{ '--duration': `${Math.max(4000, message.text.length * 70)}ms` } as CSSProperties}
+            className="dialog message whitespace-pre-line"
+            style={{ '--duration': `${Math.max(5000, message.text.length * 85)}ms` } as CSSProperties}
           >
             {message.text}
           </span>

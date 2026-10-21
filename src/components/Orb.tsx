@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+
 interface OrbProps {
   label: string;
   value: number;
@@ -9,8 +11,17 @@ interface OrbProps {
 const SIZE = 16;
 const RADIUS = 7;
 
-// Une orbe à la Diablo, en pixels : elle se remplit par le bas
+// Une orbe à la Diablo, en pixels : elle se remplit par le bas, et montre chaque gain ou dépense
 export default function Orb({ label, value, max, colors }: OrbProps) {
+  const previous = useRef(value);
+  const [delta, setDelta] = useState<{ amount: number; key: number } | null>(null);
+
+  useEffect(() => {
+    const amount = value - previous.current;
+    previous.current = value;
+    if (amount) setDelta((last) => ({ amount, key: (last?.key ?? 0) + 1 }));
+  }, [value]);
+
   const level = Math.round((value / max) * (RADIUS * 2));
   const pixels: { x: number; y: number; fill: string }[] = [];
   for (let y = 0; y < SIZE; y++) {
@@ -27,14 +38,26 @@ export default function Orb({ label, value, max, colors }: OrbProps) {
       });
     }
   }
+
   return (
-    <figure className="flex flex-col items-center gap-1" aria-label={`${label} ${value}/${max}`}>
-      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="size-10 sm:size-16" shapeRendering="crispEdges" aria-hidden>
+    <figure className="relative flex flex-col items-center gap-1" aria-label={`${label} ${value}/${max}`}>
+      {delta && (
+        <span key={`d${delta.key}`} className="orb-delta absolute -top-5 text-sm" style={{ color: colors[0] }} aria-hidden>
+          {delta.amount > 0 ? `+${delta.amount}` : delta.amount}
+        </span>
+      )}
+      <svg
+        key={delta?.key ?? 0}
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        className={`size-10 sm:size-16 ${delta ? 'orb-flash' : ''}`}
+        shapeRendering="crispEdges"
+        aria-hidden
+      >
         {pixels.map(({ x, y, fill }) => (
           <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={fill} />
         ))}
       </svg>
-      <figcaption className="whitespace-nowrap text-[10px] tracking-widest text-white/60">
+      <figcaption className="whitespace-nowrap text-xs tracking-widest text-white/70">
         {label} {value}/{max}
       </figcaption>
     </figure>
