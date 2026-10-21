@@ -126,28 +126,6 @@ const cain: Item = {
     "refuse": "« Restez un moment et écoutez... » Il n'écoute que lui-même."
 }
 
-const troll: Item = {
-    "type": "guard",
-    "id": "troll",
-    "name": "Troll grognon",
-    "image": "/guards/troll.svg",
-    "text": "Un troll grognon garde le passage du nord. Il ne laisse passer que ceux qui le font chanter.",
-    "key": "karaoke",
-    "solved": "Je lui tends le micro. Il chante faux, très fort, et s'en va en dansant.",
-    "refuse": "Le troll grogne. Il veut chanter, pas ça."
-}
-
-const cloud: Item = {
-    "type": "guard",
-    "id": "cloud",
-    "name": "Nuage de pluie",
-    "image": "/guards/cloud.svg",
-    "text": "Un nuage de pluie bouche le chemin de l'est. Il a le cafard... Il lui faudrait un peu de couleur.",
-    "key": "queer",
-    "solved": "Je déploie l'arc-en-ciel. Le nuage sourit et s'évapore.",
-    "refuse": "Il pleut de plus belle."
-}
-
 // Clin d'œil à Pokémon : il attend dans les hautes herbes, puis il suit et sa flamme éclaire le chemin
 const salameche: Item = {
     "type": "companion",
@@ -291,4 +269,4 @@ const experiences: Item[] = [
     okeiroXp
 ]
 
-export { bush, salameche, mushroom, andariel, lifeguard, curtain, fox, cain, troll, cloud, ruby, tree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer }
+export { bush, salameche, mushroom, andariel, lifeguard, curtain, fox, cain, ruby, tree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer }

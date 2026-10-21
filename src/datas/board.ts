@@ -1,7 +1,7 @@
 import { Cell, Item, Position } from '@/types/game';
 import {
-  andariel, bush, cain, cheese, cloud, colorzXp, curtain, fox, karaoke, lifeguard, mushroom, okeiroXp, openclassroomsXp,
-  queer, reading, ruby, salameche, sarahBernhardt, sorbonneXp, sun, threeWXp, tree, troll, uptooXp, wine,
+  andariel, bush, cain, cheese, colorzXp, curtain, fox, karaoke, lifeguard, mushroom, okeiroXp, openclassroomsXp,
+  queer, reading, ruby, salameche, sarahBernhardt, sorbonneXp, sun, threeWXp, tree, uptooXp, wine,
 } from './items';
 
 // La carte, vue du dessus. Chaque région s'ouvre par un gardien ; son objet a été ramassé plus tôt, parfois bien plus tôt.
@@ -33,9 +33,9 @@ const ITEMS = [
   '.....................',
   '...5.q........M.u....',
   '.....................',
-  '....L......G.........',
+  '....L................',
   '........4............',
-  '.................N...',
+  '.....................',
   '.....................',
   '............C........',
   '.s...................',
@@ -58,8 +58,8 @@ const LEGEND: Record<string, Item[]> = {
   s: [sun], a: [sarahBernhardt],
   // Caché dans les hautes herbes
   z: [salameche], c: [cheese], r: [reading], w: [wine], k: [karaoke], q: [queer], u: [ruby],
-  // Gardiens : R rideau, F renard, C Deckard Cain, G troll, N nuage ; ennemis : L maître nageur, M champignon, A Andariel
-  R: [curtain], F: [fox], C: [cain], G: [troll], N: [cloud], L: [lifeguard], M: [mushroom], A: [andariel],
+  // Gardiens : R rideau, F renard, C Deckard Cain ; ennemis : L maître nageur, M champignon, A Andariel
+  R: [curtain], F: [fox], C: [cain], L: [lifeguard], M: [mushroom], A: [andariel],
 };
 
 // Une forêt tout autour, plus large que le plus grand halo : la lumière tombe toujours sur un rond entier
