@@ -12,7 +12,7 @@ import Hero from './Hero';
 import Companion from './Companion';
 import Orb from './Orb';
 import Dialog from './Dialog';
-import { board } from '@/datas/board';
+import { board, regionAt } from '@/datas/board';
 
 // Teinte du halo selon l'humeur : chaude quand ça va, froide face à un danger
 const MOOD_COLORS = {
@@ -41,6 +41,13 @@ export default function Game() {
     const timer = window.setTimeout(() => setWalking(false), STEP_MS + 80);
     return () => window.clearTimeout(timer);
   }, [position]);
+  // Le panneau du lieu s'affiche quand on change de région
+  const region = regionAt(position);
+  const [place, setPlace] = useState<{ name: string; key: number } | null>(null);
+  useEffect(() => {
+    if (region) setPlace((last) => (last?.name === region ? last : { name: region, key: (last?.key ?? 0) + 1 }));
+  }, [region]);
+
   const groundAt = (p: { row: number; col: number }) => board[p.row][p.col].path ?? 'grass';
 
   useEffect(() => {
@@ -112,26 +119,36 @@ export default function Game() {
 
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
-        <p className={`mt-1 text-xs text-white/40 transition-opacity duration-700 ${hasMoved && !isComplete ? 'opacity-0' : 'opacity-100'}`}>
-          {isComplete ? (
-            <>
-              Merci pour la balade.{' '}
-              <button type="button" onClick={restart} className="underline decoration-white/20 underline-offset-4 hover:text-white/70">
-                Recommencer
-              </button>
-            </>
-          ) : (
-            <>
-              <span className="pointer-coarse:hidden">Les flèches pour marcher</span>
-              <span className="hidden pointer-coarse:inline">Garde le doigt appuyé et glisse pour marcher</span>
-            </>
-          )}
+        {/* Le but du jeu : une étoile par maison */}
+        <Stars count={xpCount} total={experiences.length} />
+        <p className={`mt-1 text-xs text-white/50 transition-opacity duration-700 ${hasMoved ? 'opacity-0' : 'opacity-100'}`}>
+          Trouve les six étoiles ·{' '}
+          <span className="pointer-coarse:hidden">les flèches pour marcher</span>
+          <span className="hidden pointer-coarse:inline">garde le doigt appuyé et glisse</span>
         </p>
       </header>
 
-      <p aria-live="polite" className="fixed inset-x-0 top-[max(4.5rem,calc(50%_-_var(--cell)*4.6))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
-        <Dialog message={message} />
-      </p>
+      {/* Le nom du lieu, comme les panneaux de Pokémon */}
+      {place && (
+        <div key={place.key} className="place-sign dialog fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 !w-auto px-3 py-1.5 text-sm">
+          {place.name}
+        </div>
+      )}
+
+      <div aria-live="polite" className="fixed inset-x-0 top-[max(5.25rem,calc(env(safe-area-inset-top)+4.5rem))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
+        {isComplete ? (
+          // La fin reste affichée
+          <div className="dialog">
+            <p>Les six étoiles brillent ! Le parcours est complet.</p>
+            <p className="mt-1">Merci pour la balade.</p>
+            <button type="button" onClick={restart} className="mt-3 rounded border-2 border-[#183018] px-3 py-1 hover:bg-[#183018] hover:text-[#f8f8f0]">
+              Rejouer
+            </button>
+          </div>
+        ) : (
+          <Dialog message={message} />
+        )}
+      </div>
 
       {/* Sur écran tactile seulement : il vient se placer sous le doigt */}
       <div ref={joystick} className="joystick" aria-hidden>
@@ -146,5 +163,36 @@ export default function Game() {
         right={<Orb label="MANA" value={mana} max={maxMana(found)} colors={['#a8d0ff', '#4878f0', '#2848a8']} />}
       />
     </main>
+  );
+}
+
+// Six étoiles en pixels : pleines quand on a trouvé la maison
+const STAR = [
+  '....#....',
+  '...###...',
+  '...###...',
+  '#########',
+  '.#######.',
+  '..#####..',
+  '..##.##..',
+  '.##...##.',
+  '.#.....#.',
+];
+
+function Stars({ count, total }: { count: number; total: number }) {
+  return (
+    <div className="mt-1.5 flex justify-center gap-2" aria-label={`${count} étoiles sur ${total}`}>
+      {Array.from({ length: total }, (_, index) => (
+        <svg key={index} viewBox="0 0 9 9" className="size-[18px] sm:size-[27px]" shapeRendering="crispEdges" aria-hidden>
+          {STAR.flatMap((line, y) =>
+            [...line].map((pixel, x) =>
+              pixel === '#' ? (
+                <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={index < count ? (y < 3 ? '#fff4a0' : '#f8d030') : '#3c3c44'} />
+              ) : null,
+            ),
+          )}
+        </svg>
+      ))}
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 # wwwetzel journey
 
-Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience est une maison où l'on trouve une étoile, qui rapporte un point d'XP, recharge la mana et agrandit un peu la lumière.
+Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience est une maison où l'on trouve une étoile, qui rapporte un point d'XP, recharge la mana et agrandit un peu la lumière. Le but : les six étoiles, affichées sous le titre. Le nom de chaque région s'affiche à l'entrée, comme les panneaux de Pokémon, et l'avant-dernière étoile indique où chercher la dernière.
 
 - **Les intérêts** (Sarah Bernhardt, le fromage, un livre, le vin, un micro, un arc-en-ciel, le soleil, un rubis) se ramassent en route et vont dans le sac. Chacun ouvre un passage, et fait rire le reste du temps.
 - **Les gardiens** barrent la route d'une région à l'autre : un rideau de théâtre, un renard (La Fontaine), Deckard Cain, un troll, un nuage de pluie. Leur réplique donne un indice sur l'objet à leur offrir, toujours trouvé juste avant.

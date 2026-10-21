@@ -47,7 +47,8 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  --radius: calc(var(--cell) * var(--halo));
+  /* Le halo grandit à chaque étoile, mais reste entre la bulle et le sac */
+  --radius: min(calc(var(--cell) * var(--halo)), calc(50dvh - 8.5rem), calc(50vw - 0.75rem));
 }
 
 /* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
@@ -309,6 +310,10 @@ svg {
   display: block;
   text-align: center;
   text-shadow: 0 2px 0 #000, 0 0 6px #000;
+}
+
+.place-sign {
+  animation: message 2800ms ease-in-out forwards;
 }
 
 .message {

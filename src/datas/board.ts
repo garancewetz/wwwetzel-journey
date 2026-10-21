@@ -119,3 +119,21 @@ export const START: Position = (() => {
 })();
 
 export const COLUMNS = ground[0].length;
+
+// Les régions, comme les panneaux de lieu de Pokémon : [nom, première ligne, dernière ligne, première colonne, dernière colonne]
+const REGIONS: [string, number, number, number, number][] = [
+  ['Prairie', 13, 17, 1, 8],
+  ['Bosquet', 8, 11, 1, 7],
+  ['Clairière', 8, 12, 9, 15],
+  ['Carrefour', 4, 6, 3, 16],
+  ['Plage', 1, 2, 1, 6],
+  ['Passage du nord', 1, 2, 8, 16],
+  ["Repaire d'Andariel", 4, 14, 18, 19],
+  ['Sanctuaire', 15, 17, 16, 19],
+];
+
+// Le nom du lieu ; null sur les cases de passage (gardiens, portes), où l'on garde le précédent
+export function regionAt({ row, col }: Position) {
+  const found = REGIONS.find(([, r0, r1, c0, c1]) => row - PAD >= r0 && row - PAD <= r1 && col - PAD >= c0 && col - PAD <= c1);
+  return found?.[0] ?? null;
+}

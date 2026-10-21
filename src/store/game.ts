@@ -1,4 +1,4 @@
-import { board, START } from '@/datas/board';
+import { board, regionAt, START } from '@/datas/board';
 import crossed from '@/datas/crossed';
 import { experiences, interests } from '@/datas/items';
 import { Direction, Item, Position } from '@/types/game';
@@ -12,8 +12,8 @@ const STEPS: Record<Direction, [number, number]> = {
   right: [0, 1],
 };
 
-// La fin : toutes les expériences et tous les intérêts (Salamèche est un bonus)
-export const isComplete = (found: string[]) => [...experiences, ...interests].every((item) => found.includes(item.id!));
+// La fin : les six étoiles, une par maison (les objets et Salamèche se trouvent en chemin)
+export const isComplete = (found: string[]) => experiences.every((item) => found.includes(item.id!));
 
 // joy : un objet, une expérience, un gardien passé ; fear : face à un ennemi
 export type Mood = 'calm' | 'joy' | 'fear';
@@ -21,10 +21,12 @@ export type Mood = 'calm' | 'joy' | 'fear';
 // Après quelques pas sans événement, l'humeur redevient calme
 const MOOD_STEPS = 8;
 
-// Mana : la force de vaincre un ennemi. Chaque expérience l'agrandit et la recharge,
+// Mana : chaque objet utilisé en coûte 1, vaincre un ennemi 3. Chaque expérience l'agrandit et la recharge,
 // et elle revient en marchant (jamais de blocage)
 const MANA_STEPS = 6;
+const USE_COST = 1;
 export const SPELL_COST = 3;
+const NO_MANA = 'Pas assez de mana.\nElle revient en marchant, ou avec une nouvelle expérience.';
 export const maxMana = (found: string[]) => 3 + xpCount(found) * 2;
 
 export interface GameState {
@@ -64,7 +66,7 @@ export const xpCount = (found: string[]) => experiences.filter((xp) => found.inc
 
 // Rayon du halo, en cases : il grandit un peu à chaque expérience
 // La flamme de Salamèche l'agrandit encore
-export const haloRadius = (found: string[]) => 2 + xpCount(found) * 0.25 + (found.includes('salameche') ? 0.75 : 0);
+export const haloRadius = (found: string[]) => 2 + xpCount(found) * 0.2 + (found.includes('salameche') ? 0.5 : 0);
 
 
 function fresh(): GameState {
@@ -92,6 +94,19 @@ function say(state: GameState, text: string, mood?: Mood, error?: boolean): Game
     message: { text, key: (state.message?.key ?? 0) + 1, error },
     ...(mood && { mood, moodSteps: 0 }),
   };
+}
+
+const FEMININE = ['Prairie', 'Clairière', 'Plage'];
+
+// Où se trouve la dernière maison qu'il reste à visiter
+function lastStarRegion(found: string[]) {
+  const missing = experiences.find((xp) => !found.includes(xp.id!));
+  for (const [row, cells] of board.entries()) {
+    const col = cells.findIndex((cell) => cell.items?.some((item) => item.id === missing?.id));
+    const region = col !== -1 ? regionAt({ row, col }) : null;
+    if (region) return `${/^[AEIOUÉ]/.test(region) ? "l'" : FEMININE.includes(region) ? 'la ' : 'le '}${region}`;
+  }
+  return 'le bout du chemin';
 }
 
 export const canSwim = (state: GameState) => 'lifeguard' in state.defeated;
@@ -147,9 +162,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         if (collectible) {
           const nextFound = [...found, collectible.id!];
           if (collectible.type === 'xp') {
+            const stars = xpCount(nextFound);
+            const left = experiences.length - stars;
+            const end = left === 1 ? `\nPlus qu'une étoile... elle brille quelque part vers ${lastStarRegion(nextFound)}.` : '';
             return say(
               { ...next, found: nextFound, mana: maxMana(nextFound) },
-              `Ding ! Une étoile dans la maison !\n${collectible.name}\n+1 XP · mana rechargée`,
+              `Ding ! Une étoile dans la maison ! ★ ${stars}/${experiences.length}\n${collectible.name}\n+1 XP · mana rechargée${end}`,
               'joy',
             );
           }
@@ -170,25 +188,26 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       if (!item || !state.found.includes(action.id)) return state;
 
       const guard = guardNextTo(state);
+      const isEnemy = guard?.type === 'danger';
+      const wins = guard !== undefined && item.id === guard.key;
+      // Utiliser un objet coûte 1 mana ; vaincre un ennemi en coûte 3
+      const cost = wins && isEnemy ? SPELL_COST : USE_COST;
+      if (state.mana < cost) return say(state, NO_MANA, 'fear', true);
+      state = { ...state, mana: state.mana - cost };
+
       if (!guard) {
         const count = state.uses[item.id!] ?? 0;
         const lines = item.uses ?? [`${item.name}. Qu'est-ce que je peux bien en faire ?`];
         return say({ ...state, uses: { ...state.uses, [item.id!]: count + 1 } }, lines[count % lines.length], 'joy');
       }
 
-      const isEnemy = guard.type === 'danger';
-      if (item.id !== guard.key) {
+      if (!wins) {
         const reaction = crossed[guard.id!]?.find((r) => r.id === item.id);
         return say(state, reaction?.text ?? guard.refuse ?? `${item.name} ? Ça ne marche pas.`, isEnemy ? 'fear' : undefined);
-      }
-      // Vaincre un ennemi demande de la mana ; un gardien amical cède au bon objet
-      if (isEnemy && state.mana < SPELL_COST) {
-        return say(state, 'Pas assez de mana.\nUne nouvelle expérience me redonnerait des forces.', 'fear', true);
       }
       return say(
         {
           ...state,
-          mana: isEnemy ? state.mana - SPELL_COST : state.mana,
           defeated: { ...state.defeated, [guard.id!]: guard.after ?? '' },
           bumped: null,
         },
