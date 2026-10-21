@@ -5,7 +5,7 @@ Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marc
 - **Les intérêts** (Sarah Bernhardt, le fromage, un livre, le vin, un micro, un arc-en-ciel, le soleil, un rubis) se ramassent en route et vont dans le sac. Chacun ouvre un passage, et fait rire le reste du temps.
 - **Les gardiens** barrent la route d'une région à l'autre : un rideau de théâtre, un renard (La Fontaine), Deckard Cain, un troll, un nuage de pluie. Leur réplique donne un indice sur l'objet à leur offrir, toujours trouvé juste avant.
 - **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, clin d'œil à Diablo) se battent de la même façon, mais il faut de la mana. Le maître nageur, une fois apaisé, apprend à nager.
-- **XP et mana** se lisent dans deux orbes, à la Diablo, de chaque côté du sac.
+- **XP et mana** se lisent dans deux orbes, à la Diablo, de chaque côté du sac. Chaque objet utilisé coûte 1 mana, vaincre un ennemi 3 ; elle revient en marchant et avec chaque étoile.
 - **Salamèche** se cache dans les hautes herbes. Trouvé, il suit le personnage et sa flamme éclaire plus loin.
 - **Clins d'œil à Diablo et World of Warcraft** : le « ! » jaune des donneurs de quête au-dessus des gardiens, « Ding ! » et une colonne de lumière dorée à chaque expérience, les noms d'objets en couleur de rareté, « Pas assez de mana. » en rouge.
 - **L'humeur** teinte doucement le bord de la lumière : chaude quand tout va bien, froide face à un danger.
