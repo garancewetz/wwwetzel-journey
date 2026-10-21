@@ -39,9 +39,13 @@ body {
   font-family: var(--font-pixel), system-ui, sans-serif;
 }
 
-.game {
-  /* caché par le style écrit dans la page tant que cette feuille n'est pas chargée (voir layout.tsx) */
+/* Le style écrit dans la page cache le jeu tant que cette feuille n'est pas chargée (voir layout.tsx) ;
+   ce sélecteur plus fort le fait réapparaître, quel que soit l'ordre des styles dans la page */
+html body .game {
   visibility: visible;
+}
+
+.game {
   position: fixed;
   inset: 0;
   overflow: hidden;
