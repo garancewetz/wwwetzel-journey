@@ -9,9 +9,22 @@ const pixel = Pixelify_Sans({
   subsets: ["latin", "latin-ext"],
 });
 
+const description = "Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color : on marche dans le noir et on découvre en chemin le parcours de Garance Wetzel.";
+
 export const metadata: Metadata = {
+  // Netlify fournit l'adresse du site au moment du build (variable URL)
+  metadataBase: new URL(process.env.URL ?? "http://localhost:3000"),
   title: "wwwetzel journey",
-  description: "Un petit jeu en pixel art : on marche dans le noir et on découvre en chemin le parcours de Garance Wetzel.",
+  description,
+  // L'aperçu quand on partage le lien : une vraie scène du jeu
+  openGraph: {
+    title: "wwwetzel journey",
+    description,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "L'héroïne en pixel art devant une maison, Salamèche à ses côtés, dans un rond de lumière sur fond noir." }],
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

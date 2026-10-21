@@ -24,7 +24,7 @@ export default function Inventory({ found, onUse, hint, left, right }: Inventory
     <div
       className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-30 -translate-x-1/2 transition-opacity duration-700 ${isEmpty ? 'opacity-0' : 'opacity-100'}`}
     >
-      <p aria-live="polite" className={`mb-2 text-center text-xs text-white/50 lg:text-sm transition-opacity duration-500 ${hint ? 'opacity-100' : 'opacity-0'}`}>
+      <p aria-live="polite" className={`mb-2 text-center text-sm text-white/60 transition-opacity duration-500 ${hint ? 'opacity-100' : 'opacity-0'}`}>
         <span className="pointer-coarse:hidden">{hint ? HINTS[hint].keys : '\u00a0'}</span>
         <span className="hidden pointer-coarse:inline">{hint ? HINTS[hint].touch : '\u00a0'}</span>
       </p>
@@ -42,7 +42,7 @@ export default function Inventory({ found, onUse, hint, left, right }: Inventory
                 className="relative flex size-full items-center justify-center rounded transition-transform active:scale-90"
               >
                 <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8 lg:size-10 [image-rendering:pixelated]" />
-                <span className="absolute -top-1 -left-1 text-[10px] text-white/40 pointer-coarse:hidden">{index + 1}</span>
+                <span className="absolute -top-1.5 -left-1 text-xs text-white/60 pointer-coarse:hidden">{index + 1}</span>
               </button>
             ) : (
               <span className="block size-full rounded border border-white/10" />

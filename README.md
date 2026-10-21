@@ -38,6 +38,7 @@ Le jeu est alors sur [http://localhost:3000](http://localhost:3000).
 - `npm run build` : site statique dans `out/`
 - `npm run lint` : ESLint
 - `npm run typecheck` : vérification TypeScript
+- `npm test` : tests des règles du jeu (Vitest) : la carte se termine, les gardiens, la mana, les étoiles
 
 ## Organisation
 

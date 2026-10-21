@@ -69,6 +69,8 @@ export default function Game() {
   // Touches 1 à 8 : utiliser un objet du sac
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      // une touche maintenue ne doit pas vider la mana
+      if (event.repeat) return;
       const interest = interests[Number(event.key) - 1];
       if (interest) activate(interest.id!);
     };
@@ -133,7 +135,7 @@ export default function Game() {
         <Stars count={xpCount} total={experiences.length} />
         {/* Au départ, la consigne ; ensuite, le nom du lieu, comme les panneaux de Pokémon */}
         {!hasMoved || !place ? (
-          <p className="mt-1.5 text-xs text-white/50 lg:text-sm">
+          <p className="mt-1.5 text-sm text-white/60">
             Trouve les six étoiles ·{' '}
             <span className="pointer-coarse:hidden">les flèches pour marcher</span>
             <span className="hidden pointer-coarse:inline">garde le doigt appuyé et glisse</span>

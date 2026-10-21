@@ -57,7 +57,7 @@ export default function Orb({ label, value, max, colors }: OrbProps) {
           <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={fill} />
         ))}
       </svg>
-      <figcaption className="whitespace-nowrap text-xs tracking-widest text-white/70 lg:text-sm">
+      <figcaption className="whitespace-nowrap text-[13px] tracking-widest text-white/75 lg:text-base">
         {label} {value}/{max}
       </figcaption>
     </figure>

@@ -360,9 +360,25 @@ svg {
   100% { opacity: 0; translate: 0 -18px; }
 }
 
+/* « Réduire les animations » : plus de glissements ni d'éclats, le jeu reste le même */
 @media (prefers-reduced-motion: reduce) {
   .game[data-ready="true"],
-  .item {
+  .item,
+  [data-ready="true"] .world,
+  [data-ready="true"] .layer,
+  [data-ready="true"] .follower {
     transition: none;
   }
+
+  .sprite.walking img,
+  .orb-flash,
+  .place-name {
+    animation: none;
+  }
+
+  .level-up,
+  .orb-delta {
+    display: none;
+  }
 }
+
