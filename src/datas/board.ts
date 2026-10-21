@@ -4,7 +4,7 @@ import {
   queer, reading, ruby, salameche, sarahBernhardt, sorbonneXp, sun, threeWXp, tree, troll, uptooXp, wine,
 } from './items';
 
-// La carte, vue du dessus. Chaque région s'ouvre par un gardien, que l'on passe avec l'objet trouvé juste avant.
+// La carte, vue du dessus. Chaque région s'ouvre par un gardien ; son objet a été ramassé plus tôt, parfois bien plus tôt.
 // Sol : T arbre, b buisson, X maison, ~ eau, . herbe, * fleurs, h hautes herbes, = chemin, P place, m boue
 const GROUND = [
   'TTXXXTTTTTTTTTTTTTTTT',
@@ -23,7 +23,7 @@ const GROUND = [
   'T**.=....TTTTTTTTTmmT',
   'Th..=XXX.TTTTTTTTTT.T',
   'Thh.=X.X.TTTTTTTXXX.T',
-  'T.P==...bTTTTTTTX.X.T',
+  'T.P==....TTTTTTTX.X.T',
   'T.**..~~.TTTTTTT*..*T',
   'TTTTTTTTTTTTTTTTTTTTT',
 ];
@@ -31,23 +31,23 @@ const GROUND = [
 // Objets et gardiens, aux mêmes coordonnées. @ : départ ; une expérience est la porte d'une maison
 const ITEMS = [
   '.....................',
-  '...5..........M.u....',
+  '...5.q........M.u....',
   '.....................',
   '....L......G.........',
-  '........4......q.....',
+  '........4............',
   '.................N...',
-  '......k..............',
-  '............C........',
-  '......c..............',
-  '........F............',
-  '..2.......r..........',
-  '......z.......3......',
-  '....R........w.......',
-  '.......a.............',
-  '..s................A.',
-  '......1..............',
-  '..@..............6...',
   '.....................',
+  '............C........',
+  '.s...................',
+  '........F............',
+  '..2..................',
+  '.r....z.......3......',
+  '....R....k.....w.....',
+  '.....................',
+  '...................A.',
+  '.c....1..............',
+  '..@..............6...',
+  '........a............',
   '.....................',
 ];
 
