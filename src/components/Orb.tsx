@@ -42,14 +42,14 @@ export default function Orb({ label, value, max, colors }: OrbProps) {
   return (
     <figure className="relative flex flex-col items-center gap-1" aria-label={`${label} ${value}/${max}`}>
       {delta && (
-        <span key={`d${delta.key}`} className="orb-delta absolute -top-5 text-sm" style={{ color: colors[0] }} aria-hidden>
+        <span key={`d${delta.key}`} className="orb-delta absolute -top-5 text-sm lg:-top-7 lg:text-lg" style={{ color: colors[0] }} aria-hidden>
           {delta.amount > 0 ? `+${delta.amount}` : delta.amount}
         </span>
       )}
       <svg
         key={delta?.key ?? 0}
         viewBox={`0 0 ${SIZE} ${SIZE}`}
-        className={`size-10 sm:size-16 ${delta ? 'orb-flash' : ''}`}
+        className={`size-10 sm:size-16 lg:size-24 ${delta ? 'orb-flash' : ''}`}
         shapeRendering="crispEdges"
         aria-hidden
       >
@@ -57,7 +57,7 @@ export default function Orb({ label, value, max, colors }: OrbProps) {
           <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={fill} />
         ))}
       </svg>
-      <figcaption className="whitespace-nowrap text-xs tracking-widest text-white/70">
+      <figcaption className="whitespace-nowrap text-xs tracking-widest text-white/70 lg:text-sm">
         {label} {value}/{max}
       </figcaption>
     </figure>

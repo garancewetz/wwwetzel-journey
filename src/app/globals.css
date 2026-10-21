@@ -51,6 +51,13 @@ body {
   --radius: min(calc(var(--cell) * var(--halo)), calc(50dvh - 8.5rem), calc(50vw - 0.75rem));
 }
 
+/* Sur grand écran, les orbes sont plus grandes : un peu plus de place en bas */
+@media (min-width: 1024px) {
+  .game {
+    --radius: min(calc(var(--cell) * var(--halo)), calc(50dvh - 10.5rem), calc(50vw - 0.75rem));
+  }
+}
+
 /* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
 .game[data-ready="true"] {
   transition: --halo 900ms ease-out, --mood 1200ms ease-in-out;
@@ -315,8 +322,12 @@ svg {
   text-shadow: 0 2px 0 #000, 0 0 6px #000;
 }
 
-.place-sign {
-  animation: message 2800ms ease-in-out forwards;
+.place-name {
+  animation: place-in 900ms ease-out;
+}
+
+@keyframes place-in {
+  from { opacity: 0; translate: 0 -4px; }
 }
 
 .message {

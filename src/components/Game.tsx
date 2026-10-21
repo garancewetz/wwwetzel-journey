@@ -129,19 +129,19 @@ export default function Game() {
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         {/* Le but du jeu : une étoile par maison */}
         <Stars count={xpCount} total={experiences.length} />
-        <p className={`mt-1 text-xs text-white/50 transition-opacity duration-700 ${hasMoved ? 'opacity-0' : 'opacity-100'}`}>
-          Trouve les six étoiles ·{' '}
-          <span className="pointer-coarse:hidden">les flèches pour marcher</span>
-          <span className="hidden pointer-coarse:inline">garde le doigt appuyé et glisse</span>
-        </p>
+        {/* Au départ, la consigne ; ensuite, le nom du lieu, comme les panneaux de Pokémon */}
+        {!hasMoved || !place ? (
+          <p className="mt-1.5 text-xs text-white/50 lg:text-sm">
+            Trouve les six étoiles ·{' '}
+            <span className="pointer-coarse:hidden">les flèches pour marcher</span>
+            <span className="hidden pointer-coarse:inline">garde le doigt appuyé et glisse</span>
+          </p>
+        ) : (
+          <p key={place.key} className="place-name mt-1.5 text-sm tracking-widest text-white/75 lg:text-base">
+            {place.name}
+          </p>
+        )}
       </header>
-
-      {/* Le nom du lieu, comme les panneaux de Pokémon */}
-      {place && (
-        <div key={place.key} className="place-sign dialog fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 !w-auto px-3 py-1.5 text-sm">
-          {place.name}
-        </div>
-      )}
 
       <div aria-live="polite" className="fixed inset-x-0 top-[max(5.25rem,calc(env(safe-area-inset-top)+4.5rem))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
         {isComplete ? (

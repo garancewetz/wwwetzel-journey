@@ -24,15 +24,15 @@ export default function Inventory({ found, onUse, hint, left, right }: Inventory
     <div
       className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-30 -translate-x-1/2 transition-opacity duration-700 ${isEmpty ? 'opacity-0' : 'opacity-100'}`}
     >
-      <p aria-live="polite" className={`mb-2 text-center text-xs text-white/50 transition-opacity duration-500 ${hint ? 'opacity-100' : 'opacity-0'}`}>
+      <p aria-live="polite" className={`mb-2 text-center text-xs text-white/50 lg:text-sm transition-opacity duration-500 ${hint ? 'opacity-100' : 'opacity-0'}`}>
         <span className="pointer-coarse:hidden">{hint ? HINTS[hint].keys : '\u00a0'}</span>
         <span className="hidden pointer-coarse:inline">{hint ? HINTS[hint].touch : '\u00a0'}</span>
       </p>
       <div className="flex items-end gap-2 sm:gap-4">
       {left}
-      <ul className="mb-5 flex gap-0.5 sm:gap-2">
+      <ul className="mb-5 flex gap-0.5 sm:gap-2 lg:mb-7">
         {interests.map((interest, index) => (
-          <li key={interest.id} className="size-7 sm:size-10">
+          <li key={interest.id} className="size-7 sm:size-10 lg:size-12">
             {found.includes(interest.id!) ? (
               <button
                 type="button"
@@ -41,7 +41,7 @@ export default function Inventory({ found, onUse, hint, left, right }: Inventory
                 aria-label={`Utiliser : ${interest.name}`}
                 className="relative flex size-full items-center justify-center rounded transition-transform active:scale-90"
               >
-                <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8 [image-rendering:pixelated]" />
+                <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8 lg:size-10 [image-rendering:pixelated]" />
                 <span className="absolute -top-1 -left-1 text-[10px] text-white/40 pointer-coarse:hidden">{index + 1}</span>
               </button>
             ) : (
