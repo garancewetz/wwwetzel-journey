@@ -40,6 +40,8 @@ body {
 }
 
 .game {
+  /* caché par le style écrit dans la page tant que cette feuille n'est pas chargée (voir layout.tsx) */
+  visibility: visible;
   position: fixed;
   inset: 0;
   overflow: hidden;

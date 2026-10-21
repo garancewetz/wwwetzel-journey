@@ -40,6 +40,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={pixel.variable}>
+      <head>
+        {/* Safari peint parfois la page avant d'avoir chargé la feuille de style : fond noir et jeu caché d'ici là,
+            sinon on voit toute la carte un instant */}
+        <style>{"html,body{background:#000}.game{visibility:hidden}"}</style>
+      </head>
       <body>
         <PathsSprite />
         {children}

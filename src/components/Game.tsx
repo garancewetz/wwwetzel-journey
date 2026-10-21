@@ -131,9 +131,9 @@ export default function Game() {
       {beam && <div key={levelUp} className="level-up" aria-hidden />}
       <Hero facing={facing} walking={walking} ground={groundAt(position)} />
 
-      {/* Retour au portfolio, qui sert le jeu sous /journey */}
+      {/* Retour à la fiche du jeu dans le portfolio (on y arrive par là) */}
       <a
-        href="https://garancewetz.netlify.app/"
+        href="https://garancewetz.netlify.app/#journey"
         className="fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 text-sm text-white/50 transition-colors hover:text-white/85"
       >
         ← Portfolio
