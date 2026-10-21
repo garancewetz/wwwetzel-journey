@@ -12,6 +12,7 @@ import Hero from './Hero';
 import Companion from './Companion';
 import Orb from './Orb';
 import Dialog from './Dialog';
+import Star from './Star';
 import { board, regionAt } from '@/datas/board';
 
 // Teinte du halo selon l'humeur : chaude quand ça va, froide face à un danger
@@ -80,7 +81,7 @@ export default function Game() {
 
   const xpCount = countXp(found);
 
-  // « Ding ! » : la colonne dorée, seulement quand on gagne vraiment une expérience (pas à la reprise)
+  // La colonne dorée, seulement quand on gagne vraiment une expérience (pas à la reprise)
   const lastXp = useRef(xpCount);
   const [levelUp, setLevelUp] = useState(0);
   useEffect(() => {
@@ -133,7 +134,7 @@ export default function Game() {
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         {/* Le but du jeu : une étoile par maison */}
-        <Stars count={xpCount} total={experiences.length} />
+        <Stars found={found} />
         {/* Au départ, la consigne ; ensuite, le nom du lieu, comme les panneaux de Pokémon */}
         {!hasMoved || !place ? (
           <p className="mt-1.5 text-sm text-white/60">
@@ -148,23 +149,23 @@ export default function Game() {
         )}
       </header>
 
-      <div aria-live="polite" className="fixed inset-x-0 top-[max(5.25rem,calc(env(safe-area-inset-top)+4.5rem))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
+      <div aria-live="polite" className="fixed inset-x-0 top-[max(6.75rem,calc(env(safe-area-inset-top)+6rem))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
         {isComplete ? (
           // La fin reste affichée
-          <div className="dialog">
+          <div className="dialog text-base">
             {/* La dernière étoile trouvée, pour savoir où l'on termine */}
             {lastStar && (
-              <p className="mb-2">
-                Ding ! La dernière étoile ★ 6/6
-                <br />
+              <p className="flex items-center gap-2">
+                <Star track={lastStar.track!} className="size-5 shrink-0" />
                 {lastStar.name}
               </p>
             )}
-            <p>Les six étoiles brillent ! Le parcours est complet.</p>
-            <p className="mt-1">Merci pour la balade.</p>
-            <button type="button" onClick={restart} className="mt-3 rounded border-2 border-[#183018] px-3 py-1 hover:bg-[#183018] hover:text-[#f8f8f0]">
-              Rejouer
-            </button>
+            <p className="mt-2 flex items-center justify-between gap-3">
+              <span>Les six étoiles brillent. Merci pour la balade !</span>
+              <button type="button" onClick={restart} className="shrink-0 rounded border-2 border-[#183018] px-3 py-1 hover:bg-[#183018] hover:text-[#f8f8f0]">
+                Rejouer
+              </button>
+            </p>
           </div>
         ) : (
           <Dialog message={message} />
@@ -187,32 +188,21 @@ export default function Game() {
   );
 }
 
-// Six étoiles en pixels : pleines quand on a trouvé la maison
-const STAR = [
-  '....#....',
-  '...###...',
-  '...###...',
-  '#########',
-  '.#######.',
-  '..#####..',
-  '..##.##..',
-  '.##...##.',
-  '.#.....#.',
-];
-
-function Stars({ count, total }: { count: number; total: number }) {
+// Six étoiles : les formations (bleu clair), puis les expériences pro (dorées), pleines une fois la maison trouvée
+function Stars({ found }: { found: string[] }) {
+  const groups = (['formation', 'pro'] as const).map((track) => experiences.filter((xp) => xp.track === track));
+  const count = (track: 'formation' | 'pro') => groups[track === 'formation' ? 0 : 1].filter((xp) => found.includes(xp.id!)).length;
   return (
-    <div className="mt-1.5 flex justify-center gap-2" aria-label={`${count} étoiles sur ${total}`}>
-      {Array.from({ length: total }, (_, index) => (
-        <svg key={index} viewBox="0 0 9 9" className="size-[18px] sm:size-[27px]" shapeRendering="crispEdges" aria-hidden>
-          {STAR.flatMap((line, y) =>
-            [...line].map((pixel, x) =>
-              pixel === '#' ? (
-                <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={index < count ? (y < 3 ? '#fff4a0' : '#f8d030') : '#3c3c44'} />
-              ) : null,
-            ),
-          )}
-        </svg>
+    <div
+      className="mt-1.5 flex justify-center gap-5"
+      aria-label={`Formations : ${count('formation')} sur 3 · expériences pro : ${count('pro')} sur 3`}
+    >
+      {groups.map((group, index) => (
+        <div key={index} className="flex gap-2">
+          {group.map((xp) => (
+            <Star key={xp.id} track={xp.track!} lit={found.includes(xp.id!)} className="size-[18px] sm:size-[27px]" />
+          ))}
+        </div>
       ))}
     </div>
   );

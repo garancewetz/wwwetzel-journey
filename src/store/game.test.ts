@@ -111,7 +111,7 @@ describe('les étoiles', () => {
     const state = gameReducer(at({ position: below, mana: 0 }), { type: 'move', directions: ['up'] });
     expect(state.found).toContain('sorbonne');
     expect(state.mana).toBe(maxMana(state.found));
-    expect(state.message?.text).toMatch(/★ 1\/6/);
+    expect(state.message?.text).toBe('Sorbonne Nouvelle · Master de lettres · 2015');
   });
 
   it('font la fin, et seulement elles', () => {

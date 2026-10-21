@@ -1,6 +1,7 @@
 import { CSSProperties, Fragment } from 'react';
 import { interests } from '@/datas/items';
 import { Item } from '@/types/game';
+import Star from './Star';
 
 // Couleurs de rareté de Diablo II, assombries pour se lire sur la boîte claire
 const RARITY: Record<NonNullable<Item['rarity']>, string> = {
@@ -31,7 +32,7 @@ function Colored({ text }: { text: string }) {
 }
 
 interface DialogProps {
-  message: { text: string; key: number; error?: boolean } | null;
+  message: { text: string; key: number; error?: boolean; star?: Item['track'] } | null;
 }
 
 export default function Dialog({ message }: DialogProps) {
@@ -51,6 +52,13 @@ export default function Dialog({ message }: DialogProps) {
 
   return (
     <span key={message.key} className="dialog message whitespace-pre-line" style={style}>
+      {/* Une expérience : son étoile, et s'il s'agit d'une formation ou d'une expérience pro */}
+      {message.star && (
+        <span className="mb-1 flex items-center gap-2 text-sm opacity-70">
+          <Star track={message.star} className="size-4" />
+          {message.star === 'formation' ? 'Formation' : 'Expérience pro'}
+        </span>
+      )}
       <Colored text={message.text} />
     </span>
   );

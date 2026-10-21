@@ -5,6 +5,7 @@ import { Item } from '@/types/game';
 const sorbonneXp: Item = {
     "type": "xp",
     "id": "sorbonne",
+    "track": "formation",
     "name": "Sorbonne Nouvelle · Master de lettres · 2015",
     "image": "/houses/slate.svg"
 }
@@ -12,6 +13,7 @@ const sorbonneXp: Item = {
 const threeWXp: Item = {
     "type": "xp",
     "id": "3w",
+    "track": "formation",
     "name": "3W Academy · Développeuse web · 2018",
     "image": "/houses/orange.svg"
 }
@@ -19,6 +21,7 @@ const threeWXp: Item = {
 const openclassroomsXp: Item = {
     "type": "xp",
     "id": "openclassrooms",
+    "track": "formation",
     "name": "OpenClassrooms · Développeuse d'application web · 2022",
     "image": "/houses/purple.svg"
 }
@@ -26,6 +29,7 @@ const openclassroomsXp: Item = {
 const uptooXp: Item = {
     "type": "xp",
     "id": "uptoo",
+    "track": "pro",
     "name": "Uptoo · Développeuse front · 2019",
     "image": "/houses/green.svg"
 }
@@ -33,6 +37,7 @@ const uptooXp: Item = {
 const colorzXp: Item = {
     "type": "xp",
     "id": "colorz",
+    "track": "pro",
     "name": "Colorz · Développeuse front · 2022",
     "image": "/houses/pink.svg"
 }
@@ -40,6 +45,7 @@ const colorzXp: Item = {
 const okeiroXp: Item = {
     "type": "xp",
     "id": "okeiro",
+    "track": "pro",
     "name": "Okeiro · Développeuse front · 2025",
     "image": "/houses/teal.svg"
 }

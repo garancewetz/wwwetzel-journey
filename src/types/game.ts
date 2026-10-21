@@ -19,6 +19,8 @@ export interface Item {
   refuse?: string;
   // Intérêts : rareté à la Diablo (couleur de leur nom dans les messages), et les mots qui les désignent
   rarity?: 'normal' | 'magic' | 'rare' | 'set' | 'unique';
+  // Expériences : une formation ou une expérience professionnelle (couleur de leur étoile)
+  track?: 'formation' | 'pro';
   words?: string[];
 }
 

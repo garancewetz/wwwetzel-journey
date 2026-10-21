@@ -42,8 +42,9 @@ export interface GameState {
   defeated: Record<string, string>;
   mood: Mood;
   moodSteps: number;
-  // key change à chaque message, même si le texte est identique ; error : le message rouge de WoW
-  message: { text: string; key: number; error?: boolean } | null;
+  // key change à chaque message, même si le texte est identique ; error : le message rouge de WoW ;
+  // star : l'étoile d'une expérience (formation ou pro)
+  message: { text: string; key: number; error?: boolean; star?: Item['track'] } | null;
   // combien de fois chaque intérêt a servi : ses répliques alternent
   uses: Record<string, number>;
   mana: number;
@@ -176,11 +177,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
             const stars = xpCount(nextFound);
             const left = experiences.length - stars;
             const end = left === 1 ? `\nPlus qu'une étoile... elle brille quelque part vers ${lastStarRegion(nextFound)}.` : '';
-            return say(
-              { ...next, found: nextFound, mana: maxMana(nextFound) },
-              `Ding ! Une étoile dans la maison ! ★ ${stars}/${experiences.length}\n${collectible.name}\n+1 XP · mana rechargée${end}`,
-              'joy',
-            );
+            const said = say({ ...next, found: nextFound, mana: maxMana(nextFound) }, `${collectible.name}${end}`, 'joy');
+            return { ...said, message: { ...said.message!, star: collectible.track } };
           }
           return say({ ...next, found: nextFound }, collectible.text ?? collectible.name, 'joy');
         }
