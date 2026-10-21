@@ -17,6 +17,9 @@ export interface Item {
   after?: string;
   // Gardiens : la réponse à tout autre objet
   refuse?: string;
+  // Intérêts : rareté à la Diablo (couleur de leur nom dans les messages), et les mots qui les désignent
+  rarity?: 'normal' | 'magic' | 'rare' | 'set' | 'unique';
+  words?: string[];
 }
 
 export interface Cell {

@@ -162,6 +162,8 @@ const salameche: Item = {
 const sarahBernhardt: Item = {
     "type": "interest",
     "id": "sarahBernhardt",
+    "rarity": "unique",
+    "words": ["Sarah Bernhardt"],
     "name": "Sarah Bernhardt",
     "image": "/interests/sarahBernhardt.svg",
     "text": "Sarah Bernhardt, en pleine prairie ! Elle répète une tirade pour ce soir.",
@@ -174,6 +176,8 @@ const sarahBernhardt: Item = {
 const karaoke: Item = {
     "type": "interest",
     "id": "karaoke",
+    "rarity": "magic",
+    "words": ["micro", "karaoké"],
     "name": "Karaoké",
     "image": "/interests/karaoke.svg",
     "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer...",
@@ -186,6 +190,8 @@ const karaoke: Item = {
 const cheese: Item = {
     "type": "interest",
     "id": "cheese",
+    "rarity": "normal",
+    "words": ["fromage"],
     "name": "Fromage",
     "image": "/interests/cheese.svg",
     "text": "Oh, du fromage fondu ! J'adore ça !",
@@ -198,6 +204,8 @@ const cheese: Item = {
 const reading: Item = {
     "type": "interest",
     "id": "reading",
+    "rarity": "magic",
+    "words": ["livre", "lecture"],
     "name": "Lecture",
     "image": "/interests/reading.svg",
     "text": "Je suis en train de lire un livre sur la lecture. C'est fascinant !",
@@ -210,6 +218,8 @@ const reading: Item = {
 const wine: Item = {
     "type": "interest",
     "id": "wine",
+    "rarity": "magic",
+    "words": ["verre de vin", "vin"],
     "name": "Un verre de vin",
     "image": "/interests/wine.svg",
     "text": "Du vin ? C'est parti !",
@@ -222,6 +232,8 @@ const wine: Item = {
 const sun: Item = {
     "type": "interest",
     "id": "sun",
+    "rarity": "rare",
+    "words": ["soleil du sud", "soleil"],
     "name": "Soleil du sud",
     "image": "/interests/sun.svg",
     "text": "Un soleil du sud, c'est beau ! Je le mets dans mon sac à dos, il pourrait me servir plus tard... Vivement les vacances...",
@@ -234,6 +246,8 @@ const sun: Item = {
 const queer: Item = {
     "type": "interest",
     "id": "queer",
+    "rarity": "set",
+    "words": ["arc-en-ciel", "queer"],
     "name": "Queer",
     "image": "/interests/rainbow.svg",
     "text": "Queer, c'est beau !",
@@ -246,6 +260,8 @@ const queer: Item = {
 const ruby: Item = {
     "type": "interest",
     "id": "ruby",
+    "rarity": "unique",
+    "words": ["rubis parfait", "rubis"],
     "name": "Rubis parfait",
     "image": "/interests/ruby.svg",
     "text": "Un rubis parfait ! Serti dans une arme, il brûle tout ce qu'il touche.",

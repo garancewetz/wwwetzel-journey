@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 import { board, COLUMNS } from '@/datas/board';
 import { Item } from '@/types/game';
 
@@ -38,20 +38,37 @@ function World({ found, defeated }: WorldProps) {
             }
             // Gardien parti sans laisser d'image (il nous a laissé passer)
             const isGone = item.id !== undefined && defeated[item.id] === '';
-            const size = item.type === 'danger' || item.type === 'guard' ? 'item-large' : isCollectible(item) ? 'item-small' : '';
+            const isGuard = item.type === 'danger' || item.type === 'guard';
+            const size = isGuard ? 'item-large' : isCollectible(item) ? 'item-small' : '';
             return (
-              <img
-                key={index}
-                src={(item.id && defeated[item.id]) || item.image}
-                alt=""
-                draggable={false}
-                className={`item ${size} ${isFound || isGone ? 'item-found' : ''}`}
-              />
+              <Fragment key={index}>
+                <img
+                  src={(item.id && defeated[item.id]) || item.image}
+                  alt=""
+                  draggable={false}
+                  className={`item ${size} ${isFound || isGone ? 'item-found' : ''}`}
+                />
+                {/* Comme un donneur de quête dans World of Warcraft, tant qu'il attend son objet */}
+                {isGuard && !(item.id! in defeated) && <QuestMark />}
+              </Fragment>
             );
           })}
         </div>
       ))}
     </div>
+  );
+}
+
+// Le « ! » jaune des quêtes, en pixels
+function QuestMark() {
+  return (
+    <svg className="quest-mark" viewBox="0 0 5 11" shapeRendering="crispEdges" aria-hidden>
+      <rect x="0" y="0" width="5" height="8" fill="#183018" />
+      <rect x="0" y="8" width="5" height="3" fill="#183018" />
+      <rect x="1" y="1" width="3" height="6" fill="#f8d030" />
+      <rect x="1" y="1" width="1" height="6" fill="#fff4a0" />
+      <rect x="1" y="9" width="3" height="1" fill="#f8d030" />
+    </svg>
   );
 }
 

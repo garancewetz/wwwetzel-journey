@@ -11,6 +11,7 @@ import Inventory from './Inventory';
 import Hero from './Hero';
 import Companion from './Companion';
 import Orb from './Orb';
+import Dialog from './Dialog';
 import { board } from '@/datas/board';
 
 // Teinte du halo selon l'humeur : chaude quand ça va, froide face à un danger
@@ -69,6 +70,14 @@ export default function Game() {
   }, [activate]);
 
   const xpCount = countXp(found);
+
+  // « Ding ! » : la colonne dorée, seulement quand on gagne vraiment une expérience (pas à la reprise)
+  const lastXp = useRef(xpCount);
+  const [levelUp, setLevelUp] = useState(0);
+  useEffect(() => {
+    if (ready && xpCount > lastXp.current) setLevelUp((n) => n + 1);
+    lastXp.current = xpCount;
+  }, [xpCount, ready]);
   const isComplete = complete(found);
   const hasMoved = position.row !== START.row || position.col !== START.col;
 
@@ -98,6 +107,7 @@ export default function Game() {
       {found.includes('salameche') && (
         <Companion trail={trail} position={position} walking={walking} ground={groundAt(trail)} />
       )}
+      {levelUp > 0 && <div key={levelUp} className="level-up" aria-hidden />}
       <Hero facing={facing} walking={walking} ground={groundAt(position)} />
 
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
@@ -120,15 +130,7 @@ export default function Game() {
       </header>
 
       <p aria-live="polite" className="fixed inset-x-0 top-[max(4.5rem,calc(50%_-_var(--cell)*4.6))] z-30 mx-auto max-w-md px-4 text-base leading-snug sm:text-lg">
-        {message && (
-          <span
-            key={message.key}
-            className="dialog message whitespace-pre-line"
-            style={{ '--duration': `${Math.max(5000, message.text.length * 85)}ms` } as CSSProperties}
-          >
-            {message.text}
-          </span>
-        )}
+        <Dialog message={message} />
       </p>
 
       {/* Sur écran tactile seulement : il vient se placer sous le doigt */}

@@ -124,6 +124,38 @@ svg {
   transition: none;
 }
 
+/* Le « ! » de quête flotte au-dessus du gardien (sa tête dépasse d'une demi-case) */
+.quest-mark {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: calc(var(--cell) * -0.95);
+  width: calc(var(--cell) * 5 / 16);
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+/* « Ding ! » : une colonne de lumière dorée, comme une montée de niveau dans Diablo II */
+.level-up {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  z-index: 19;
+  width: calc(var(--cell) * 0.75);
+  height: calc(var(--cell) * 3.5);
+  translate: -50% calc(var(--cell) * 0.4);
+  transform-origin: bottom;
+  background: linear-gradient(to top, #fff4a0 0 12%, #f8d030 12% 40%, rgb(248 208 48 / 0.6) 40% 70%, rgb(248 208 48 / 0) 100%);
+  pointer-events: none;
+  animation: level-up 1300ms ease-out forwards;
+}
+
+@keyframes level-up {
+  0% { opacity: 0; scale: 1 0; }
+  20% { opacity: 0.9; scale: 1 1; }
+  100% { opacity: 0; scale: 0.4 1; }
+}
+
 .item-found {
   opacity: 0;
   scale: 1.8;
@@ -271,6 +303,12 @@ svg {
   box-shadow: inset 0 0 0 2px #f8f8f0, inset 0 0 0 4px #6890c0;
   color: #183018;
   text-align: left;
+}
+
+.wow-error {
+  display: block;
+  text-align: center;
+  text-shadow: 0 2px 0 #000, 0 0 6px #000;
 }
 
 .message {

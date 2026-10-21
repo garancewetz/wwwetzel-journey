@@ -7,6 +7,7 @@ Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marc
 - **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, clin d'œil à Diablo) se battent de la même façon, mais il faut de la mana. Le maître nageur, une fois apaisé, apprend à nager.
 - **XP et mana** se lisent dans deux orbes, à la Diablo, de chaque côté du sac.
 - **Salamèche** se cache dans les hautes herbes. Trouvé, il suit le personnage et sa flamme éclaire plus loin.
+- **Clins d'œil à Diablo et World of Warcraft** : le « ! » jaune des donneurs de quête au-dessus des gardiens, « Ding ! » et une colonne de lumière dorée à chaque expérience, les noms d'objets en couleur de rareté, « Pas assez de mana. » en rouge.
 - **L'humeur** teinte doucement le bord de la lumière : chaude quand tout va bien, froide face à un danger.
 
 La partie est gardée dans le navigateur : on reprend là où on s'était arrêté.

@@ -39,8 +39,8 @@ export interface GameState {
   defeated: Record<string, string>;
   mood: Mood;
   moodSteps: number;
-  // key change à chaque message, même si le texte est identique
-  message: { text: string; key: number } | null;
+  // key change à chaque message, même si le texte est identique ; error : le message rouge de WoW
+  message: { text: string; key: number; error?: boolean } | null;
   // combien de fois chaque intérêt a servi : ses répliques alternent
   uses: Record<string, number>;
   mana: number;
@@ -86,10 +86,10 @@ function fresh(): GameState {
 
 export const initialState = fresh();
 
-function say(state: GameState, text: string, mood?: Mood): GameState {
+function say(state: GameState, text: string, mood?: Mood, error?: boolean): GameState {
   return {
     ...state,
-    message: { text, key: (state.message?.key ?? 0) + 1 },
+    message: { text, key: (state.message?.key ?? 0) + 1, error },
     ...(mood && { mood, moodSteps: 0 }),
   };
 }
@@ -149,7 +149,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           if (collectible.type === 'xp') {
             return say(
               { ...next, found: nextFound, mana: maxMana(nextFound) },
-              `Une étoile dans la maison !\n${collectible.name}\n+1 XP · mana rechargée`,
+              `Ding ! Une étoile dans la maison !\n${collectible.name}\n+1 XP · mana rechargée`,
               'joy',
             );
           }
@@ -183,7 +183,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       }
       // Vaincre un ennemi demande de la mana ; un gardien amical cède au bon objet
       if (isEnemy && state.mana < SPELL_COST) {
-        return say(state, `${item.name} vacille... Il me manque de la mana. Une nouvelle expérience me donnerait de la force.`, 'fear');
+        return say(state, 'Pas assez de mana.\nUne nouvelle expérience me redonnerait des forces.', 'fear', true);
       }
       return say(
         {
