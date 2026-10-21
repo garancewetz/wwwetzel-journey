@@ -64,7 +64,7 @@ const mushroom: Item = {
     "id": "mushroom",
     "name": "Champignon maléfique",
     "image": "/dangers/mushroom.svg",
-    "text": "Oh non, un champignon maléfique ! Il ne vit que dans l'ombre et l'humidité... Ai-je quelque chose de lumineux dans mon sac ?",
+    "text": "Oh non, un champignon maléfique me barre la route !",
     "key": "sun",
     "solved": "Ha ! Le méchant champignon n'aime pas le soleil ! Le voilà réduit en poussière !",
     "after": "/dangers/mushroomXsun.svg"
@@ -75,7 +75,7 @@ const lifeguard: Item = {
     "id": "lifeguard",
     "name": "Maître nageur musclé",
     "image": "/dangers/lifeguard.svg",
-    "text": "Un maître nageur musclé me barre la route de la plage. Il s'ennuie ferme... Un petit remontant le ferait peut-être bouger ?",
+    "text": "Un maître nageur musclé me barre la route de la plage. Il croise les bras.",
     "key": "wine",
     "solved": "Je lui offre un verre de vin. Ravi, il me laisse passer... et m'apprend à nager !"
 }
@@ -86,7 +86,7 @@ const andariel: Item = {
     "id": "andariel",
     "name": "Andariel",
     "image": "/dangers/andariel.svg",
-    "text": "Andariel, la Vierge de l'Angoisse, garde le dernier passage ! On dit qu'elle ne craint qu'une chose : une arme qui brûle.",
+    "text": "Andariel, la Vierge de l'Angoisse, garde le dernier passage !",
     "key": "ruby",
     "solved": "Le rubis s'embrase : Andariel ne supporte pas le feu. Elle disparaît dans un cri."
 }
@@ -97,10 +97,10 @@ const curtain: Item = {
     "id": "curtain",
     "name": "Rideau de théâtre",
     "image": "/guards/curtain.svg",
-    "text": "Un lourd rideau de théâtre ferme le passage. Il ne se lèvera que pour une grande actrice...",
+    "text": "Un lourd rideau de théâtre ferme le passage.",
     "key": "sarahBernhardt",
     "solved": "Sarah Bernhardt entre en scène. Le rideau se lève sous les applaudissements !",
-    "refuse": "Le rideau ne bouge pas. Il attend une vraie tragédienne."
+    "refuse": "Le rideau ne bouge pas d'un pouce."
 }
 
 const fox: Item = {
@@ -108,10 +108,10 @@ const fox: Item = {
     "id": "fox",
     "name": "Renard affamé",
     "image": "/guards/fox.svg",
-    "text": "Un renard affamé me barre la route. Il a l'air de rêver d'un bon morceau de fromage...",
+    "text": "Un renard affamé me barre la route.",
     "key": "cheese",
     "solved": "« Que vous êtes joli ! » Je lui donne le fromage, il file avec, comme dans la fable.",
-    "refuse": "Le renard hausse les épaules. Ce n'est pas du fromage, ça."
+    "refuse": "Le renard hausse les épaules."
 }
 
 // Autre clin d'œil à Diablo
@@ -120,7 +120,7 @@ const cain: Item = {
     "id": "cain",
     "name": "Deckard Cain",
     "image": "/guards/cain.svg",
-    "text": "Deckard Cain : « Restez un moment et écoutez... » Il ne s'arrête plus de parler. Un bon livre le ferait peut-être taire ?",
+    "text": "Deckard Cain : « Restez un moment et écoutez... » Il ne s'arrête plus de parler.",
     "key": "reading",
     "solved": "Je lui offre un livre. Il s'y plonge et en oublie de parler. Je passe sur la pointe des pieds.",
     "refuse": "« Restez un moment et écoutez... » Il n'écoute que lui-même."
@@ -242,7 +242,7 @@ const ruby: Item = {
     "words": ["rubis parfait", "rubis"],
     "name": "Rubis parfait",
     "image": "/interests/ruby.svg",
-    "text": "Un rubis parfait ! Serti dans une arme, il brûle tout ce qu'il touche.",
+    "text": "Un rubis parfait ! Il brille d'un drôle d'éclat.",
     "uses": [
         "Je fais briller le rubis. Il me brûle un peu les doigts.",
         "Un rubis parfait. Il irait bien sur une épée."

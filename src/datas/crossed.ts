@@ -34,7 +34,7 @@ const crossed: Record<string, Reaction[]> = {
         },
         {
             id: ruby.id,
-            text: "Le rubis ne lui fait ni chaud ni froid. Il lui faudrait du vrai soleil."
+            text: "Le rubis ne lui fait ni chaud ni froid."
         },
 
     ],

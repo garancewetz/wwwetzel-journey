@@ -21,7 +21,8 @@ export type Mood = 'calm' | 'joy' | 'fear';
 // Après quelques pas sans événement, l'humeur redevient calme
 const MOOD_STEPS = 8;
 
-// Mana : chaque objet utilisé en coûte 1, vaincre un ennemi 3. Chaque expérience l'agrandit et la recharge,
+// Mana : un objet utilisé en coûte 1, vaincre un ennemi 3 ; essayer un objet qui ne marche pas face à un gardien
+// est gratuit (on peut tous les essayer). Chaque expérience l'agrandit et la recharge,
 // et elle revient en marchant (jamais de blocage)
 const MANA_STEPS = 6;
 const USE_COST = 1;
@@ -201,8 +202,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const guard = guardNextTo(state);
       const isEnemy = guard?.type === 'danger';
       const wins = guard !== undefined && item.id === guard.key;
-      // Utiliser un objet coûte 1 mana ; vaincre un ennemi en coûte 3
-      const cost = wins && isEnemy ? SPELL_COST : USE_COST;
+      // Utiliser un objet coûte 1 mana, vaincre un ennemi 3 ; un mauvais essai face à un gardien ne coûte rien
+      const cost = wins ? (isEnemy ? SPELL_COST : USE_COST) : guard ? 0 : USE_COST;
       if (state.mana < cost) return say(state, NO_MANA, 'fear', true);
       state = { ...state, mana: state.mana - cost };
 
