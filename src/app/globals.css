@@ -53,41 +53,34 @@ html body .game {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  /* Le halo part à une taille confortable et grandit doucement ; la sixième étoile atteint toute la place entre la bulle et le sac */
-  --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 11.5rem), calc(50vw - 0.75rem));
-  --start-radius: calc(var(--max-radius) * 0.7);
-  --radius: calc(var(--start-radius) + (var(--max-radius) - var(--start-radius)) * var(--halo));
 }
 
-/* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
-.game[data-ready="true"] {
-  transition: --halo 1200ms ease-out, --mood 1200ms ease-in-out;
-}
-
-/* La case (--row, --col) est toujours au centre de l'écran, sous le personnage */
 img,
 svg {
   image-rendering: pixelated;
 }
 
-/* Calques qui suivent la carte : la carte elle-même, et celui du compagnon */
-.world,
-.layer {
+/* Calques qui suivent la carte : la carte elle-même, et celui du compagnon.
+   Game pose le déplacement en transform sur le calque même, pour garder la case courante au centre de l'écran.
+   Surtout pas de variable CSS héritée (--row, --col) : chaque pas ferait recalculer le style des milliers de tuiles,
+   ce qui faisait ramer la marche sur téléphone. */
+.pan {
   position: absolute;
   left: 50%;
   top: 50%;
-  display: grid;
-  grid-auto-rows: var(--cell);
   pointer-events: none;
-  transform: translate(
-    calc((var(--col) + 0.5) * var(--cell) * -1),
-    calc((var(--row) + 0.5) * var(--cell) * -1)
-  );
+  /* Calque GPU permanent : la carte est dessinée une fois, pas à chaque pas */
+  will-change: transform;
 }
 
-[data-ready="true"] .world,
-[data-ready="true"] .layer {
+/* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
+[data-ready="true"] .pan {
   transition: transform var(--step) linear;
+}
+
+.world {
+  display: grid;
+  grid-auto-rows: var(--cell);
 }
 
 /* 1px de recouvrement : pas de fine ligne entre deux cases quand la carte tombe entre deux pixels */
@@ -170,6 +163,23 @@ svg {
 .item-found {
   opacity: 0;
   scale: 1.8;
+}
+
+/* Le halo part à une taille confortable et grandit doucement ; la sixième étoile atteint toute la place entre la bulle et le sac.
+   --halo et --mood sont posés sur ces deux calques seulement : leur animation ne touche rien d'autre */
+.mood,
+.halo {
+  --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 11.5rem), calc(50vw - 0.75rem));
+  --start-radius: calc(var(--max-radius) * 0.7);
+  --radius: calc(var(--start-radius) + (var(--max-radius) - var(--start-radius)) * var(--halo));
+}
+
+[data-ready="true"] .mood {
+  transition: --halo 1200ms ease-out, --mood 1200ms ease-in-out;
+}
+
+[data-ready="true"] .halo {
+  transition: --halo 1200ms ease-out;
 }
 
 /* L'humeur colore doucement le bord du halo */
@@ -363,10 +373,10 @@ svg {
 
 /* « Réduire les animations » : plus de glissements ni d'éclats, le jeu reste le même */
 @media (prefers-reduced-motion: reduce) {
-  .game[data-ready="true"],
+  [data-ready="true"] .mood,
+  [data-ready="true"] .halo,
   .item,
-  [data-ready="true"] .world,
-  [data-ready="true"] .layer,
+  [data-ready="true"] .pan,
   [data-ready="true"] .follower {
     transition: none;
   }

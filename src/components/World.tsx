@@ -10,10 +10,10 @@ interface WorldProps {
 
 const isCollectible = (item: Item) => item.type === 'xp' || item.type === 'interest';
 
-// La carte entière ; elle glisse sous le personnage grâce à --row et --col (voir .world)
+// La carte entière ; elle glisse sous le personnage avec son calque (voir .pan dans Game)
 function World({ found, defeated }: WorldProps) {
   return (
-    <div className="world" style={{ gridTemplateColumns: `repeat(${COLUMNS}, var(--cell))` }} aria-hidden>
+    <div className="world" style={{ gridTemplateColumns: `repeat(${COLUMNS}, var(--cell))` }}>
       {board.flat().map((cell) => (
         <div key={cell.id} className="relative">
           {cell.path && (

@@ -111,26 +111,29 @@ export default function Game() {
   const blocker = guardNextTo(state);
   const hint = !hasItems ? null : blocker ? 'facing' : hasUsed ? null : 'first';
 
+  // La case courante reste au centre de l'écran, sous le personnage : la carte glisse d'un transform (voir .pan)
+  const pan = {
+    transform: `translate(calc(${-(position.col + 0.5)} * var(--cell)), calc(${-(position.row + 0.5)} * var(--cell)))`,
+  };
+  const halo = lightProgress(found);
+  // Avec Salamèche, la lumière est plus chaude
+  const moodColor = mood === 'calm' && found.includes('salameche') ? 'rgb(255 150 60 / 0.12)' : MOOD_COLORS[mood];
+
   return (
     <main
       className="game"
       data-ready={ready}
-      style={
-        {
-          '--row': position.row,
-          '--col': position.col,
-          '--halo': lightProgress(found),
-          // Avec Salamèche, la lumière est plus chaude
-          '--mood': mood === 'calm' && found.includes('salameche') ? 'rgb(255 150 60 / 0.12)' : MOOD_COLORS[mood],
-        } as CSSProperties
-      }
       {...pointer}
     >
-      <World found={found} defeated={defeated} />
-      <div className="mood" />
-      <div className="halo" />
+      <div className="pan" style={pan} aria-hidden>
+        <World found={found} defeated={defeated} />
+      </div>
+      <div className="mood" style={{ '--halo': halo, '--mood': moodColor } as CSSProperties} />
+      <div className="halo" style={{ '--halo': halo } as CSSProperties} />
       {found.includes('salameche') && (
-        <Companion trail={trail} position={position} walking={walking} ground={groundAt(trail)} />
+        <div className="pan" style={pan} aria-hidden>
+          <Companion trail={trail} position={position} walking={walking} ground={groundAt(trail)} />
+        </div>
       )}
       {beam && <div key={levelUp} className="level-up" aria-hidden />}
       <Hero facing={facing} walking={walking} ground={groundAt(position)} />
