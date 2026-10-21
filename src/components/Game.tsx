@@ -94,6 +94,8 @@ export default function Game() {
     return () => window.clearTimeout(timer);
   }, [levelUp]);
   const isComplete = complete(found);
+  const lastStarId = [...found].reverse().find((id) => experiences.some((xp) => xp.id === id));
+  const lastStar = experiences.find((xp) => xp.id === lastStarId);
   const hasMoved = position.row !== START.row || position.col !== START.col;
 
   // Comment se servir du sac : au premier objet, puis chaque fois qu'un ennemi barre la route
@@ -147,6 +149,14 @@ export default function Game() {
         {isComplete ? (
           // La fin reste affichée
           <div className="dialog">
+            {/* La dernière étoile trouvée, pour savoir où l'on termine */}
+            {lastStar && (
+              <p className="mb-2">
+                Ding ! La dernière étoile ★ 6/6
+                <br />
+                {lastStar.name}
+              </p>
+            )}
             <p>Les six étoiles brillent ! Le parcours est complet.</p>
             <p className="mt-1">Merci pour la balade.</p>
             <button type="button" onClick={restart} className="mt-3 rounded border-2 border-[#183018] px-3 py-1 hover:bg-[#183018] hover:text-[#f8f8f0]">
