@@ -92,6 +92,8 @@ function createControls(step: Step, joystick: { current: HTMLElement | null }) {
   }
 
   const onKeyDown = (event: KeyboardEvent) => {
+    // Cmd/Ctrl/Alt + flèche reste au navigateur (aller en haut de page, historique...)
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
     const direction = ARROWS[event.key];
     if (!direction) return;
     event.preventDefault();

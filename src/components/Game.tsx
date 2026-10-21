@@ -74,6 +74,8 @@ export default function Game() {
     const onKeyDown = (event: KeyboardEvent) => {
       // une touche maintenue ne doit pas vider la mana
       if (event.repeat) return;
+      // Cmd/Ctrl + chiffre change d'onglet : ce n'est pas pour le jeu
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
       const interest = interests[Number(event.key) - 1];
       if (interest) activate(interest.id!);
     };
