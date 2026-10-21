@@ -172,7 +172,7 @@ const cheese: Item = {
     "words": ["fromage"],
     "name": "Fromage",
     "image": "/interests/cheese.svg",
-    "text": "Oh, du fromage fondu ! J'adore ça !",
+    "text": "Quelque chose bouge dans les hautes herbes... Du fromage fondu ! J'adore ça !",
     "uses": [
         "Je grignote un bout de fromage. Ça va tout de suite mieux.",
         "Je garde le reste pour l'apéro. On ne sait jamais."

@@ -24,6 +24,8 @@ function World({ found, defeated }: WorldProps) {
             // Salamèche reste caché dans les hautes herbes ; une fois trouvé, il suit (voir Companion)
             if (item.type === 'companion') return null;
             const isFound = isCollectible(item) && found.includes(item.id!);
+            // Comme les objets cachés de Pokémon : dans les hautes herbes, on ne le voit qu'en marchant dessus
+            if (cell.path === 'tallgrass' && isCollectible(item) && !isFound) return null;
             // Une expérience est une maison : sa fenêtre s'allume une fois qu'on y est entré
             if (item.type === 'xp') {
               return (
