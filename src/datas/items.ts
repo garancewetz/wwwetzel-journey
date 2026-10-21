@@ -157,20 +157,6 @@ const sarahBernhardt: Item = {
     ]
 }
 
-const karaoke: Item = {
-    "type": "interest",
-    "id": "karaoke",
-    "rarity": "magic",
-    "words": ["micro", "karaoké"],
-    "name": "Karaoké",
-    "image": "/interests/karaoke.svg",
-    "text": "Et si on se lançait dans un karaoké ? On a besoin d'une chanson pour commencer...",
-    "uses": [
-        "Je chante à tue-tête. Personne pour m'entendre, c'est parfait.",
-        "Le micro grésille. Le karaoké attendra une meilleure acoustique."
-    ]
-}
-
 const cheese: Item = {
     "type": "interest",
     "id": "cheese",
@@ -227,20 +213,6 @@ const sun: Item = {
     ]
 }
 
-const queer: Item = {
-    "type": "interest",
-    "id": "queer",
-    "rarity": "set",
-    "words": ["arc-en-ciel", "queer"],
-    "name": "Queer",
-    "image": "/interests/rainbow.svg",
-    "text": "Queer, c'est beau !",
-    "uses": [
-        "Je déploie l'arc-en-ciel. Tout de suite, la balade est plus belle.",
-        "Un peu de fierté dans le noir, ça ne fait jamais de mal."
-    ]
-}
-
 const ruby: Item = {
     "type": "interest",
     "id": "ruby",
@@ -259,10 +231,8 @@ const interests: Item[] = [
     sun,
     wine,
     sarahBernhardt,
-    queer,
     reading,
     cheese,
-    karaoke,
     ruby
 ]
 
@@ -275,4 +245,4 @@ const experiences: Item[] = [
     okeiroXp
 ]
 
-export { bush, salameche, mushroom, andariel, lifeguard, curtain, fox, cain, ruby, tree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, karaoke, cheese, reading, wine, sun, queer }
+export { bush, salameche, mushroom, andariel, lifeguard, curtain, fox, cain, ruby, tree, interests, experiences, sorbonneXp, threeWXp, openclassroomsXp, uptooXp, colorzXp, okeiroXp, sarahBernhardt, cheese, reading, wine, sun }

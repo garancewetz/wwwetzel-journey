@@ -2,7 +2,7 @@
 
 Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marche dans le noir, seule une lueur entoure le personnage, et l'on découvre en chemin le parcours de Garance Wetzel : chaque expérience est une maison où l'on trouve une étoile, qui rapporte un point d'XP, recharge la mana et agrandit la lumière, par paliers : elle part toute petite et atteint toute la place de l'écran avec la sixième étoile. Le but : les six étoiles, affichées sous le titre. Le nom de chaque région s'affiche à l'entrée, comme les panneaux de Pokémon, et l'avant-dernière étoile indique où chercher la dernière.
 
-- **Les intérêts** (Sarah Bernhardt, le fromage, un livre, le vin, un micro, un arc-en-ciel, le soleil, un rubis) se ramassent en route et vont dans le sac. La plupart ouvrent un passage ; tous font rire le reste du temps.
+- **Les intérêts** (Sarah Bernhardt, le fromage, un livre, le vin, le soleil, un rubis) se ramassent en route et vont dans le sac. Chacun fait céder un gardien, et fait rire le reste du temps.
 - **Les gardiens** barrent la route d'une région à l'autre : un rideau de théâtre, un renard (La Fontaine), Deckard Cain. À chacun son objet, ramassé plus tôt en chemin : on les essaie, les mauvais essais sont gratuits.
 - **Les ennemis** (un maître nageur, un champignon maléfique et Andariel, clin d'œil à Diablo) se battent de la même façon, mais il faut de la mana. Le maître nageur, une fois apaisé, apprend à nager.
 - **XP et mana** se lisent dans deux orbes, à la Diablo, de chaque côté du sac. Chaque objet utilisé coûte 1 mana, vaincre un ennemi 3, un mauvais essai face à un gardien rien ; elle revient en marchant et avec chaque étoile.
@@ -16,7 +16,7 @@ La partie est gardée dans le navigateur : on reprend là où on s'était arrêt
 
 ## Comment jouer
 
-- **Ordinateur** : les flèches pour marcher (on peut les garder appuyées). On ramasse un objet en passant dessus. Les touches 1 à 8, ou un clic, utilisent un objet du sac.
+- **Ordinateur** : les flèches pour marcher (on peut les garder appuyées). On ramasse un objet en passant dessus. Les touches 1 à 6, ou un clic, utilisent un objet du sac.
 - **Téléphone** : un joystick vient se placer sous le doigt ; on garde appuyé et on glisse dans la direction voulue. On touche un objet du sac pour l'utiliser.
 
 ## Stack

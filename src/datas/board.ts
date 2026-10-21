@@ -1,7 +1,7 @@
 import { Cell, Item, Position } from '@/types/game';
 import {
-  andariel, bush, cain, cheese, colorzXp, curtain, fox, karaoke, lifeguard, mushroom, okeiroXp, openclassroomsXp,
-  queer, reading, ruby, salameche, sarahBernhardt, sorbonneXp, sun, threeWXp, tree, uptooXp, wine,
+  andariel, bush, cain, cheese, colorzXp, curtain, fox, lifeguard, mushroom, okeiroXp, openclassroomsXp,
+  reading, ruby, salameche, sarahBernhardt, sorbonneXp, sun, threeWXp, tree, uptooXp, wine,
 } from './items';
 
 // La carte, vue du dessus. Chaque région s'ouvre par un gardien ; son objet a été ramassé plus tôt, parfois bien plus tôt.
@@ -31,7 +31,7 @@ const GROUND = [
 // Objets et gardiens, aux mêmes coordonnées. @ : départ ; une expérience est la porte d'une maison
 const ITEMS = [
   '.....................',
-  '...5.q........M.u....',
+  '...5..........M.u....',
   '.....................',
   '....L................',
   '........4............',
@@ -42,7 +42,7 @@ const ITEMS = [
   '........F............',
   '..2..................',
   '.r....z.......3......',
-  '....R....k.....w.....',
+  '....R..........w.....',
   '.....................',
   '...................A.',
   '.c....1..............',
@@ -57,7 +57,7 @@ const LEGEND: Record<string, Item[]> = {
   // Intérêts
   s: [sun], a: [sarahBernhardt],
   // Caché dans les hautes herbes
-  z: [salameche], c: [cheese], r: [reading], w: [wine], k: [karaoke], q: [queer], u: [ruby],
+  z: [salameche], c: [cheese], r: [reading], w: [wine], u: [ruby],
   // Gardiens : R rideau, F renard, C Deckard Cain ; ennemis : L maître nageur, M champignon, A Andariel
   R: [curtain], F: [fox], C: [cain], L: [lifeguard], M: [mushroom], A: [andariel],
 };

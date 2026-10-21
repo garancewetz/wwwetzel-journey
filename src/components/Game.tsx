@@ -67,7 +67,7 @@ export default function Game() {
     settle();
   };
 
-  // Touches 1 à 8 : utiliser un objet du sac
+  // Touches 1 à 6 : utiliser un objet du sac
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       // une touche maintenue ne doit pas vider la mana

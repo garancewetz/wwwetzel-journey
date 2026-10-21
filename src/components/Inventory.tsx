@@ -12,11 +12,11 @@ interface InventoryProps {
 }
 
 const HINTS = {
-  first: { keys: '1 à 8 pour utiliser un objet', touch: 'Touche un objet pour l’utiliser' },
-  facing: { keys: 'Quel objet du sac ? 1 à 8', touch: 'Quel objet du sac ? Touche-le' },
+  first: { keys: '1 à 6 pour utiliser un objet', touch: 'Touche un objet pour l’utiliser' },
+  facing: { keys: 'Quel objet du sac ? 1 à 6', touch: 'Quel objet du sac ? Touche-le' },
 };
 
-// Le sac : touches 1 à 8 au clavier, ou on touche l'objet
+// Le sac : touches 1 à 6 au clavier, ou on touche l'objet
 export default function Inventory({ found, onUse, hint, left, right }: InventoryProps) {
   const isEmpty = found.length === 0;
 
