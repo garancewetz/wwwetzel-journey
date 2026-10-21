@@ -1,10 +1,17 @@
-# Déploiement sur Netlify (réglages lus automatiquement depuis le dépôt)
+# Déploiement sur Netlify (réglages lus automatiquement depuis le dépôt).
+# Le public ne voit pas ce site : le portfolio le sert sous garancewetz.netlify.app/journey.
 [build]
   command = "npm run build"
   publish = "out"
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Le jeu est construit pour l'adresse /journey : ses fichiers sont ici à la racine
+[[redirects]]
+  from = "/journey/*"
+  to = "/:splat"
+  status = 200
 
 # Les fichiers du build ont un nom qui change à chaque version : on peut les garder en cache longtemps
 [[headers]]

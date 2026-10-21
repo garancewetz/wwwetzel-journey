@@ -100,7 +100,7 @@ function createControls(step: Step, joystick: { current: HTMLElement | null }) {
     pointer: {
       onPointerDown(event: PointerEvent) {
         if (drag || event.button > 0) return;
-        if ((event.target as Element).closest('button')) return;
+        if ((event.target as Element).closest('button, a')) return;
         drag = { id: event.pointerId, x: event.clientX, y: event.clientY, directions: [] };
         event.currentTarget.setPointerCapture(event.pointerId);
         showJoystick(joystick.current, drag);

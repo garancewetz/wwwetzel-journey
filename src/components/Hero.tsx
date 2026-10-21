@@ -1,3 +1,4 @@
+import { asset } from '@/lib/asset';
 import { Direction } from '@/types/game';
 
 interface HeroProps {
@@ -13,7 +14,7 @@ export const sheetFor = (facing: Direction) => (facing === 'up' || facing === 'd
 export default function Hero({ facing, walking, ground }: HeroProps) {
   return (
     <div className={`sprite hero ${walking ? 'walking' : ''}`} data-facing={facing}>
-      <img src={`/hero/${sheetFor(facing)}.svg`} alt="Garance" draggable={false} />
+      <img src={asset(`/hero/${sheetFor(facing)}.svg`)} alt="Garance" draggable={false} />
       <Cover ground={ground} />
     </div>
   );

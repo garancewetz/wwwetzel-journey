@@ -131,6 +131,14 @@ export default function Game() {
       {beam && <div key={levelUp} className="level-up" aria-hidden />}
       <Hero facing={facing} walking={walking} ground={groundAt(position)} />
 
+      {/* Retour au portfolio, qui sert le jeu sous /journey */}
+      <a
+        href="https://garancewetz.netlify.app/"
+        className="fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-40 text-sm text-white/50 transition-colors hover:text-white/85"
+      >
+        ← Portfolio
+      </a>
+
       <header className="fixed inset-x-0 top-0 z-30 px-4 pt-[max(1rem,env(safe-area-inset-top))] text-center">
         <h1 className="text-sm tracking-widest text-white/70">wwwetzel journey</h1>
         {/* Le but du jeu : une étoile par maison */}

@@ -12,7 +12,7 @@ Un petit jeu en pixel art, en hommage aux Pokémon de la Game Boy Color. On marc
 
 La partie est gardée dans le navigateur : on reprend là où on s'était arrêté.
 
-**Jouer : à renseigner après la mise en ligne**
+**Jouer : [garancewetz.netlify.app/journey](https://garancewetz.netlify.app/journey)**
 
 ## Comment jouer
 
@@ -30,7 +30,7 @@ npm install
 npm run dev
 ```
 
-Le jeu est alors sur [http://localhost:3000](http://localhost:3000).
+Le jeu est alors sur [http://localhost:3000/journey](http://localhost:3000/journey) : il est construit pour vivre sous `/journey`.
 
 ## Scripts
 
@@ -55,4 +55,8 @@ Pour modifier la carte, voir `src/datas/board.ts` : elle est dessinée en texte,
 
 ## Mise en ligne
 
-Netlify, réglages dans `netlify.toml` : `npm run build`, dossier publié `out/`.
+Le jeu est servi par le portfolio, à l'adresse `garancewetz.netlify.app/journey` :
+
+- ce dépôt a son propre site Netlify (réglages dans `netlify.toml` : `npm run build`, dossier publié `out/`), que le public ne voit pas ;
+- le portfolio relaie `/journey/*` vers ce site (règle de proxy dans son `netlify.toml`) ;
+- les deux se déploient chacun de leur côté, à chaque push sur `main`.

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { interests } from '@/datas/items';
+import { asset } from '@/lib/asset';
 
 interface InventoryProps {
   found: string[];
@@ -41,7 +42,7 @@ export default function Inventory({ found, onUse, hint, left, right }: Inventory
                 aria-label={`Utiliser : ${interest.name}`}
                 className="relative flex size-full items-center justify-center rounded transition-transform active:scale-90"
               >
-                <img src={interest.image} alt="" draggable={false} className="size-6 sm:size-8 lg:size-10 [image-rendering:pixelated]" />
+                <img src={asset(interest.image)} alt="" draggable={false} className="size-6 sm:size-8 lg:size-10 [image-rendering:pixelated]" />
                 <span className="absolute -top-1.5 -left-1 text-xs text-white/60 pointer-coarse:hidden">{index + 1}</span>
               </button>
             ) : (

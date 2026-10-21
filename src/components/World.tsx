@@ -1,5 +1,6 @@
 import { Fragment, memo } from 'react';
 import { board, COLUMNS } from '@/datas/board';
+import { asset } from '@/lib/asset';
 import { Item } from '@/types/game';
 
 interface WorldProps {
@@ -31,7 +32,7 @@ function World({ found, defeated }: WorldProps) {
               return (
                 <img
                   key={index}
-                  src={isFound ? item.image.replace('.svg', '-lit.svg') : item.image}
+                  src={asset(isFound ? item.image.replace('.svg', '-lit.svg') : item.image)}
                   alt=""
                   draggable={false}
                   className="item item-house"
@@ -45,7 +46,7 @@ function World({ found, defeated }: WorldProps) {
             return (
               <Fragment key={index}>
                 <img
-                  src={(item.id && defeated[item.id]) || item.image}
+                  src={asset((item.id && defeated[item.id]) || item.image)}
                   alt=""
                   draggable={false}
                   className={`item ${size} ${isFound || isGone ? 'item-found' : ''}`}

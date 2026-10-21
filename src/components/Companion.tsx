@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { asset } from '@/lib/asset';
 import { Direction, Position } from '@/types/game';
 import { Cover } from './Hero';
 
@@ -19,7 +20,7 @@ export default function Companion({ trail, position, walking, ground }: Companio
         data-facing={facing}
         style={{ '--trow': trail.row, '--tcol': trail.col } as CSSProperties}
       >
-        <img src="/companion/salameche.svg" alt="" draggable={false} />
+        <img src={asset('/companion/salameche.svg')} alt="" draggable={false} />
         <Cover ground={ground} />
       </div>
     </div>
