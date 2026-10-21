@@ -62,19 +62,32 @@ const LEGEND: Record<string, Item[]> = {
   R: [curtain], F: [fox], C: [cain], G: [troll], N: [cloud], L: [lifeguard], M: [mushroom], A: [andariel],
 };
 
+// Une forêt tout autour, plus large que le plus grand halo : la lumière tombe toujours sur un rond entier
+const PAD = 5;
+const surround = (lines: string[], fill: string) => {
+  const edge = fill.repeat(lines[0].length + PAD * 2);
+  return [
+    ...Array<string>(PAD).fill(edge),
+    ...lines.map((line) => fill.repeat(PAD) + line + fill.repeat(PAD)),
+    ...Array<string>(PAD).fill(edge),
+  ];
+};
+const ground = surround(GROUND, 'T');
+const marks = surround(ITEMS, '.');
+
 const ROAD = '=P';
 const SIDES: [string, number, number][] = [['t', -1, 0], ['r', 0, 1], ['b', 1, 0], ['l', 0, -1]];
 
 // Tuile d'un chemin ou d'une place : ses bras partent vers les chemins voisins
 function roadTile(row: number, col: number) {
-  const sides = SIDES.filter(([, dr, dc]) => ROAD.includes(GROUND[row + dr]?.[col + dc] ?? '')).map(([side]) => side);
-  return `${GROUND[row][col] === 'P' ? 'place' : 'road'}-${sides.join('')}`;
+  const sides = SIDES.filter(([, dr, dc]) => ROAD.includes(ground[row + dr]?.[col + dc] ?? '')).map(([side]) => side);
+  return `${ground[row][col] === 'P' ? 'place' : 'road'}-${sides.join('')}`;
 }
 
-function cell(ground: string, mark: string, row: number, col: number): Cell {
-  const id = row * GROUND[0].length + col;
+function cell(kind: string, mark: string, row: number, col: number): Cell {
+  const id = row * ground[0].length + col;
   const items = LEGEND[mark] ?? [];
-  switch (ground) {
+  switch (kind) {
     case 'T':
       return { id, path: 'grass', items: [tree] };
     case 'b':
@@ -98,11 +111,11 @@ function cell(ground: string, mark: string, row: number, col: number): Cell {
   }
 }
 
-export const board: Cell[][] = GROUND.map((line, row) => [...line].map((ground, col) => cell(ground, ITEMS[row][col], row, col)));
+export const board: Cell[][] = ground.map((line, row) => [...line].map((kind, col) => cell(kind, marks[row][col], row, col)));
 
 export const START: Position = (() => {
-  const row = ITEMS.findIndex((line) => line.includes('@'));
-  return { row, col: ITEMS[row].indexOf('@') };
+  const row = marks.findIndex((line) => line.includes('@'));
+  return { row, col: marks[row].indexOf('@') };
 })();
 
-export const COLUMNS = GROUND[0].length;
+export const COLUMNS = ground[0].length;

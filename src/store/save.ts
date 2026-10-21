@@ -2,7 +2,7 @@ import { board } from '@/datas/board';
 import { GameState, SavedGame } from './game';
 
 // La partie est gardée dans ce navigateur : on reprend là où on s'était arrêté
-const KEY = 'wwwetzel-journey:v6';
+const KEY = 'wwwetzel-journey:v7';
 
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((v) => typeof v === 'string');
