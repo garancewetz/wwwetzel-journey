@@ -48,7 +48,7 @@ body {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   /* Le halo part à une taille confortable et grandit doucement ; la sixième étoile atteint toute la place entre la bulle et le sac */
-  --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 14rem), calc(50vw - 0.75rem));
+  --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 11.5rem), calc(50vw - 0.75rem));
   --start-radius: calc(var(--max-radius) * 0.7);
   --radius: calc(var(--start-radius) + (var(--max-radius) - var(--start-radius)) * var(--halo));
 }
