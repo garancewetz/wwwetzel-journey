@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 
-/* Rayon du halo, en nombre de cases : déclaré pour pouvoir l'animer */
+/* Lumière gagnée, de 0 (départ) à 1 (six étoiles) : déclarée pour pouvoir l'animer */
 @property --halo {
   syntax: "<number>";
   inherits: true;
-  initial-value: 2;
+  initial-value: 0;
 }
 
 /* Teinte de l'humeur, déclarée pour passer en douceur d'une couleur à l'autre */
@@ -47,20 +47,22 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  /* Le halo grandit à chaque étoile, mais reste entre la bulle et le sac */
-  --radius: min(calc(var(--cell) * var(--halo)), calc(50dvh - 8.5rem), calc(50vw - 0.75rem));
+  /* Le halo part petit et grandit par paliers ; la sixième étoile atteint toute la place entre la bulle et le sac */
+  --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 8.5rem), calc(50vw - 0.75rem));
+  --start-radius: min(calc(var(--cell) * 1.1), calc(var(--max-radius) * 0.45));
+  --radius: calc(var(--start-radius) + (var(--max-radius) - var(--start-radius)) * var(--halo));
 }
 
 /* Sur grand écran, les orbes sont plus grandes : un peu plus de place en bas */
 @media (min-width: 1024px) {
   .game {
-    --radius: min(calc(var(--cell) * var(--halo)), calc(50dvh - 10.5rem), calc(50vw - 0.75rem));
+    --max-radius: min(calc(var(--cell) * 4), calc(50dvh - 10.5rem), calc(50vw - 0.75rem));
   }
 }
 
 /* Pas de transition avant la reprise de la partie : la carte ne défile pas au chargement */
 .game[data-ready="true"] {
-  transition: --halo 900ms ease-out, --mood 1200ms ease-in-out;
+  transition: --halo 1200ms ease-out, --mood 1200ms ease-in-out;
 }
 
 /* La case (--row, --col) est toujours au centre de l'écran, sous le personnage */

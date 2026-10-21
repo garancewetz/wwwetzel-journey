@@ -65,9 +65,8 @@ const isCollectible = (item: Item) => item.type === 'xp' || item.type === 'inter
 
 export const xpCount = (found: string[]) => experiences.filter((xp) => found.includes(xp.id!)).length;
 
-// Rayon du halo, en cases : il grandit un peu à chaque expérience
-// La flamme de Salamèche l'agrandit encore
-export const haloRadius = (found: string[]) => 2 + xpCount(found) * 0.2 + (found.includes('salameche') ? 0.5 : 0);
+// La lumière gagnée, de 0 au départ à 1 avec les six étoiles
+export const lightProgress = (found: string[]) => xpCount(found) / experiences.length;
 
 
 function fresh(): GameState {

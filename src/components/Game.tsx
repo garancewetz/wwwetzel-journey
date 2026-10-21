@@ -2,7 +2,7 @@
 
 import { CSSProperties, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { experiences, interests } from '@/datas/items';
-import { START, guardNextTo, gameReducer, haloRadius, initialState, isComplete as complete, maxMana, xpCount as countXp } from '@/store/game';
+import { START, guardNextTo, gameReducer, initialState, lightProgress, isComplete as complete, maxMana, xpCount as countXp } from '@/store/game';
 import { STEP_MS, useControls } from '@/store/controls';
 import { loadGame, saveGame } from '@/store/save';
 import { Direction } from '@/types/game';
@@ -114,8 +114,9 @@ export default function Game() {
         {
           '--row': position.row,
           '--col': position.col,
-          '--halo': haloRadius(found),
-          '--mood': MOOD_COLORS[mood],
+          '--halo': lightProgress(found),
+          // Avec Salamèche, la lumière est plus chaude
+          '--mood': mood === 'calm' && found.includes('salameche') ? 'rgb(255 150 60 / 0.12)' : MOOD_COLORS[mood],
         } as CSSProperties
       }
       {...pointer}
